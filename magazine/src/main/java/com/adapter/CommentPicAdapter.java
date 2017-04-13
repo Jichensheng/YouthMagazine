@@ -16,7 +16,7 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams;
 
 /**
- * 图片f
+ * 图片详情
  * author：Jics
  * 2017/4/10 16:43
  */
