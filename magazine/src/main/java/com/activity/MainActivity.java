@@ -58,12 +58,12 @@ public class MainActivity extends FragmentActivity {
 		fragments.add(momentFragment);
 
 		BaseFragment contactFragment = new BaseFragment();
-		contactFragment.setTitle("轻办公");
+		contactFragment.setTitle("实验1");
 		contactFragment.setIconId(R.drawable.tab_user_selector);
 		fragments.add(contactFragment);
 
 		BaseFragment recordFragment = new BaseFragment();
-		recordFragment.setTitle("我的");
+		recordFragment.setTitle("实验2");
 		recordFragment.setIconId(R.drawable.tab_record_selector);
 		fragments.add(recordFragment);
 
