@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="tabView">@style/TabView</item>
+        <item name="tabPageIndicator">@style/TabIndicator</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">#fff</item>
+    </style>
+    <style name="TabIndicator"/>
+
+    <style name="TabView">
+        <item name="android:addStatesFromChildren">true</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+
+    <style name="ImageThemeBase" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+    <style name="ImageTheme" parent="ImageThemeBase"/>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:typeface">serif</item>
+    </style>
+</resources>

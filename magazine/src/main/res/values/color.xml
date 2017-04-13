@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tab_text_normal">#696969</color>
+    <color name="tab_text_selected">#696969</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#353535</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="rose_red">#fa6c6c</color>
+    <color name="light_gray">#b3b3b3</color>
+    <color name="light_gray_more">#efefef</color>
+    <color name="dark_gray">#6c6c6c</color>
+    <color name="text_main_black">#454545</color>
+    <color name="transparent">#00000000</color>
+</resources>

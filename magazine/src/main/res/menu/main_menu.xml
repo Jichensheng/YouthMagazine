@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto "
+>
+    <item
+        android:title="hello_world"
+        android:icon="@drawable/abc_ic_menu_selectall_mtrl_alpha"
+    >
+        <item android:icon="@drawable/abc_ic_menu_cut_mtrl_alpha"
+              android:title="item1"
+              android:id="@+id/action_cut"
+              app:showAsAction="never"/>
+        <item android:icon="@drawable/abc_ic_menu_cut_mtrl_alpha"
+              android:title="item2"
+              android:id="@+id/action_cut1"
+              app:showAsAction="never"/>
+    </item>
+</menu>
