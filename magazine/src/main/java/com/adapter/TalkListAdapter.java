@@ -59,6 +59,8 @@ public class TalkListAdapter extends RecyclerView.Adapter {
                     .placeholder(R.drawable.banner_default_circle)
                     .noFade()
                     .into(cdView);
+
+
         }
 
 

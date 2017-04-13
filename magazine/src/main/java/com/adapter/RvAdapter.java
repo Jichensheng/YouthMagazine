@@ -109,7 +109,8 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 	@Override
 	public int getItemViewType(int position) {
-		return position % 2;
+//		return position % 2;
+		return 0;
 	}
 
 	/**
