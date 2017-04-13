@@ -50,13 +50,13 @@ public class TalkListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof RvAdapter.CDHolder) {
-            CDView cdView = ((RvAdapter.CDHolder) holder).cdView;
+        if (holder instanceof CDListHolder) {
+            CDView cdView = ((CDListHolder) holder).cdView;
             Picasso.with(context)
                     .load(mUrls[new Random().nextInt(mUrls.length)])
-                    .error(R.drawable.banner_default)
-                    .placeholder(R.drawable.banner_default)
                     .transform(new CircleTransform())
+                    .error(R.drawable.banner_default_circle)
+                    .placeholder(R.drawable.banner_default_circle)
                     .noFade()
                     .into(cdView);
         }
@@ -108,7 +108,7 @@ public class TalkListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 30;
     }
 
 }
