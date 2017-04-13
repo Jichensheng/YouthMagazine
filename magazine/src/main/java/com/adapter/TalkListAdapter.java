@@ -53,10 +53,9 @@ public class TalkListAdapter extends RecyclerView.Adapter {
         if (holder instanceof RvAdapter.CDHolder) {
             CDView cdView = ((RvAdapter.CDHolder) holder).cdView;
             Picasso.with(context)
-//                    .load("http://img4.imgtn.bdimg.com/it/u=2644422079,4250545639&fm=21&gp=0.jpg")
                     .load(mUrls[new Random().nextInt(mUrls.length)])
-                    .placeholder(R.drawable.banner_default)
                     .error(R.drawable.banner_default)
+                    .placeholder(R.drawable.banner_default)
                     .transform(new CircleTransform())
                     .noFade()
                     .into(cdView);
