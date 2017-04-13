@@ -1,1 +1,1 @@
-include ':app', ':tab＋viewpager', ':magazine'
+include ':magazine'
