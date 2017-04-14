@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 
 import java.util.ArrayList;
 import java.util.List;
