@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
 import java.util.List;

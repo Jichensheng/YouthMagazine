@@ -10,9 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MyFragmentAdapter;
 import com.jcs.magazine.fragment.ArticleFragment;
-import com.githang.navigatordemo.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,11 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.activity.ArticleActivity;
-import com.jcs.magazine.base.BaseFragment;
-import com.githang.navigatordemo.R;
-import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 import com.jcs.magazine.adapter.YZUPageAdapter;
+import com.jcs.magazine.base.BaseFragment;
+import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
 /**
  * author：Jics

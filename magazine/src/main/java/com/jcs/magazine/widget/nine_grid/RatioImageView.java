@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 
 
 /**

@@ -15,8 +15,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseApplication;
-import com.githang.navigatordemo.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

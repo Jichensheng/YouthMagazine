@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.TalkListAdapter;
 import com.jcs.magazine.base.BaseFragment;
-import com.githang.navigatordemo.R;
 
 /**
  * Created by liudong on 17/4/12.

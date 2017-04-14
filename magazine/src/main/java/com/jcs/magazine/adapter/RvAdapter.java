@@ -10,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
+import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
-import com.githang.navigatordemo.R;
-import com.squareup.picasso.Picasso;
 import com.jcs.magazine.util.CircleTransform;
 import com.jcs.magazine.widget.CDView;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;

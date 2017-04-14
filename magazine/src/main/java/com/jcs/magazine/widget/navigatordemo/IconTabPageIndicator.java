@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 import com.jcs.magazine.widget.viewpagerindicator.IconPagerAdapter;
 import com.jcs.magazine.widget.viewpagerindicator.PageIndicator;
-
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

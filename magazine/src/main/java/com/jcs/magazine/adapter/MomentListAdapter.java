@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
-import com.githang.navigatordemo.R;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
 import java.io.Serializable;

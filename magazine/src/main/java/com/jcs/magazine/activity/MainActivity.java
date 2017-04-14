@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MomentFragment;
 import com.jcs.magazine.fragment.TalkFragment;
+import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.navigatordemo.FragmentAdapter;
 import com.jcs.magazine.widget.navigatordemo.IconTabPageIndicator;
-import com.githang.navigatordemo.R;
-import com.jcs.magazine.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;

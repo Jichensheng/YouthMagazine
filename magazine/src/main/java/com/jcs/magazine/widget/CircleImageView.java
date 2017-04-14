@@ -16,7 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 
 
 /**

@@ -9,9 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-
+import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
-import com.githang.navigatordemo.R;
 
 import java.util.List;
 

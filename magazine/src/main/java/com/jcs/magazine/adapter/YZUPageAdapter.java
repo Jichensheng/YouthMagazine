@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
 
 
 /**

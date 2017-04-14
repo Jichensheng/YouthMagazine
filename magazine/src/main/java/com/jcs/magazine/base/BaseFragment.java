@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.githang.navigatordemo.R;
+import com.jcs.magazine.R;
+
 
 /**
  * User: Geek_Soledad(msdx.android@qq.com)
