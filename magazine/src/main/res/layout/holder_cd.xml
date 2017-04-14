@@ -35,7 +35,7 @@
         android:textSize="16sp"
     />
 
-    <com.widget.CDView
+    <com.jcs.magazine.widget.CDView
         android:id="@+id/cd_music"
         android:layout_width="220dp"
         android:layout_height="220dp"

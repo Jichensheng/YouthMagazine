@@ -11,7 +11,7 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
     >
-        <com.widget.CircleImageView
+        <com.jcs.magazine.widget.CircleImageView
             android:id="@+id/civ_head"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingRight="40dp"
         android:paddingTop="10dp"
         android:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
         android:textColor="#484848"
@@ -82,7 +82,7 @@
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
     >
-        <com.widget.nine_grid.NineGridTestLayout
+        <com.jcs.magazine.widget.nine_grid.NineGridTestLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_nine_grid"
             android:layout_width="match_parent"
@@ -104,21 +104,21 @@
             android:gravity="center"
             android:text="赞:"
         />
-        <com.widget.CircleImageView
+        <com.jcs.magazine.widget.CircleImageView
             android:id="@+id/civ_head1"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
             android:src="@drawable/hmm"
         />
-        <com.widget.CircleImageView
+        <com.jcs.magazine.widget.CircleImageView
             android:id="@+id/civ_head2"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
             android:src="@drawable/hmm"
         />
-        <com.widget.CircleImageView
+        <com.jcs.magazine.widget.CircleImageView
             android:id="@+id/civ_head3"
             android:layout_width="35dp"
             android:layout_height="35dp"

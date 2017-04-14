@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
-    <com.widget.CircleImageView
+    <com.jcs.magazine.widget.CircleImageView
         android:id="@+id/civ_head"
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -72,7 +72,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="10dp"
             >
-            <com.widget.nine_grid.NineGridTestLayout
+            <com.jcs.magazine.widget.nine_grid.NineGridTestLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/layout_nine_grid"
                 android:layout_width="match_parent"

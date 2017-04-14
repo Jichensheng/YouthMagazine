@@ -33,13 +33,13 @@
         android:layerType="software"
         android:orientation="horizontal" >
 
-        <com.yzu_viewPager.NoneOverScrollShadowView
+        <com.jcs.magazine.yzu_viewPager.NoneOverScrollShadowView
             android:id="@+id/id_viewpager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp" >
-        </com.yzu_viewPager.NoneOverScrollShadowView>
+        </com.jcs.magazine.yzu_viewPager.NoneOverScrollShadowView>
     </LinearLayout>
 
 </LinearLayout>

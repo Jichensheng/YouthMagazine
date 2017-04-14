@@ -3,9 +3,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                tools:context="com.activity.MainActivity">
+                tools:context="com.jcs.magazine.activity.MainActivity">
 
-    <com.widget.navigatordemo.IconTabPageIndicator
+    <com.jcs.magazine.widget.navigatordemo.IconTabPageIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:layout_above="@id/indicator"
         android:layout_height="1px"
         android:background="#a9a9a9" />
-    <com.widget.viewpagerindicator.NonSlipViewPager
+    <com.jcs.magazine.widget.viewpagerindicator.NonSlipViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
