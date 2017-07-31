@@ -96,6 +96,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
+            android:transitionName="cover"
             android:src="@mipmap/cover2"/>
     </LinearLayout>
     <ImageView

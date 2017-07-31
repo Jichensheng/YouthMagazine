@@ -27,6 +27,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
 		initViews();
+
 	}
 
 	private void initViews() {

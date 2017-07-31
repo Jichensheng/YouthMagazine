@@ -1,5 +1,6 @@
 package com.jcs.magazine.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,14 +20,12 @@ import java.util.List;
  * author：Jics
  * 2017/4/5 09:52
  */
+@SuppressLint("ValidFragment")
 public class ArticleFragment extends Fragment {
 	private int position;
 	private RecyclerView recyclerView;
 	private List<String> list;
 
-	public ArticleFragment() {
-
-	}
 
 	public ArticleFragment(int position) {
 		this.position = position;

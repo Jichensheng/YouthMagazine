@@ -1,5 +1,6 @@
 package com.jcs.magazine.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,18 +10,29 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.jcs.magazine.R;
-import com.jcs.magazine.activity.ArticleActivity;
+import com.jcs.magazine.activity.PrefaceActivity;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
+import com.jcs.magazine.bean.MagazineCoverBean;
+import com.jcs.magazine.bean.MgzBean;
+import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * author：Jics
  * 2016/6/21 14:16
  */
 public class MagazineFragment extends BaseFragment {
+	private static final String TAG="jcs_net";
 	private ViewPager mViewPager;
 	private YZUPageAdapter mAdapter;
 	private boolean flag;
@@ -47,9 +59,28 @@ public class MagazineFragment extends BaseFragment {
 		mAdapter.setOnClickPageListener(new YZUPageAdapter.OnClickPageListener() {
 
 			@Override
-			public void onClickPage(String position) {
-				Intent inten =new Intent(getActivity(),ArticleActivity.class);
-				startActivity(inten);
+			public void onClickPage(final ImageView view, String position) {
+				YzuClient.getInstance()
+						.getMagazineCover()
+						.subscribeOn(Schedulers.newThread())//网络请求开新线程
+						.observeOn(AndroidSchedulers.mainThread())//网络响应在UI线程
+						.subscribe(new Consumer<MgzBean<MagazineCoverBean>>() {
+							@Override
+							public void accept(MgzBean<MagazineCoverBean> magazineCoverBeanMgzBean) throws Exception {
+								UiUtil.toast( magazineCoverBeanMgzBean.toString());
+								Log.e(TAG, "accept: "+ magazineCoverBeanMgzBean.toString() );
+//								Intent inten = new Intent(getActivity(), ArticleActivity.class);
+								Intent inten = new Intent(getActivity(), PrefaceActivity.class);
+								ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,"cover");
+								startActivity(inten,options.toBundle());
+							}
+						}, new Consumer<Throwable>() {
+							@Override
+							public void accept(Throwable throwable) throws Exception {
+								UiUtil.toast( "回调失败:"+throwable.toString());
+							}
+						});
+
 
 			}
 

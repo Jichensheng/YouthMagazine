@@ -6,6 +6,6 @@ public interface IconPagerAdapter {
      */
     int getIconResId(int index);
 
-    // From PagerAdapter
+    // From YzuPagerAdapter
     int getCount();
 }

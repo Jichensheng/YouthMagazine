@@ -11,6 +11,8 @@ import android.view.View;
  * 2016/6/22 15:47
  */
 public class NoneOverScrollShadowView extends ViewPager {
+	private float preX;
+
 	public NoneOverScrollShadowView(Context context) {
 		super(context);
 	}
@@ -21,4 +23,5 @@ public class NoneOverScrollShadowView extends ViewPager {
 		}
 
 	}
+
 }

@@ -21,13 +21,12 @@ public class ArticleActivity extends AppCompatActivity {
 	private Toolbar tb;
 	private TabLayout tlTitle;
 	private ViewPager vp;
-	private String[] mTitle = {"商品", "详情", "评论"};
 	private List<Fragment> lists;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_article);
 		initView();
 	}
 

@@ -1,1 +1,1 @@
-include ':magazine'
+include ':magazine', ':rtext'

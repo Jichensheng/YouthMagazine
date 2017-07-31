@@ -30,13 +30,13 @@ public class YZUPageAdapter extends PagerAdapter {
 	@Override
 	public Object instantiateItem(ViewGroup container, final int position) {
 		View bookView =LayoutInflater.from(context).inflate(R.layout.holder_cover, container, false);
-		ImageView imv= (ImageView) bookView.findViewById(R.id.imv_yzu_cover);
+		final ImageView imv= (ImageView) bookView.findViewById(R.id.imv_yzu_cover);
 
 		imv.setImageResource(imgRes[position]);
 		bookView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				listener.onClickPage(""+position);
+				listener.onClickPage(imv,""+position);
 			}
 		});
 		container.addView(bookView);
@@ -59,7 +59,7 @@ public class YZUPageAdapter extends PagerAdapter {
 	}
 	
 	public interface OnClickPageListener{
-		void onClickPage(String position);
+		void onClickPage(ImageView view,String position);
 	}
 
 }

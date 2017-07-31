@@ -11,9 +11,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  */
 public class BaseApplication extends Application {
 	private static BaseApplication instance;
-	private void BaseFragment(){
-
-	}
 
 	@Override
 	public void onCreate() {
