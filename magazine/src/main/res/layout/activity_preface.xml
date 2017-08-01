@@ -19,6 +19,6 @@
         android:text="此\n处\n为\n目\n录"
         android:textColor="#ffa6a6"
         android:typeface="serif"
-        android:textSize="32sp"
+        android:textSize="22sp"
         android:layout_height="0dp"/>
 </LinearLayout>

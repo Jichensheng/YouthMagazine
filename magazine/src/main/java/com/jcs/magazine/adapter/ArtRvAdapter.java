@@ -55,13 +55,18 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	}
 
 	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 		if (holder instanceof StoryHolder) {
-			((StoryHolder) holder).imv_cover.setTag(position);
 			((StoryHolder) holder).tv_title.setText(items.get(position).getTitle());
 			((StoryHolder) holder).tv_athor.setText("文 / "+items.get(position).getAuthor());
 			((StoryHolder) holder).tv_excerpt.setText(items.get(position).getExcerpt());
 			((StoryHolder) holder).tv_praise.setText(""+items.get(position).getPraise());
+			((StoryHolder) holder).ll_content.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onArtItemClickListener.onItemClick(v, position);
+				}
+			});
 		}
 	}
 
@@ -74,6 +79,7 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	 * story viewHolder
 	 */
 	class StoryHolder extends RecyclerView.ViewHolder {
+		LinearLayout ll_content;
 		//封面图
 		TextView tv_title;
 		TextView tv_athor;
@@ -88,6 +94,7 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 		public StoryHolder(final View itemView) {
 			super(itemView);
+			ll_content= (LinearLayout) itemView.findViewById(R.id.ll_content);
 			imv_cover = (ImageView) itemView.findViewById(R.id.imv_cover);
 			tv_title = (TextView) itemView.findViewById(R.id.tv_title);
 			tv_athor = (TextView) itemView.findViewById(R.id.tv_athor);
@@ -110,12 +117,7 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 				}
 			});
 
-			imv_cover.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					onArtItemClickListener.onItemClick(v, (Integer) imv_cover.getTag());
-				}
-			});
+
 
 		}
 	}

@@ -17,7 +17,7 @@ import com.jcs.magazine.activity.PrefaceActivity;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
-import com.jcs.magazine.bean.MgzCoverBean;
+import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
@@ -60,14 +60,13 @@ public class MagazineFragment extends BaseFragment {
 
 			@Override
 			public void onClickPage(final ImageView view, String position) {
-				YzuClient.getInstance()
+				/*YzuClient.getInstance()
 						.getMagazineCover(1,3)//第一页，每页3条
 						.subscribeOn(Schedulers.newThread())//网络请求开新线程
 						.observeOn(AndroidSchedulers.mainThread())//网络响应在UI线程
 						.subscribe(new Consumer<BaseListTemplet<MgzCoverBean>>() {
 							@Override
 							public void accept(BaseListTemplet<MgzCoverBean> mgzCoverBeanBaseMgz) throws Exception {
-//								UiUtil.toast( mgzCoverBeanBaseMgz.print());
 								Log.e(TAG, "accept: "+ mgzCoverBeanBaseMgz.isSucc() );
 
 								Intent inten = new Intent(getActivity(), PrefaceActivity.class);
@@ -79,9 +78,30 @@ public class MagazineFragment extends BaseFragment {
 							public void accept(Throwable throwable) throws Exception {
 								UiUtil.toast( "回调失败:"+throwable.toString());
 							}
+						});*/
+
+
+
+
+				YzuClient.getInstance().getContents(1)
+						.subscribeOn(Schedulers.newThread())
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe(new Consumer<BaseListTemplet<ContentsBean>>() {
+							@Override
+							public void accept(BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet) throws Exception {
+								Intent intent = new Intent(getActivity(), PrefaceActivity.class);
+								Bundle bundle=new Bundle();
+								bundle.putSerializable("contents",contentsBeanListBeanTemplet);
+								intent.putExtras(bundle);
+								ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,"cover");
+								startActivity(intent,options.toBundle());
+							}
+						}, new Consumer<Throwable>() {
+							@Override
+							public void accept(Throwable throwable) throws Exception {
+								UiUtil.toast("网络回调错误："+throwable.toString());
+							}
 						});
-
-
 			}
 
 		});

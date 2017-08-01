@@ -2,20 +2,16 @@ package com.jcs.magazine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.network.YzuClient;
-import com.jcs.magazine.util.UiUtil;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 卷首语
@@ -24,18 +20,34 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PrefaceActivity extends AppCompatActivity {
 	private ImageView imageView;
+	private TextView textView;
 	private String TAG = "jcs_net";
-
+	private BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_preface);
+		initView();
+	}
+
+	private void initView() {
+		contentsBeanListBeanTemplet= (BaseListTemplet<ContentsBean>) getIntent().getSerializableExtra("contents");
+		String contents = decodeContents();
+		textView= (TextView) findViewById(R.id.tv_preface);
 		imageView = (ImageView) findViewById(R.id.iv_cover);
 		imageView.setImageResource(R.drawable.l_content);
-		imageView.setOnClickListener(new View.OnClickListener() {
+		textView.setText(contents);
+		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				YzuClient.getInstance().getContents(1)
+
+				Intent intent = new Intent(PrefaceActivity.this, ArticleActivity.class);
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("contents",contentsBeanListBeanTemplet);
+				intent.putExtras(bundle);
+				startActivity(intent);
+
+				/*YzuClient.getInstance().getContents(1)
 						.subscribeOn(Schedulers.newThread())
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe(new Consumer<BaseListTemplet<ContentsBean>>() {
@@ -52,10 +64,22 @@ public class PrefaceActivity extends AppCompatActivity {
 							public void accept(Throwable throwable) throws Exception {
 								UiUtil.toast("网络回调错误："+throwable.toString());
 							}
-						});
+						});*/
 
 
 			}
 		});
+	}
+
+	@NonNull
+	private String decodeContents() {
+		String contents="";
+		for (ContentsBean contentsBean : contentsBeanListBeanTemplet.getResults().getBody()) {
+			contents+="\n  "+contentsBean.getName();
+			for (ContentsBean.ArticlesBean articlesBean : contentsBean.getArticles()) {
+				contents+="\n  "+articlesBean.getTitle();
+			}
+		}
+		return contents;
 	}
 }
