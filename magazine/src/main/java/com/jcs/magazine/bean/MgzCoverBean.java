@@ -1,11 +1,13 @@
 package com.jcs.magazine.bean;
 
+import java.io.Serializable;
+
 /**
  * 封面bean
  * author：Jics
  * 2017/7/31 13:37
  */
-public class MagazineCoverBean {
+public class MgzCoverBean implements Serializable {
 
 	/**
 	 * vol : 53
@@ -13,10 +15,19 @@ public class MagazineCoverBean {
 	 * subeditor : Jcs
 	 * images : http://xxx.xxx.xxx/xxx
 	 */
+	private int id;
 	private int vol;
 	private String editorship;
 	private String subeditor;
 	private String images;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getVol() {
 		return vol;
@@ -52,8 +63,9 @@ public class MagazineCoverBean {
 
 	@Override
 	public String toString() {
-		return "MagazineCoverBean{" +
-				"vol=" + vol +
+		return "MgzCoverBean{" +
+				"id=" + id +
+				", vol=" + vol +
 				", editorship='" + editorship + '\'' +
 				", subeditor='" + subeditor + '\'' +
 				", images='" + images + '\'' +

@@ -16,8 +16,8 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
-import com.jcs.magazine.bean.MagazineCoverBean;
-import com.jcs.magazine.bean.MgzBean;
+import com.jcs.magazine.bean.BaseListTemplet;
+import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
@@ -61,15 +61,15 @@ public class MagazineFragment extends BaseFragment {
 			@Override
 			public void onClickPage(final ImageView view, String position) {
 				YzuClient.getInstance()
-						.getMagazineCover()
+						.getMagazineCover(1,3)//第一页，每页3条
 						.subscribeOn(Schedulers.newThread())//网络请求开新线程
 						.observeOn(AndroidSchedulers.mainThread())//网络响应在UI线程
-						.subscribe(new Consumer<MgzBean<MagazineCoverBean>>() {
+						.subscribe(new Consumer<BaseListTemplet<MgzCoverBean>>() {
 							@Override
-							public void accept(MgzBean<MagazineCoverBean> magazineCoverBeanMgzBean) throws Exception {
-								UiUtil.toast( magazineCoverBeanMgzBean.toString());
-								Log.e(TAG, "accept: "+ magazineCoverBeanMgzBean.toString() );
-//								Intent inten = new Intent(getActivity(), ArticleActivity.class);
+							public void accept(BaseListTemplet<MgzCoverBean> mgzCoverBeanBaseMgz) throws Exception {
+//								UiUtil.toast( mgzCoverBeanBaseMgz.print());
+								Log.e(TAG, "accept: "+ mgzCoverBeanBaseMgz.isSucc() );
+
 								Intent inten = new Intent(getActivity(), PrefaceActivity.class);
 								ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,"cover");
 								startActivity(inten,options.toBundle());

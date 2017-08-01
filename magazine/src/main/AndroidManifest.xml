@@ -33,6 +33,9 @@
         <activity
             android:name=".activity.PrefaceActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ArticleDetialActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

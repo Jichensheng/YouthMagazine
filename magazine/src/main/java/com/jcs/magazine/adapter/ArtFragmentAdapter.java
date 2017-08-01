@@ -4,15 +4,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.jcs.magazine.fragment.ArticleFragment;
+
 import java.util.List;
 
 /**
  * Fragment适配器
  */
-public class MyFragmentAdapter extends FragmentPagerAdapter {
-	private List<Fragment> list;
+public class ArtFragmentAdapter extends FragmentPagerAdapter {
+	private List<ArticleFragment> list;
 
-	public MyFragmentAdapter(FragmentManager fm, List<Fragment> list) {
+	public ArtFragmentAdapter(FragmentManager fm, List<ArticleFragment> list) {
 		super(fm);
 		this.list = list;
 	}
@@ -33,8 +35,13 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
 		return list.size();
 	}
 
+	/**
+	 * TabLayout里对应的名字
+	 * @param position
+	 * @return
+	 */
 	@Override
 	public CharSequence getPageTitle(int position) {
-		return "风物杂谈" + position;
+		return list.get(position).getName();
 	}
 }

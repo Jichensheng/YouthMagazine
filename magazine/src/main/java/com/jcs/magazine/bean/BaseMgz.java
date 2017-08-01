@@ -1,25 +1,19 @@
 package com.jcs.magazine.bean;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
+ * 所有请求基础模板
+ * 泛型E为results字段的实体
  * author：Jics
  * 2017/7/31 14:20
  */
-public class MgzBean<T> {
-
-	/**
-	 * succ : true
-	 * statusCode : 200
-	 * msg : 回馈信息
-	 * results : {"vol":53,"editorship":"季晨生","subeditor":"Jcs","images":" http: //xxx.xxx.xxx/xxx"}
-	 * time : 1452839930069
-	 */
+public class BaseMgz<E> implements Serializable {
 
 	private boolean succ;
 	private int statusCode;
 	private String msg;
-	private List<T> results;
+	private E results;
 	private long time;
 
 	public boolean isSucc() {
@@ -46,11 +40,11 @@ public class MgzBean<T> {
 		this.msg = msg;
 	}
 
-	public List<T> getResults() {
+	public E getResults() {
 		return results;
 	}
 
-	public void setResults(List<T> results) {
+	public void setResults(E results) {
 		this.results = results;
 	}
 
@@ -64,15 +58,12 @@ public class MgzBean<T> {
 
 	@Override
 	public String toString() {
-		String list="";
-		for (T result : results) {
-			list+=result.toString()+'\n';
-		}
-		return "MgzBean{" +
+
+		return "BaseMgz{" +
 				"succ=" + succ +
 				", statusCode=" + statusCode +
 				", msg='" + msg + '\'' +
-				", results=" + list +
+				", results=" + results.toString() +
 				", time=" + time +
 				'}';
 	}

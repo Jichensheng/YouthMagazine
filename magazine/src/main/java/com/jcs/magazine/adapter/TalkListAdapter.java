@@ -60,9 +60,6 @@ public class TalkListAdapter extends RecyclerView.Adapter {
 
     }
 
-    /**
-     * 杂志封面holder
-     */
     class CDListHolder extends RecyclerView.ViewHolder implements CDView.OnStopListener, CDView.OnPlayListener {
         CDView cdView;
 
@@ -73,7 +70,7 @@ public class TalkListAdapter extends RecyclerView.Adapter {
 
         public CDListHolder(View itemView) {
             super(itemView);
-            tv_like = (TextView) itemView.findViewById(R.id.tv_like);
+            tv_like = (TextView) itemView.findViewById(R.id.tv_praise);
             cdView = (CDView) itemView.findViewById(R.id.cd_music);
             ll_like = (LinearLayout) itemView.findViewById(R.id.ll_like);
             ll_like.setOnClickListener(new View.OnClickListener() {

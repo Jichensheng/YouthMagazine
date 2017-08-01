@@ -2,16 +2,18 @@ package com.jcs.magazine.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jcs.magazine.R;
-import com.jcs.magazine.adapter.MyFragmentAdapter;
+import com.jcs.magazine.adapter.ArtFragmentAdapter;
+import com.jcs.magazine.bean.BaseListTemplet;
+import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.fragment.ArticleFragment;
 
 import java.util.ArrayList;
@@ -21,7 +23,8 @@ public class ArticleActivity extends AppCompatActivity {
 	private Toolbar tb;
 	private TabLayout tlTitle;
 	private ViewPager vp;
-	private List<Fragment> lists;
+	private List<ArticleFragment> lists;
+	private String TAG="ArticleActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,18 @@ public class ArticleActivity extends AppCompatActivity {
 	}
 
 	private void initView() {
-		initViewPager();
+
+		BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet= (BaseListTemplet<ContentsBean>) getIntent().getSerializableExtra("contents");
+		Log.e(TAG, "accept: "+contentsBeanListBeanTemplet.getMsg()
+				+"\n目录列表级别："+contentsBeanListBeanTemplet.getResults().toString()
+				+"\n单个目录下的文章列表级别"+contentsBeanListBeanTemplet.getResults().getBody().get(0).toString()
+				+"\n单个目录下的文章列表下的单篇文章级别"+contentsBeanListBeanTemplet.getResults().getBody().get(0).getArticles().get(0).toString()
+		);
+		//所有目录
+		List<ContentsBean> contents=contentsBeanListBeanTemplet.getResults().getBody();
+
+//		UiUtil.toast(contentsBeanListBeanTemplet.print());
+		initViewPager(contents);
 		initToolbar();
 	}
 
@@ -53,14 +67,14 @@ public class ArticleActivity extends AppCompatActivity {
 
 	}
 
-	private void initViewPager() {
+	private void initViewPager(List<ContentsBean> contents) {
 		vp = (ViewPager) findViewById(R.id.vp);
 		lists = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {
-			lists.add(new ArticleFragment(i));
+		for (ContentsBean content : contents) {
+			lists.add(new ArticleFragment(content));
 		}
-
-		vp.setAdapter(new MyFragmentAdapter(getSupportFragmentManager(), lists));
+		//此处的MyFragmentAdapter内部给lists里的每个页面绑定了tablayout的标题
+		vp.setAdapter(new ArtFragmentAdapter(getSupportFragmentManager(), lists));
 		vp.setCurrentItem(0);
 
 

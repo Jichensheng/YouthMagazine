@@ -12,8 +12,13 @@
 />
     <TextView
         android:id="@+id/tv_preface"
+        android:gravity="center"
         android:background="#eee"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:text="此\n处\n为\n目\n录"
+        android:textColor="#ffa6a6"
+        android:typeface="serif"
+        android:textSize="32sp"
         android:layout_height="0dp"/>
 </LinearLayout>

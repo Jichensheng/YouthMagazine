@@ -3,14 +3,17 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/back"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools"
+
+>
     <TextView
         android:id="@+id/tv_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center"
-        android:text="- ONE STORY -"
+        tools:text="- ONE STORY -"
         android:textColor="#afafaf"
         android:textSize="14sp"
     />
@@ -20,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="白日梦"
+        tools:text="白日梦"
         android:textColor="@android:color/black"
         android:textSize="17sp"
     />
@@ -30,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
-        android:text="文 / 正南七白"
+        tools:text="文 / 正南七白"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
     />
@@ -42,12 +45,12 @@
         android:src="@mipmap/cover"/>
 
     <TextView
-        android:id="@+id/tv_summary"
+        android:id="@+id/tv_excerpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
-        android:text="他语气坦率，当然也有点低落。她觉得这才是\n他真正说话的样子。"
+        tools:text="他语气坦率，当然也有点低落。她觉得这才是\n他真正说话的样子。"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp"
     />
@@ -64,7 +67,7 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1天前"
+            tools:text="1天前"
             android:textColor="#cfcfcf"
             android:textSize="12sp"
         />
@@ -80,7 +83,7 @@
             android:orientation="horizontal"
         >
             <TextView
-                android:id="@+id/tv_like"
+                android:id="@+id/tv_praise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10086"

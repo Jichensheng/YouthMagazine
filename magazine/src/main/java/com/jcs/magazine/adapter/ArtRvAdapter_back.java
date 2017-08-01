@@ -33,7 +33,7 @@ import java.util.Random;
  * 顺序应该是 定义不同的holder ——> 根据特定条件通过getItemViewType设定不同位置显示类型 ——>  通过onCreatViewHolder根据不同的类型生成并返回不同holder实体 ——> 在onBindViewHolder里具体给控件具体赋值
  * 2017/4/5 13:45
  */
-public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ArtRvAdapter_back extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private Map<Integer,Boolean> flags;
 	private List<String> items;
 	private Context context;
@@ -48,7 +48,7 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 			"http://img2.imgtn.bdimg.com/it/u=3251359643,4211266111&fm=21&gp=0.jpg",
 			"http://preview.quanjing.com/ojo001/pe0060887.jpg",
 			"http://img5.imgtn.bdimg.com/it/u=2024625579,507531332&fm=21&gp=0.jpg"};
-	public RvAdapter(Context context, List<String> items) {
+	public ArtRvAdapter_back(Context context, List<String> items) {
 		this.context = context;
 		this.items = items;
 		flags=new HashMap<>();
@@ -110,7 +110,7 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	}
 
 	/**
-	 * 状态holder
+	 * 广场holder
 	 */
 	class MomentHolder extends RecyclerView.ViewHolder {
 		NineGridTestLayout layout;
@@ -136,7 +136,7 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 		public CDHolder(View itemView) {
 			super(itemView);
-			tv_like = (TextView) itemView.findViewById(R.id.tv_like);
+			tv_like = (TextView) itemView.findViewById(R.id.tv_praise);
 			cdView= (CDView) itemView.findViewById(R.id.cd_music);
 			ll_like = (LinearLayout) itemView.findViewById(R.id.ll_like);
 			imv_like = (ImageView) itemView.findViewById(R.id.imv_like);
@@ -177,7 +177,7 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 		public StoryHolder(View itemView) {
 			super(itemView);
-			tv_like = (TextView) itemView.findViewById(R.id.tv_like);
+			tv_like = (TextView) itemView.findViewById(R.id.tv_praise);
 			ll_like = (LinearLayout) itemView.findViewById(R.id.ll_like);
 			imv_like = (ImageView) itemView.findViewById(R.id.imv_like);
 			ll_like.setOnClickListener(new View.OnClickListener() {
