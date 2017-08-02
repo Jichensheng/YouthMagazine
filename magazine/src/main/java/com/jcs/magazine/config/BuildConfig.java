@@ -6,4 +6,6 @@ package com.jcs.magazine.config;
  */
 public class BuildConfig {
 	public static final Boolean DEBUG=true;
+	public static final int COVER_WIDTH=503;
+	public static final int COVER_Height=593;
 }

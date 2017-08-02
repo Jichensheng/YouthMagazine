@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.jcs.rtext.custom.AnimDrawableAlertDialog;
+import com.jcs.rtext.custom.VirticleContentsView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,21 @@ private Button btn;
         setContentView(R.layout.activity_main);
         btn= (Button) findViewById(R.id.btn_jcs);
 
+        VirticleContentsView vt_chapter= (VirticleContentsView) findViewById(R.id.vt_chapter);
+        vt_chapter.setChapter("风物杂谈");
+        vt_chapter.setTitles(new String[]{"幸得光影，更有你","女之耽兮","生命华实"});
+
+
+//        showDialog();
+
+
+        showShareElement();
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void showShareElement() {
         final List<ItemBean> list = new ArrayList<>();
 
         ItemBean itemBean1 = new ItemBean(R.drawable.bj, "拜见女皇陛下", "小学生于1996年开始的战斗。");
@@ -90,7 +108,7 @@ private Button btn;
 
 
         final ImageView imageView= (ImageView) MainActivity.this.findViewById(R.id.iv_jcs_start);
-                imageView.setTransitionName("jcs");
+        imageView.setTransitionName("jcs");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +118,11 @@ private Button btn;
                 startActivity(new Intent(MainActivity.this, OtherActivity.class), options.toBundle());
             }
         });
+    }
 
-
+    private void showDialog() {
+        AnimDrawableAlertDialog progressDrawableAlertDialog;
+        progressDrawableAlertDialog=new AnimDrawableAlertDialog(this);
+        progressDrawableAlertDialog.show();
     }
 }

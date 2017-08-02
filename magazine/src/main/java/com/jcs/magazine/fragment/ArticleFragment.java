@@ -70,6 +70,8 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 
 	@Override
 	public void onItemClick(View view, final int position) {
+		//TODO 文章ID
+		int articleID=list.get(position).getId();
 		YzuClient.getInstance().getArticle("5311")
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
@@ -78,6 +80,8 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
 						Intent intent=new Intent(getContext(), ArticleDetialActivity.class);
 						intent.putExtra("id",position+"\n"+articleBean.getResults().getContent());
+						intent.putExtra("title",list.get(position).getTitle());
+						intent.putExtra("author",list.get(position).getAuthor());
 						startActivity(intent);
 					}
 				}, new Consumer<Throwable>() {

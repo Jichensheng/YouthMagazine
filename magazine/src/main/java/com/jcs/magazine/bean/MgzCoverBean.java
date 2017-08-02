@@ -71,4 +71,13 @@ public class MgzCoverBean implements Serializable {
 				", images='" + images + '\'' +
 				'}';
 	}
+	public static MgzCoverBean getDefaultBean(){
+		MgzCoverBean mgzCoverBean=new MgzCoverBean();
+			mgzCoverBean.setEditorship("季晨生");
+			mgzCoverBean.setId(-1);
+			mgzCoverBean.setSubeditor("Jcs");
+			mgzCoverBean.setImages("---");
+			mgzCoverBean.setVol(0);
+		return mgzCoverBean;
+	}
 }

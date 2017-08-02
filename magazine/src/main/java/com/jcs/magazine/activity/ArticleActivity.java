@@ -45,7 +45,8 @@ public class ArticleActivity extends AppCompatActivity {
 		List<ContentsBean> contents=contentsBeanListBeanTemplet.getResults().getBody();
 
 //		UiUtil.toast(contentsBeanListBeanTemplet.print());
-		initViewPager(contents);
+		String position=getIntent().getStringExtra("position");
+		initViewPager(contents,position);
 		initToolbar();
 	}
 
@@ -67,7 +68,7 @@ public class ArticleActivity extends AppCompatActivity {
 
 	}
 
-	private void initViewPager(List<ContentsBean> contents) {
+	private void initViewPager(List<ContentsBean> contents, String position) {
 		vp = (ViewPager) findViewById(R.id.vp);
 		lists = new ArrayList<>();
 		for (ContentsBean content : contents) {
@@ -75,8 +76,7 @@ public class ArticleActivity extends AppCompatActivity {
 		}
 		//此处的MyFragmentAdapter内部给lists里的每个页面绑定了tablayout的标题
 		vp.setAdapter(new ArtFragmentAdapter(getSupportFragmentManager(), lists));
-		vp.setCurrentItem(0);
-
+		vp.setCurrentItem(Integer.parseInt(position));
 
 	}
 
@@ -96,4 +96,5 @@ public class ArticleActivity extends AppCompatActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 }

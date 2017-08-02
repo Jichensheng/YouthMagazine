@@ -3,7 +3,7 @@
     <color name="tab_text_normal">#696969</color>
     <color name="tab_text_selected">#696969</color>
 
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#aeaeae</color>
     <color name="colorPrimaryDark">#353535</color>
     <color name="colorAccent">#FF4081</color>
     <color name="rose_red">#fa6c6c</color>

@@ -38,6 +38,7 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setAdapter(adapter);
 		mIndicator.setViewPager(mViewPager);
 
+
 	}
 
 	private List<BaseFragment> initFragments() {
