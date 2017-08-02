@@ -6,6 +6,8 @@ import android.support.v4.view.ViewPager;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseFragment;
+import com.jcs.magazine.bean.BaseListTemplet;
+import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MomentFragment;
 import com.jcs.magazine.fragment.TalkFragment;
@@ -31,6 +33,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initViews() {
+
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mIndicator = (IconTabPageIndicator) findViewById(R.id.indicator);
 		List<BaseFragment> fragments = initFragments();
@@ -45,6 +48,11 @@ public class MainActivity extends FragmentActivity {
 		List<BaseFragment> fragments = new ArrayList<>();
 
 		MagazineFragment magazineFragment = new MagazineFragment();
+
+/*        Bundle bundle = new Bundle();
+        bundle.putSerializable("arg", getIntent().getSerializableExtra("covers"));
+        magazineFragment.setArguments(bundle);*/
+
 		magazineFragment.setTitle("期刊");
 		magazineFragment.setIconId(R.drawable.tab_record_selector);
 		fragments.add(magazineFragment);

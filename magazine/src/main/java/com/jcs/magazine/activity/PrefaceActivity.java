@@ -15,6 +15,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.PrefaceRvAdapter;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
+import com.jcs.magazine.config.BuildConfig;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -49,6 +50,8 @@ public class PrefaceActivity extends AppCompatActivity implements PrefaceRvAdapt
 		Picasso.with(this)
 				.load(getIntent().getStringExtra("img"))
 				.noFade()
+                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_Height)
+                .centerCrop()
 				.placeholder(R.drawable.l_content)
 				.error(R.drawable.l_content)
 				.into(imageView);
