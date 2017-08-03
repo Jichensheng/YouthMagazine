@@ -2,7 +2,6 @@ package com.jcs.magazine.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
+import com.jcs.magazine.base.BaseActivity;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * author：Jics
  * 2017/4/11 14:31
  */
-public class MomentActivity extends AppCompatActivity {
+public class MomentActivity extends BaseActivity {
 	private RecyclerView recyclerView;
 	private List<String> urls;
 	private Toolbar toolbar;

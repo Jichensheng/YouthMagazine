@@ -3,11 +3,11 @@ package com.jcs.magazine.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.CommentPicAdapter;
+import com.jcs.magazine.base.BaseActivity;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * author：Jics
  * 2017/4/10 16:24
  */
-public class CommentPicActivity extends AppCompatActivity {
+public class CommentPicActivity extends BaseActivity {
 	private ViewPager viewPager;
 	private List<String> mUrls;
 	private int index;

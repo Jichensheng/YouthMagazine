@@ -1,13 +1,11 @@
 package com.jcs.magazine.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
 import com.jcs.magazine.R;
+import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.base.BaseFragment;
-import com.jcs.magazine.bean.BaseListTemplet;
-import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MomentFragment;
 import com.jcs.magazine.fragment.TalkFragment;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
 
 	private ViewPager mViewPager;
 	private IconTabPageIndicator mIndicator;

@@ -11,9 +11,12 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.ContentsBean;
+import com.jcs.magazine.config.BuildConfig;
+import com.jcs.magazine.mock.MockConfig;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * author：Jics
@@ -28,25 +31,10 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	private OnArtItemClickListener onArtItemClickListener;
 	private List<ContentsBean.ArticlesBean> items;
 	private Context context;
-	private List<String> urls;
-	private String[] mUrls = new String[]{
-			"http://img4.imgtn.bdimg.com/it/u=3445377427,2645691367&fm=21&gp=0.jpg",
-			"http://img4.imgtn.bdimg.com/it/u=2644422079,4250545639&fm=21&gp=0.jpg",
-			"http://img5.imgtn.bdimg.com/it/u=1444023808,3753293381&fm=21&gp=0.jpg",
-			"http://img4.imgtn.bdimg.com/it/u=882039601,2636712663&fm=21&gp=0.jpg",
-			"http://img4.imgtn.bdimg.com/it/u=4119861953,350096499&fm=21&gp=0.jpg",
-			"http://img5.imgtn.bdimg.com/it/u=1717647885,4193212272&fm=21&gp=0.jpg",
-			"http://img2.imgtn.bdimg.com/it/u=3251359643,4211266111&fm=21&gp=0.jpg",
-			"http://preview.quanjing.com/ojo001/pe0060887.jpg",
-			"http://img5.imgtn.bdimg.com/it/u=2024625579,507531332&fm=21&gp=0.jpg"};
 
 	public ArtRvAdapter(Context context, List<ContentsBean.ArticlesBean> items) {
 		this.context = context;
 		this.items = items;
-		urls = new ArrayList<>();
-		for (String mUrl : mUrls) {
-			urls.add(mUrl);
-		}
 	}
 
 	@Override
@@ -67,6 +55,15 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 					onArtItemClickListener.onItemClick(v, position);
 				}
 			});
+			Picasso.with(context)
+//					.load(items.get(position).getImage())
+					.load(MockConfig.URLS[new Random().nextInt(MockConfig.URLS.length)])
+					.noFade()
+					.placeholder(R.mipmap.cover)
+					.error(R.mipmap.cover)
+					.resize(BuildConfig.COVER_WIDTH_ARTICLE,BuildConfig.COVER_HEIGHT_ARTICLE)
+					.centerCrop()
+					.into(((StoryHolder) holder).imv_cover);
 		}
 	}
 
@@ -80,9 +77,9 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 	 */
 	class StoryHolder extends RecyclerView.ViewHolder {
 		LinearLayout ll_content;
-		//封面图
 		TextView tv_title;
 		TextView tv_athor;
+		//封面图
 		ImageView imv_cover;
 		TextView tv_excerpt;
 

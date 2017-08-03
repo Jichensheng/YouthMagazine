@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcs.magazine.R;
+import com.jcs.magazine.mock.MockConfig;
 import com.jcs.magazine.util.CircleTransform;
 import com.jcs.magazine.widget.CDView;
 import com.squareup.picasso.Picasso;
@@ -22,16 +23,6 @@ import java.util.Random;
 
 public class TalkListAdapter extends RecyclerView.Adapter {
     private Context context;
-    private String[] mUrls = new String[]{
-            "http://img4.imgtn.bdimg.com/it/u=3445377427,2645691367&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=2644422079,4250545639&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=1444023808,3753293381&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=882039601,2636712663&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=4119861953,350096499&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=1717647885,4193212272&fm=21&gp=0.jpg",
-            "http://img2.imgtn.bdimg.com/it/u=3251359643,4211266111&fm=21&gp=0.jpg",
-            "http://preview.quanjing.com/ojo001/pe0060887.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=2024625579,507531332&fm=21&gp=0.jpg"};
 
     public TalkListAdapter(Context context) {
         this.context = context;
@@ -47,7 +38,7 @@ public class TalkListAdapter extends RecyclerView.Adapter {
         if (holder instanceof CDListHolder) {
             CDView cdView = ((CDListHolder) holder).cdView;
             Picasso.with(context)
-                    .load(mUrls[new Random().nextInt(mUrls.length)])
+                    .load(MockConfig.URLS[new Random().nextInt(MockConfig.URLS.length)])
                     .transform(new CircleTransform())
                     .error(R.drawable.banner_default_circle)
                     .placeholder(R.drawable.banner_default_circle)

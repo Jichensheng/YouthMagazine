@@ -11,16 +11,7 @@
                   android:id="@+id/ll_content"
                   android:orientation="vertical"
                   android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            tools:text="- ONE STORY -"
-            android:textColor="#afafaf"
-            android:textSize="14sp"
-        />
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -43,10 +34,10 @@
         />
         <ImageView
             android:id="@+id/imv_cover"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/cover"/>
+            android:layout_height="180dp"/>
 
         <TextView
             android:id="@+id/tv_excerpt"

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.PrefaceRvAdapter;
+import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.config.BuildConfig;
@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
  * author：Jics
  * 2017/7/31 19:36
  */
-public class PrefaceActivity extends AppCompatActivity implements PrefaceRvAdapter.OnPreItemClickListener{
+public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.OnPreItemClickListener{
 	private ImageView imageView;
 	private RecyclerView rv_preface;
 	private BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet;
@@ -50,7 +50,7 @@ public class PrefaceActivity extends AppCompatActivity implements PrefaceRvAdapt
 		Picasso.with(this)
 				.load(getIntent().getStringExtra("img"))
 				.noFade()
-                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_Height)
+                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
                 .centerCrop()
 				.placeholder(R.drawable.l_content)
 				.error(R.drawable.l_content)

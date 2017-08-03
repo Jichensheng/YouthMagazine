@@ -5,4 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="sdcard_removed">存储卡已移除</string>
+    <string name="sdcard_checking">正在检测存储卡，请稍候再试</string>
+    <string name="sdcard_unmounted">存储卡未挂载</string>
+    <string name="partial_delete_failure">部分文件删除失败</string>
 </resources>

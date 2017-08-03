@@ -29,7 +29,7 @@ public class VirticleContentsView extends View {
 	private int titleRectSize;
 	//文字内容
 	private String chapter = "你好呀";
-	private String[] titles=new String[0];
+	private String[] titles = new String[0];
 	//间距问题
 	private int paddingChapter = 6;
 	private int paddingTitle = 6;
@@ -128,7 +128,7 @@ public class VirticleContentsView extends View {
 		drawChapter(canvas);
 		//drawTitile
 		//画布平移一个章节的宽度
-		canvas.translate(chapterRectSize + paddingChapter * 3, (float) paddingChapter / 5);
+		canvas.translate(chapterRectSize + paddingChapter * 3, -paddingChapter*3);
 		mPaint.setTextSize(titleFontSizePx);
 		mPaint.setTypeface(Typeface.DEFAULT);
 		for (int i = 0; i < titles.length; i++) {
@@ -136,12 +136,17 @@ public class VirticleContentsView extends View {
 			String[] titleSingle = string2strings(title);
 			int out = canvas.save();
 			//列级平移
-			canvas.translate(i * (titleRectSize + paddingTitle), 0);
-			for (int j = 0; j < titleSingle.length; j++) {
+			canvas.translate(i * (titleRectSize + paddingTitle*1.5f), 0);
+			for (int j = 0; j <= titleSingle.length; j++) {
 				int inside = canvas.save();
 				//行级平移
 				canvas.translate(0, j * (titleRectSize + paddingTitle));
-				drawCenterText(canvas, mPaint, titleSingle[j], titleFontSizePx, paddingTitle);
+				if (j == 0) {
+					mPaint.setColor(Color.parseColor("#b3b3b3"));
+					drawCenterText(canvas, mPaint, "﹨", titleFontSizePx, paddingTitle);
+					mPaint.setColor(Color.BLACK);
+				} else
+					drawCenterText(canvas, mPaint, titleSingle[j - 1], titleFontSizePx, paddingTitle);
 				canvas.restoreToCount(inside);
 			}
 			canvas.restoreToCount(out);
@@ -165,7 +170,7 @@ public class VirticleContentsView extends View {
 			drawCenterText(canvas, mPaint, chapters[i], chapterFontSizePx, paddingChapter);
 			if (i == chapters.length - 1 && titles.length != 0) {
 				//保证每一条数线的结束点一样
-				int height = ((chapterRectSize + paddingChapter) * 3 * 4) + chapterFontSize;
+				int height = ((chapterRectSize + paddingChapter) * 3 * 3) + chapterFontSize;
 				mPaint.setStrokeWidth(2);
 				mPaint.setStyle(Paint.Style.STROKE);
 				canvas.drawLine(chapterRectSize / 2 + paddingChapter, chapterFontSizePx * 2, chapterRectSize / 2 + paddingChapter, height, mPaint);
@@ -199,7 +204,7 @@ public class VirticleContentsView extends View {
 		if (string != null) {
 			strings = new String[string.length()];
 			for (int i = 0; i < string.length(); i++) {
-				char temp = string.charAt(i)=='—'?'|':(string.charAt(i)=='《'||string.charAt(i)=='<'?'﹁':(string.charAt(i)=='》'||string.charAt(i)=='>'?'﹂':string.charAt(i)));
+				char temp = string.charAt(i) == '—' ? '|' : (string.charAt(i) == '《' || string.charAt(i) == '<' ? '﹁' : (string.charAt(i) == '》' || string.charAt(i) == '>' ? '﹂' : string.charAt(i)));
 				strings[i] = String.valueOf(temp);
 			}
 			return strings;

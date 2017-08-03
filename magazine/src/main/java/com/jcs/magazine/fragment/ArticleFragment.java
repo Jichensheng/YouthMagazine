@@ -79,7 +79,7 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
 						Intent intent=new Intent(getContext(), ArticleDetialActivity.class);
-						intent.putExtra("id",position+"\n"+articleBean.getResults().getContent());
+						intent.putExtra("content",articleBean.getResults().getContent());
 						intent.putExtra("title",list.get(position).getTitle());
 						intent.putExtra("author",list.get(position).getAuthor());
 						startActivity(intent);

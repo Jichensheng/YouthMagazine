@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.ArtFragmentAdapter;
+import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.fragment.ArticleFragment;
@@ -19,7 +19,7 @@ import com.jcs.magazine.fragment.ArticleFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity {
+public class ArticleActivity extends BaseActivity {
 	private Toolbar tb;
 	private TabLayout tlTitle;
 	private ViewPager vp;
@@ -44,7 +44,6 @@ public class ArticleActivity extends AppCompatActivity {
 		//所有目录
 		List<ContentsBean> contents=contentsBeanListBeanTemplet.getResults().getBody();
 
-//		UiUtil.toast(contentsBeanListBeanTemplet.print());
 		String position=getIntent().getStringExtra("position");
 		initViewPager(contents,position);
 		initToolbar();
@@ -84,6 +83,11 @@ public class ArticleActivity extends AppCompatActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
+		menu.add(1, 100, 1, "菜单一");//动态添加一个按钮；
+		menu.add(1, 101, 1, "菜单二");//注意：第二个参数是Item的ID值；
+		menu.add(1, 102, 1, "菜单三");
+		menu.add(1, 103, 1, "菜单四");
+		menu.add(1, 104, 1, "菜单五");
 		return true;
 	}
 

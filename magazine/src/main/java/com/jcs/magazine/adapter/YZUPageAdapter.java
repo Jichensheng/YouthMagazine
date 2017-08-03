@@ -51,10 +51,10 @@ public class YZUPageAdapter extends PagerAdapter {
         Picasso.with(context)
                 .load(coverBeens.get(position).getImages())
                 .noFade()
-                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_Height)
-                .centerCrop()
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
+                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+                .centerCrop()
                 .into(imv);
 
 //		imv.setImageResource(imgRes[position]);
