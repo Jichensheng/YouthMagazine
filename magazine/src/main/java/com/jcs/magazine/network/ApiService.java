@@ -40,4 +40,6 @@ public interface ApiService {
 	@GET("magazine/article/{articleId}")
 	Observable<BaseMgz<ArticleBean>> getArticle(@Path("articleId") String id);
 
+
+
 }

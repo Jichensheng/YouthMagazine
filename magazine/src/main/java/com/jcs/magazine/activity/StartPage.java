@@ -38,7 +38,7 @@ public class StartPage extends BaseActivity {
 		// 不显示系统的标题栏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
-
+		checkPermission();
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
 		animator.setDuration(2000);
 		animator.addListener(new Animator.AnimatorListener() {

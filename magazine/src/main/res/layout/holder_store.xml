@@ -34,8 +34,8 @@
         />
         <ImageView
             android:id="@+id/imv_cover"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="180dp"/>
 
