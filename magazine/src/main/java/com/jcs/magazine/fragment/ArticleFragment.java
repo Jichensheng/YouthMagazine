@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 
 import java.util.ArrayList;
@@ -70,6 +72,7 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 
 	@Override
 	public void onItemClick(View view, final int position) {
+        final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
 		int articleID=list.get(position).getId();
 		YzuClient.getInstance().getArticle("5311")
@@ -78,6 +81,7 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
+                        loading.dismiss();
 						Intent intent=new Intent(getContext(), ArticleDetialActivity.class);
 						intent.putExtra("content",articleBean.getResults().getContent());
 						intent.putExtra("title",list.get(position).getTitle());
@@ -87,6 +91,7 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 				}, new Consumer<Throwable>() {
 					@Override
 					public void accept(Throwable throwable) throws Exception {
+                        loading.dismiss();
 						UiUtil.toast( "回调失败:"+throwable.toString());
 					}
 				});

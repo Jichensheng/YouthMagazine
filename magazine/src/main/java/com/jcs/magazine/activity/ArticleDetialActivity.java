@@ -2,6 +2,7 @@ package com.jcs.magazine.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.HtmlUtil;
 
 import static com.jcs.magazine.R.id.webView;
@@ -33,11 +35,13 @@ public class ArticleDetialActivity extends BaseActivity {
 		tv_author.setText("文 / "+autore);
 
 		mWebView = (WebView) findViewById(webView);
+        final AlertDialog loading = new DialogHelper(ArticleDetialActivity.this).show(R.layout.loading);
 		mWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
 				//Todo 加载结束
+                loading.dismiss();
 			}
 		});
 		WebSettings settings = mWebView.getSettings();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,12 +14,14 @@ import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
+import com.jcs.magazine.activity.StartPage;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -40,6 +44,7 @@ public class MagazineFragment extends BaseFragment {
     private YZUPageAdapter mAdapter;
     private List<MgzCoverBean> coverBeens;
     private BaseListTemplet<MgzCoverBean> mgzCoverBeanBaseMgz;
+    private boolean isFirstClick=true;
 
 
     @Override
@@ -62,35 +67,42 @@ public class MagazineFragment extends BaseFragment {
                 return mViewPager.dispatchTouchEvent(event);
             }
         });
-//        coverBeens.add(MgzCoverBean.getDefaultBean());
         mAdapter = new YZUPageAdapter(view.getContext(), coverBeens);
         mAdapter.setOnClickPageListener(new YZUPageAdapter.OnClickPageListener() {
 
             @Override
             public void onClickPage(final ImageView view, final int position) {
+                if (isFirstClick) {//防止多次点击
+                    isFirstClick=false;
+                    final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
+                    //目录id
+                    int contentsId = coverBeens.get(position).getId();
+                    YzuClient.getInstance().getContents(contentsId)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<BaseListTemplet<ContentsBean>>() {
+                                @Override
+                                public void accept(BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet) throws Exception {
+                                    loading.dismiss();
+                                    isFirstClick=true;
+                                    Intent intent = new Intent(getActivity(), PrefaceActivity.class);
+                                    intent.putExtra("img", coverBeens.get(position).getImages());
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("contents", contentsBeanListBeanTemplet);
+                                    intent.putExtras(bundle);
+                                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover");
+                                    startActivity(intent, options.toBundle());
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    isFirstClick=true;
+                                    loading.dismiss();
+                                    UiUtil.toast("网络回调错误：" + throwable.toString());
+                                }
+                            });
+                }
 
-                //目录id
-                int contentsId = coverBeens.get(position).getId();
-                YzuClient.getInstance().getContents(contentsId)
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<BaseListTemplet<ContentsBean>>() {
-                            @Override
-                            public void accept(BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet) throws Exception {
-                                Intent intent = new Intent(getActivity(), PrefaceActivity.class);
-                                intent.putExtra("img", coverBeens.get(position).getImages());
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("contents", contentsBeanListBeanTemplet);
-                                intent.putExtras(bundle);
-                                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover");
-                                startActivity(intent, options.toBundle());
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                UiUtil.toast("网络回调错误：" + throwable.toString());
-                            }
-                        });
             }
 
         });
