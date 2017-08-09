@@ -1,11 +1,13 @@
 package com.jcs.magazine.fragment;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
+import com.jcs.magazine.activity.StartPage;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
@@ -21,6 +24,7 @@ import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DialogHelper;
+import com.jcs.magazine.util.NetworkUtil;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
@@ -95,7 +99,23 @@ public class MagazineFragment extends BaseFragment {
                                 public void accept(Throwable throwable) throws Exception {
                                     isFirstClick=true;
                                     loading.dismiss();
-                                    UiUtil.toast("网络回调错误：" + throwable.toString());
+                                    if (NetworkUtil.isConnectingToInternet(getContext())) {//服务器原因
+                                        new DialogHelper(getContext()).show(new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        },"连接失败", "服务器维护中，请稍后重试");
+                                    }else{//网络原因
+                                        new DialogHelper(getContext()).show(new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        },"连接失败","请检查网络是否连接");
+
+                                    }
+                                    Log.e(TAG, "accept: "+throwable.toString() );
                                 }
                             });
                 }
