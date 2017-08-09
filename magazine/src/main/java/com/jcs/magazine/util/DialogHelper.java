@@ -83,4 +83,13 @@ public class DialogHelper {
         return show(listenerOk, true, 0, 0, title, content,true);
     }
 
+    /**
+     * 最简单的提示框
+     * @param title
+     * @param content
+     * @return
+     */
+    public AlertDialog show(String title, String content){
+        return show(null,true,0,0,title,content,false);
+    }
 }

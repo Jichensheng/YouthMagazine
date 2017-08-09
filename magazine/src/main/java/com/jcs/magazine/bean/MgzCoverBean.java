@@ -13,13 +13,13 @@ public class MgzCoverBean implements Serializable {
 	 * vol : 53
 	 * editorship : 季晨生
 	 * subeditor : Jcs
-	 * images : http://xxx.xxx.xxx/xxx
+	 * image : http://xxx.xxx.xxx/xxx
 	 */
 	private int id;
 	private int vol;
 	private String editorship;
 	private String subeditor;
-	private String images;
+	private String image;
 
 	public int getId() {
 		return id;
@@ -53,12 +53,12 @@ public class MgzCoverBean implements Serializable {
 		this.subeditor = subeditor;
 	}
 
-	public String getImages() {
-		return images;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImages(String images) {
-		this.images = images;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class MgzCoverBean implements Serializable {
 				", vol=" + vol +
 				", editorship='" + editorship + '\'' +
 				", subeditor='" + subeditor + '\'' +
-				", images='" + images + '\'' +
+				", image='" + image + '\'' +
 				'}';
 	}
 	public static MgzCoverBean getDefaultBean(){
@@ -76,7 +76,7 @@ public class MgzCoverBean implements Serializable {
 			mgzCoverBean.setEditorship("季晨生");
 			mgzCoverBean.setId(-1);
 			mgzCoverBean.setSubeditor("Jcs");
-			mgzCoverBean.setImages("---");
+			mgzCoverBean.setImage("---");
 			mgzCoverBean.setVol(0);
 		return mgzCoverBean;
 	}

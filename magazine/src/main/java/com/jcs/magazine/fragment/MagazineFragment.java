@@ -14,7 +14,6 @@ import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
-import com.jcs.magazine.activity.StartPage;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
@@ -25,11 +24,9 @@ import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -86,7 +83,7 @@ public class MagazineFragment extends BaseFragment {
                                     loading.dismiss();
                                     isFirstClick=true;
                                     Intent intent = new Intent(getActivity(), PrefaceActivity.class);
-                                    intent.putExtra("img", coverBeens.get(position).getImages());
+                                    intent.putExtra("img", coverBeens.get(position).getImage());
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable("contents", contentsBeanListBeanTemplet);
                                     intent.putExtras(bundle);

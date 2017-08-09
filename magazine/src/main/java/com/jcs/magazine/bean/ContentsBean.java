@@ -11,21 +11,21 @@ import java.util.List;
 public class ContentsBean implements Serializable {
 
 	/**
-	 * id : 01
+	 * contentsId : 01
 	 * name : 扬城小韵
-	 * articles : [{"title":"白日梦","id":530101,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","id":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","id":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","id":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999}]
+	 * articles : [{"title":"白日梦","contentsId":530101,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","contentsId":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","contentsId":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999},{"title":"白日梦","contentsId":530102,"author":"正南七白","image":"http: //xxx.xxx.xxx/xxx","excerpt":"他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。","praise":999}]
 	 */
 
-	private String id;
+	private String contentsId;
 	private String name;
 	private List<ArticlesBean> articles;
 
-	public String getId() {
-		return id;
+	public String getContentsId() {
+		return contentsId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setContentsId(String contentsId) {
+		this.contentsId = contentsId;
 	}
 
 	public String getName() {
@@ -47,7 +47,7 @@ public class ContentsBean implements Serializable {
 	public class ArticlesBean  implements Serializable {
 		/**
 		 * title : 白日梦
-		 * id : 530101
+		 * contentsId : 530101
 		 * author : 正南七白
 		 * image : http: //xxx.xxx.xxx/xxx
 		 * excerpt : 他语气坦荡，当然也有点低落。她觉得这才是他真正说话的样子。
@@ -55,7 +55,7 @@ public class ContentsBean implements Serializable {
 		 */
 
 		private String title;
-		private int id;
+		private int articleId;
 		private String author;
 		private String image;
 		private String excerpt;
@@ -69,12 +69,12 @@ public class ContentsBean implements Serializable {
 			this.title = title;
 		}
 
-		public int getId() {
-			return id;
+		public int getArticleId() {
+			return articleId;
 		}
 
-		public void setId(int id) {
-			this.id = id;
+		public void setArticleId(int articleId) {
+			this.articleId = articleId;
 		}
 
 		public String getAuthor() {
@@ -113,7 +113,7 @@ public class ContentsBean implements Serializable {
 		public String toString() {
 			return "ArticlesBean{" +
 					"title='" + title + '\'' +
-					", id=" + id +
+					", contentsId=" + articleId +
 					", author='" + author + '\'' +
 					", image='" + image + '\'' +
 					", excerpt='" + excerpt + '\'' +
@@ -125,7 +125,7 @@ public class ContentsBean implements Serializable {
 	@Override
 	public String toString() {
 		return "ContentsBean{" +
-				"id='" + id + '\'' +
+				"contentsId='" + contentsId + '\'' +
 				", name='" + name + '\'' +
 				", articles=" + articles.toString() +
 				'}';

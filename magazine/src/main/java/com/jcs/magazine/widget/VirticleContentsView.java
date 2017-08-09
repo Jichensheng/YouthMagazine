@@ -143,7 +143,7 @@ public class VirticleContentsView extends View {
 				canvas.translate(0, j * (titleRectSize + paddingTitle));
 				if (j == 0) {
 					mPaint.setColor(Color.parseColor("#b3b3b3"));
-					drawCenterText(canvas, mPaint, "﹨", titleFontSizePx, paddingTitle);
+					drawCenterText(canvas, mPaint, " ", titleFontSizePx, paddingTitle);
 					mPaint.setColor(Color.BLACK);
 				} else
 					drawCenterText(canvas, mPaint, titleSingle[j - 1], titleFontSizePx, paddingTitle);

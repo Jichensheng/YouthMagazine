@@ -49,7 +49,7 @@ public class YZUPageAdapter extends PagerAdapter {
         tv_vol.setText("Vol." + coverBeens.get(position).getVol());
         tv_sub_editor.setText("副主编：" + coverBeens.get(position).getSubeditor());
         Picasso.with(context)
-                .load(coverBeens.get(position).getImages())
+                .load(coverBeens.get(position).getImage())
                 .noFade()
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)

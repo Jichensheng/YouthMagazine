@@ -9,22 +9,22 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="MainActivity">
 <com.jcs.rtext.custom.VirticleContentsView
-    android:id="@+id/vt_chapter"
+    android:contentsId="@+contentsId/vt_chapter"
     android:background="#f79494"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_below="@+id/vt_chapter"
+        android:contentsId="@+contentsId/recyclerview"
+        android:layout_below="@+contentsId/vt_chapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btn_jcs" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_below="@+id/recyclerview"
+    <Button android:contentsId="@+contentsId/btn_jcs" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_below="@+contentsId/recyclerview"
             android:text="Jcs"/>
-    <ImageView android:id="@+id/iv_jcs_start"
+    <ImageView android:contentsId="@+contentsId/iv_jcs_start"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_below="@id/btn_jcs"
+               android:layout_below="@contentsId/btn_jcs"
                android:src="@drawable/bj"
                />
     <!--android:transitionName="jcs"-->

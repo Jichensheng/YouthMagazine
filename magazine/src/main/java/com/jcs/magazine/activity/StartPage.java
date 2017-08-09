@@ -5,38 +5,25 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.LayoutInflaterCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
-import com.jcs.magazine.base.BaseApplication;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DialogHelper;
+import com.jcs.magazine.util.NetworkUtil;
 import com.jcs.magazine.util.UiUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -81,7 +68,25 @@ public class StartPage extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                UiUtil.toast("回调失败:" + throwable.toString());
+                                if (NetworkUtil.isConnectingToInternet(StartPage.this)) {//服务器原因
+                                    new DialogHelper(StartPage.this).show(new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    },"连接失败", "服务器维护中，请稍后重试");
+                                }else{//网络原因
+                                    new DialogHelper(StartPage.this).show(new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    },"连接失败","请检查网络是否连接");
+
+                                }
+                                Log.e(TAG, "accept: "+throwable.toString() );
                             }
                         });
             }
@@ -100,6 +105,9 @@ public class StartPage extends BaseActivity {
 
     }
 
+    /**
+     * 权限检测
+     */
     private void requestPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
