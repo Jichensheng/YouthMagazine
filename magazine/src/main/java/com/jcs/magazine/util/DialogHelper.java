@@ -80,7 +80,7 @@ public class DialogHelper {
      */
     public AlertDialog show(DialogInterface.OnClickListener listenerOk
             , String title, String content) {
-        return show(listenerOk, true, 0, 0, title, content,true);
+        return show(listenerOk, false, 0, 0, title, content,false);
     }
 
     /**
@@ -90,6 +90,6 @@ public class DialogHelper {
      * @return
      */
     public AlertDialog show(String title, String content){
-        return show(null,true,0,0,title,content,false);
+        return show(null,false,0,0,title,content,false);
     }
 }
