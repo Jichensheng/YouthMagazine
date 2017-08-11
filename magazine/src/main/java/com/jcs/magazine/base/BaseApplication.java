@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
+import com.jcs.magazine.mock.MockConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -23,7 +24,10 @@ public class BaseApplication extends Application {
 		initCrash();
 		initImageLoader();
         initApplication();
+		MockConfig.printPathLog(this);
 	}
+
+
 	public static BaseApplication getInstance(){
 		return instance;
 	}

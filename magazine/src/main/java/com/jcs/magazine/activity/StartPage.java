@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class StartPage extends BaseActivity {
-    final private String TAG="生命周期";
+    final private String TAG="StartPage";
     private ValueAnimator animator;
 
     @Override

@@ -226,22 +226,7 @@ public class FileUtil {
     // (availableBlocks * blockSize)/1024 /1024 MB单位
   }
 
-  /**
-   * 返回缓存路径，有SD卡 返回的是/mnt/sdcard/Android/data/...包名/cache 没有SD卡
-   * 返回的是data/data/...包名/cache
-   *
-   * @return
-   */
-  public static File getAndroidCacheFile() {
-    File result = null;
 
-    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// SD卡已经挂载
-      result = BaseApplication.getInstance().getExternalCacheDir();
-    } else {
-      result = BaseApplication.getInstance().getCacheDir();
-    }
-    return result;
-  }
 
   /**
    * 获取图片缓存路径 有SDcard放在/mnt/sdcard/Android目录下
@@ -253,7 +238,7 @@ public class FileUtil {
   public static File getImageCacheFile() {
 
     File result = new File(
-            getCacheRootFile().getAbsoluteFile() + "/" + BuildConfig.APP_CACHE_DIR + "/" + BuildConfig.IMAGE_CACHE_DIR);
+            getProjectRootFile().getAbsoluteFile() + "/" + BuildConfig.APP_CACHE_DIR + "/" + BuildConfig.IMAGE_CACHE_DIR);
     if (!result.exists())
       result.mkdirs();
 
@@ -261,11 +246,12 @@ public class FileUtil {
   }
 
   /**
-   * 获取项目缓存总目录
+   * 获取Android文件夹下项目包名文件夹下的files目录
    *
-   * @return
+   * 有外存时：/storage/emulated/0/Android/data/包名/files
+   * 无外存时：/data/user/0/包名/files
    */
-  public static File getCacheRootFile() {
+  public static File getProjectRootFile() {
     File result = null;
     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// SD卡已经挂载
       result = BaseApplication.getInstance().getExternalFilesDir(null);
@@ -274,7 +260,25 @@ public class FileUtil {
     }
     return result;
   }
+  /**
+   * 获取Android文件夹下项目包名文件夹下的cache目录
+   *
+   * /storage/emulated/0/Android/data/包名/cache
+   * 返回缓存路径，有SD卡 返回的是/mnt/sdcard/Android/data/包名/cache
+   * 没有SD卡返回的是data/data/包名/cache
+   *
+   * @return
+   */
+  public static File getProjectRootCache() {
+    File result = null;
 
+    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// SD卡已经挂载
+      result = BaseApplication.getInstance().getExternalCacheDir();
+    } else {
+      result = BaseApplication.getInstance().getCacheDir();
+    }
+    return result;
+  }
   /**
    * 获取视频录制的文件 文件名以当前时间的毫秒数
    *
@@ -296,25 +300,6 @@ public class FileUtil {
     getRecordFile();
   }
 
-  /**
-   * 获取netroid缓存路径
-   *
-   * @return
-   */
-  public static File getNetroidCachePath() {
-    File result = null;
-    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// SD卡已经挂载
-      result = BaseApplication.getInstance().getExternalFilesDir(null);
-    }
-    if (result == null)
-      result = BaseApplication.getInstance().getFilesDir();
-
-    result = new File(result.getAbsoluteFile() + "/" + BuildConfig.NETROID_CACHE_DIR);
-    if (!result.exists())
-      result.mkdir();
-
-    return result;
-  }
 
   /**
    * 头像的临时文件路径

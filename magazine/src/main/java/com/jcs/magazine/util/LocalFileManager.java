@@ -171,13 +171,13 @@ public class LocalFileManager {
   }
 
   /**
-   * 创建目录
-   *
+   * 在/storage/emulated/0/Android/data/包名/cache下创建dir目录
    * @param dir
    */
   public final File createAppDir(String dir) {
     synchronized (this) {
-      String _path = String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, dir);
+//      String _path = String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, dir);
+      String _path = String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(), dir);
       File _dir = new File(_path);
       if (null != dir && !_dir.exists()) {
         boolean rt = _dir.mkdirs();
@@ -190,14 +190,13 @@ public class LocalFileManager {
 
   /**
    * 在外部存储卡中创建文件
-   *
-   * @param filePath
-   *            创建文件路径名称
+   * 在/storage/emulated/0/Android/data/包名/cache下的APP_TEMP_DIR目录创建文件
+   * @param filePath 创建文件路径名称
    * @return File
    */
   public final File createExtFile(String filePath) {
-    File baseFile = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_TEMP_DIR));
+//    File baseFile = new File( String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_TEMP_DIR));
+    File baseFile = new File( String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(), BuildConfig.APP_TEMP_DIR));
     if (!baseFile.exists()) {
       baseFile.mkdirs();
     }
@@ -219,14 +218,14 @@ public class LocalFileManager {
 
   /**
    * 在外部存储卡中创建目录
-   *
-   * @param subDir
-   *            目录地址
+   * 在/storage/emulated/0/Android/data/包名/cache下创建subDir目录
+   * @param subDir 目录地址
    * @return File
    */
   public final File createExtDir(String subDir) {
     synchronized (this) {
-      File _dir = new File(String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, subDir));
+//      File _dir = new File(String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, subDir));
+      File _dir = new File(String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(),  subDir));
       if (null != subDir && !_dir.exists()) {
         boolean rt = _dir.mkdirs();
         grantPermission(_dir);
@@ -237,13 +236,14 @@ public class LocalFileManager {
   }
 
   /**
-   * 获取缓存目录
-   *
+   * 在包cache目录的data目录下创建目录
+   * 在/storage/emulated/0/Android/data/包名/cache下的APP_DATA_DIR目录下创建subdir目录
    * @return File
    */
   public final File getDataDir(String subdir) {
     File parent = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_DATA_DIR));
+//            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_DATA_DIR));
+            String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(),  BuildConfig.APP_DATA_DIR));
     File child = new File(parent, subdir);
     if (!child.exists()) {
       if (!child.mkdirs()) {
@@ -261,13 +261,13 @@ public class LocalFileManager {
   }
 
   /**
-   * 获取缓存目录
-   *
+   * 在包cache目录的cache目录下创建目录
+   * 在/storage/emulated/0/Android/data/包名/cache下的APP_CACHE_DIR目录下创建subdir目录
    * @return File
    */
   public final File getCacheDir(String subdir) {
-    File parent = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_CACHE_DIR));
+//    File parent = new File( String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_CACHE_DIR));
+    File parent = new File( String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(),  BuildConfig.APP_CACHE_DIR));
     File child = new File(parent, subdir);
     if (!child.exists()) {
       if (!child.mkdirs()) {
@@ -285,20 +285,20 @@ public class LocalFileManager {
   }
 
   /**
-   * 创建系统日志目录
-   *
+   * 获取系统日志log目录
+   * 在/storage/emulated/0/Android/data/包名/cache下的APP_LOG_DIR目录
    * @return File
    */
   public final File getLogDir() {
-    File dir = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_LOG_DIR));
+//    File dir = new File( String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_LOG_DIR));
+    File dir = new File( String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(), BuildConfig.APP_LOG_DIR));
     if (dir.isDirectory() && !dir.exists()) {
       if (!dir.mkdirs()) {
         Log.e("", "Unable to create external cache directory");
         return null;
       }
       try {
-        new File(dir, ".nomedia").createNewFile();// 避免被外部程序扫描
+        new File(dir, ".nomedia").createNewFile();// 用来屏蔽媒体软件扫描的
       } catch (IOException e) {
         Log.e("",
                 "Can't create \".nomedia\" file in com.oceansoft.webview.cache.application external cache directory");
@@ -309,12 +309,12 @@ public class LocalFileManager {
 
   /**
    * 创建异常日志目录
-   *
+   * 在/storage/emulated/0/Android/data/包名/cache下的APP_LOG_DIR目录下创建APP_LOG_CRASH_DIR
    * @return File
    */
   public final File getCrashLogDir() {
-    File parent = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_LOG_DIR));
+//    File parent = new File( String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_LOG_DIR));
+    File parent = new File( String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(), BuildConfig.APP_LOG_DIR));
     File child = new File(parent, BuildConfig.APP_LOG_CRASH_DIR);
     if (!child.exists()) {
       if (!child.mkdirs()) {
@@ -333,12 +333,12 @@ public class LocalFileManager {
 
   /**
    * 获取 应用列表下载存放目录
-   *
+   * 创建一个/storage/emulated/0/Android/data/包名/cache/dowload/apps目录
    * @return
    */
   public final File getAppDownloadDir() {
-    File parent = new File(
-            String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_DOWNLOAD_DIR));
+//    File parent = new File( String.format("%1$s/%2$s/%3$s", getSdCardRootPath(), BuildConfig.APP_ROOT_DIR, BuildConfig.APP_DOWNLOAD_DIR));
+    File parent = new File(  String.format("%1$s/%2$s", FileUtil.getProjectRootCache().getAbsolutePath(),  BuildConfig.APP_DOWNLOAD_DIR));
     File child = new File(parent, BuildConfig.APP_DOWNLOAD_SUB_DIR);
     if (!child.exists()) {
       if (!child.mkdirs()) {
@@ -354,9 +354,7 @@ public class LocalFileManager {
    * 清除缓存
    */
   public final void cleanCache() {
-    deleteAllFiles(FileUtil.getCacheRootFile());
-//    ImageLoader.getInstance().clearDiscCache();
-//    ImageLoader.getInstance().clearMemoryCache();
+    deleteAllFiles(FileUtil.getProjectRootFile().getParentFile());
   }
 
   /**
@@ -365,7 +363,7 @@ public class LocalFileManager {
    * @return String
    */
   public final String getCacheSize() {
-    return getPathSize(FileUtil.getCacheRootFile().getAbsolutePath());
+    return getPathSize(FileUtil.getProjectRootFile().getParent());
   }
 
   /**
@@ -466,8 +464,7 @@ public class LocalFileManager {
   /**
    * 获取文件权限(755)
    *
-   * @param file
-   *            指定目录名称
+   * @param file  指定目录名称
    */
   public final void grantPermission(File file) {
     try {

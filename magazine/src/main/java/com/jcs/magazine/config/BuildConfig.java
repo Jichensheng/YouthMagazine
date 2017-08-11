@@ -13,11 +13,17 @@ import java.util.regex.Pattern;
  * 2017/7/31 14:33
  */
 public class BuildConfig {
-	public static final Boolean DEBUG=true;
-	public static final int COVER_WIDTH=503;
-	public static final int COVER_HEIGHT =593;
-	public static final int COVER_WIDTH_ARTICLE=1080;
-	public static final int COVER_HEIGHT_ARTICLE =515;
+	public static final Boolean DEBUG = true;
+	/**
+	 * 封面默认宽高px
+	 */
+	public static final int COVER_WIDTH = 503;
+	public static final int COVER_HEIGHT = 593;
+	/**
+	 * 文章预览图默认款高px
+	 */
+	public static final int COVER_WIDTH_ARTICLE = 1080;
+	public static final int COVER_HEIGHT_ARTICLE = 515;
 
 	/**
 	 * 应用名称
@@ -73,15 +79,18 @@ public class BuildConfig {
 	 */
 	public static final String APP_DOWNLOAD_SUB_DIR = "apps";
 
-	/**
-	 * 视频录制路径
-	 */
-
 	public static int THREAD_COUNT = 3;
 
-	public static final String NETROID_CACHE_DIR = "netroid_cache";
+	public static final String RETROFIT_CACHE_DIR = "retrofit_cache";
 
-	public static final int NETROID_CACHE_SIZE = 2 * 1024 * 1024;
+	public static final int RETROFIT_CACHE_SIZE = 10 * 1024 * 1024;
+	/**
+	 * 缓存时间
+	 */
+	public static final int CATCH_MAXAGE = 60 * 60; // 有网络时 设置缓存超时时间1个小时
+	public static final int CATCH_MAXSTALE = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
+	public static final int DEFAULT_TIMEOUT = 5 * 1000;
+
 
 	// 客户端变量
 	private static int serverVersionCode = 1;

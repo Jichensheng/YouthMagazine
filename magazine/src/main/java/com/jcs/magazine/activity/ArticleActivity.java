@@ -15,6 +15,8 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.fragment.ArticleFragment;
+import com.jcs.magazine.util.LocalFileManager;
+import com.jcs.magazine.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +85,8 @@ public class ArticleActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
-		menu.add(1, 100, 1, "菜单一");//动态添加一个按钮；
-		menu.add(1, 101, 1, "菜单二");//注意：第二个参数是Item的ID值；
+		menu.add(1, 100, 1, "获取缓存大小");//动态添加一个按钮；
+		menu.add(1, 101, 1, "删除所有缓存");//注意：第二个参数是Item的ID值；
 		menu.add(1, 102, 1, "菜单三");
 		menu.add(1, 103, 1, "菜单四");
 		menu.add(1, 104, 1, "菜单五");
@@ -94,9 +96,17 @@ public class ArticleActivity extends BaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//让toolbar的返回按钮具有返回功能
-		if (item.getItemId() == android.R.id.home) {
-			finish();
-			return true;
+		switch (item.getItemId()){
+			case android.R.id.home:
+				finish();
+				return true;
+			case 100:
+				UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
+				int i=1/0;
+				break;
+			case 101:
+				LocalFileManager.getInstance().cleanCache();
+				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
