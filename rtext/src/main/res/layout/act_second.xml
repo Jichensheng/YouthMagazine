@@ -6,13 +6,13 @@
     android:gravity="center">
 
     <TextView
-        android:contentsId="@+contentsId/textView1"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="这是第二个Ativity" />
 
     <Button
-        android:contentsId="@+contentsId/button1"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="返回" />

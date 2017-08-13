@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 <ImageView
-    android:contentsId="@+contentsId/iv_jcs"
+    android:id="@+id/iv_jcs"
     android:transitionName="jcs"
     android:src="@drawable/bj"
     android:layout_width="wrap_content"
