@@ -5,7 +5,7 @@
       
       
 ---
-###### 部分类参考其他开源项目
+###### 部分类参考其他开源项目 A
 MIT License
 
 Copyright (c) [year] [fullname]
