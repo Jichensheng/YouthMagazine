@@ -14,7 +14,7 @@
 
 
     <ImageView
-        android:contentsId="@+contentsId/image"
+        android:id="@+id/image"
         android:layout_width="105dp"
         android:layout_height="139dp"
         android:layout_marginTop="40dp"
@@ -22,21 +22,21 @@
         android:transitionName="aaa" />
 
     <TextView
-        android:contentsId="@+contentsId/title"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
         android:layout_marginTop="100dp"
         android:textSize="32sp"
         android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@contentsId/image"
+        android:layout_toRightOf="@id/image"
         tools:text="nihao1" />
 
     <TextView
-        android:contentsId="@+contentsId/detail"
+        android:id="@+id/detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@contentsId/image"
+        android:layout_below="@id/image"
         android:layout_marginTop="20dp"
         android:textSize="18sp"
         android:text="Title" />
