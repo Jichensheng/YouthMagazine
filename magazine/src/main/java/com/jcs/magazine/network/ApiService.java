@@ -42,7 +42,7 @@ public interface ApiService {
 
 	/**
 	 *
-	 * @param versionNo 本地版本号   f
+	 * @param versionNo 本地版本号
 	 * @return
 	 */
 	@GET("magazine/version/{versionNo}")
