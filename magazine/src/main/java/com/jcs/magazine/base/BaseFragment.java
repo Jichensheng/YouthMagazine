@@ -21,6 +21,9 @@ public class BaseFragment extends Fragment {
     private String title;
     private int iconId;
 
+    public BaseFragment() {
+    }
+
     public String getTitle() {
         return title;
     }

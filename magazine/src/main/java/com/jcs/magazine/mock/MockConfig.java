@@ -51,7 +51,7 @@ public class MockConfig {
 		sb.append("\nFU-getProjectRootCache　　　"+ FileUtil.getProjectRootCache().getAbsolutePath());
 		sb.append("\nFU-getProjectRootFile　　　"+ FileUtil.getProjectRootFile().getAbsolutePath());
 		sb.append("\nFU-getImageCacheFile　　　"+ FileUtil.getImageCacheFile().getAbsolutePath());
-		sb.append("\nFU-getTempAvatarFile　　　"+ FileUtil.getTempAvatarFile().getAbsolutePath());
+		sb.append("\nFU-getTempAvatarFile　　　"+ FileUtil.getTempAvatarFile(FileUtil.DEFAULT_PIC_HEAD_NAME).getAbsolutePath());
 		sb.append("\nFU-getSDcardAvailaleSize　　　"+ FileUtil.getSDcardAvailaleSize());
 
 		sb.append("\nSYS-getFilesDir　　　"+ context.getFilesDir().getAbsolutePath());

@@ -15,8 +15,6 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.fragment.ArticleFragment;
-import com.jcs.magazine.util.LocalFileManager;
-import com.jcs.magazine.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +25,7 @@ public class ArticleActivity extends BaseActivity {
 	private ViewPager vp;
 	private List<ArticleFragment> lists;
 	private String TAG="ArticleActivity";
+	private List<ContentsBean> contents;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +43,11 @@ public class ArticleActivity extends BaseActivity {
 				+"\n单个目录下的文章列表下的单篇文章级别"+contentsBeanListBeanTemplet.getResults().getBody().get(0).getArticles().get(0).toString()
 		);
 		//所有目录
-		List<ContentsBean> contents=contentsBeanListBeanTemplet.getResults().getBody();
+		contents=contentsBeanListBeanTemplet.getResults().getBody();
 
 		String position=getIntent().getStringExtra("position");
-		initViewPager(contents,position);
+
+		initViewPager(position);
 		initToolbar();
 	}
 
@@ -69,14 +69,16 @@ public class ArticleActivity extends BaseActivity {
 
 	}
 
-	private void initViewPager(List<ContentsBean> contents, String position) {
-		vp = (ViewPager) findViewById(R.id.vp);
+	private void initViewPager( String position) {
 		lists = new ArrayList<>();
 		for (ContentsBean content : contents) {
-			lists.add(new ArticleFragment(content));
+			ArticleFragment articleFragment = new ArticleFragment(content);
+			lists.add(articleFragment);
 		}
+		vp = (ViewPager) findViewById(R.id.vp);
 		//此处的MyFragmentAdapter内部给lists里的每个页面绑定了tablayout的标题
 		vp.setAdapter(new ArtFragmentAdapter(getSupportFragmentManager(), lists));
+		//position代表第几章
 		vp.setCurrentItem(Integer.parseInt(position));
 
 	}
@@ -84,30 +86,33 @@ public class ArticleActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_menu, menu);
-		menu.add(1, 100, 1, "获取缓存大小");//动态添加一个按钮；
+//		getMenuInflater().inflate(R.menu.main_menu, menu);
+		for (int i = 0; i < contents.size(); i++) {
+			menu.add(1,i,1,contents.get(i).getName());
+		}
+		/*menu.add(1, 100, 1, "获取缓存大小");//动态添加一个按钮；
 		menu.add(1, 101, 1, "删除所有缓存");//注意：第二个参数是Item的ID值；
 		menu.add(1, 102, 1, "菜单三");
 		menu.add(1, 103, 1, "菜单四");
-		menu.add(1, 104, 1, "菜单五");
+		menu.add(1, 104, 1, "菜单五");*/
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//让toolbar的返回按钮具有返回功能
-		switch (item.getItemId()){
-			case android.R.id.home:
-				finish();
-				return true;
-			case 100:
-				UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
-				int i=1/0;
-				break;
-			case 101:
-				LocalFileManager.getInstance().cleanCache();
-				break;
-		}
+		vp.setCurrentItem(item.getItemId());
+		/*//让toolbar的返回按钮具有返回功能
+			switch (item.getItemId()) {
+				case android.R.id.home:
+					finish();
+					return true;
+				case 100:
+					UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
+					break;
+				case 101:
+					LocalFileManager.getInstance().cleanCache();
+					break;
+		}*/
 		return super.onOptionsItemSelected(item);
 	}
 

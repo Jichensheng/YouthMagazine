@@ -63,7 +63,7 @@ public class YZUPageAdapter extends PagerAdapter {
             public void onClick(View v) {
                 if (coverBeens.get(position).getId() == -1) {
                 } else
-                    listener.onClickPage(imv, position);
+                    listener.onClickPage(v,imv, position);
             }
         });
         //注意别忘记了
@@ -87,7 +87,7 @@ public class YZUPageAdapter extends PagerAdapter {
     }
 
     public interface OnClickPageListener {
-        void onClickPage(ImageView view, int position);
+        void onClickPage(View bookView,ImageView view, int position);
     }
 
     // 可以删除这段代码看看，数据源更新而viewpager不更新的情况

@@ -29,6 +29,8 @@ import java.util.zip.ZipFile;
  * 文件操作工具类 User: chenw Date: 13-9-29 Time: 下午4:39
  */
 public class FileUtil {
+  public static final String DEFAULT_PIC_HEAD_NAME="avatar.jpg";
+  public static final String DEFAULT_PIC_SHAER_NAME="share.png";
 
   /**
    * 获取文件大小工具方法
@@ -296,17 +298,14 @@ public class FileUtil {
     return result;
   }
 
-  public static void main(String[] args) {
-    getRecordFile();
-  }
 
 
   /**
-   * 头像的临时文件路径
+   * 图片的临时文件路径
    *
    * @return
    */
-  public static File getTempAvatarFile() {
+  public static File getTempAvatarFile(String name) {
     File result = null;
     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// SD卡已经挂载
       result = BaseApplication.getInstance().getExternalFilesDir(null);
@@ -314,7 +313,7 @@ public class FileUtil {
     if (result == null)
       result = BaseApplication.getInstance().getFilesDir();
 
-    result = new File(result.getAbsoluteFile() + "/avatar.jpg");
+    result = new File(result.getAbsoluteFile() + "/"+name);
     if (!result.exists())
       try {
         result.createNewFile();

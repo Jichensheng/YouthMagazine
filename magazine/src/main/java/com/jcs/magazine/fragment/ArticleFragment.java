@@ -43,8 +43,12 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 	//某章节的所有文章数据
 	private ContentsBean content;
 
+	public ArticleFragment() {
+
+	}
+
 	public ArticleFragment(ContentsBean content) {
-		this.content=content;
+		this.content = content;
 	}
 
 	@Nullable
@@ -72,30 +76,29 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 
 	@Override
 	public void onItemClick(View view, final int position) {
-        final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
+		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
-		int articleID=list.get(position).getArticleId();
+		int articleID = list.get(position).getArticleId();
 		YzuClient.getInstance().getArticle("5311")
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
-                        loading.dismiss();
-						Intent intent=new Intent(getContext(), ArticleDetialActivity.class);
-						intent.putExtra("content",articleBean.getResults().getContent());
-						intent.putExtra("title",list.get(position).getTitle());
-						intent.putExtra("author",list.get(position).getAuthor());
+						loading.dismiss();
+						Intent intent = new Intent(getContext(), ArticleDetialActivity.class);
+						intent.putExtra("content", articleBean.getResults().getContent());
+						intent.putExtra("title", list.get(position).getTitle());
+						intent.putExtra("author", list.get(position).getAuthor());
 						startActivity(intent);
 					}
 				}, new Consumer<Throwable>() {
 					@Override
 					public void accept(Throwable throwable) throws Exception {
-                        loading.dismiss();
-						UiUtil.toast( "回调失败:"+throwable.toString());
+						loading.dismiss();
+						UiUtil.toast("回调失败:" + throwable.toString());
 					}
 				});
-
 
 
 	}
@@ -109,7 +112,8 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 	public void onShareClick() {
 
 	}
-	public String getName(){
+
+	public String getName() {
 		return content.getName();
 	}
 }

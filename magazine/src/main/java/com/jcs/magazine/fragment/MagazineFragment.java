@@ -16,16 +16,15 @@ import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
-import com.jcs.magazine.activity.StartPage;
 import com.jcs.magazine.adapter.YZUPageAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.BitmapUtil;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.NetworkUtil;
-import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
 import java.util.List;
@@ -47,6 +46,8 @@ public class MagazineFragment extends BaseFragment {
     private BaseListTemplet<MgzCoverBean> mgzCoverBeanBaseMgz;
     private boolean isFirstClick=true;
 
+    public MagazineFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,10 +73,18 @@ public class MagazineFragment extends BaseFragment {
         mAdapter.setOnClickPageListener(new YZUPageAdapter.OnClickPageListener() {
 
             @Override
-            public void onClickPage(final ImageView view, final int position) {
+            public void onClickPage(final View bookView, final ImageView view, final int position) {
                 if (isFirstClick) {//防止多次点击
                     isFirstClick=false;
                     final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
+//                            BitmapUtil.makeViewBitmap(bookView,841,1400);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                    BitmapUtil.getViewBitmap(bookView);
+                        }
+                    }).start();
                     //目录id
                     int contentsId = coverBeens.get(position).getId();
                     YzuClient.getInstance().getContents(contentsId)

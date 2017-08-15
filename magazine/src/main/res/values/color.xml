@@ -7,6 +7,7 @@
     <color name="colorPrimaryDark">#353535</color>
     <color name="colorAccent">#FF4081</color>
     <color name="rose_red">#fa6c6c</color>
+    <color name="btn_red">#ea4b4b</color>
     <color name="light_gray">#b3b3b3</color>
     <color name="light_gray_more">#efefef</color>
     <color name="dark_gray">#6c6c6c</color>

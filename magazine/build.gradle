@@ -16,10 +16,26 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
+    signingConfigs {
+        debug {
+            storeFile file('magazine.jks')
+            storePassword "nji9VFR\$"
+            keyAlias "key0"
+            keyPassword "nji9VFR\$"
+        }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

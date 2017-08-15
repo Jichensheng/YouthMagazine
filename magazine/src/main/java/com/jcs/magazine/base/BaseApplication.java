@@ -6,9 +6,12 @@ import android.content.pm.PackageManager;
 
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
-import com.jcs.magazine.mock.MockConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.common.QueuedWork;
 
 /**
  * author：Jics
@@ -24,8 +27,12 @@ public class BaseApplication extends Application {
 		initCrash();
 		initImageLoader();
         initApplication();
-		MockConfig.printPathLog(this);
+//		MockConfig.printPathLog(this);
+		initUmengShare();
+
 	}
+
+
 
 
 	public static BaseApplication getInstance(){
@@ -49,5 +56,18 @@ public class BaseApplication extends Application {
             e.printStackTrace();
         }
     }
+
+	{
+		//这里是appid和secret，签名是用软件计算出来的
+		PlatformConfig.setWeixin("wx65b8cefeabe59828", "60ab003d09baa17440a92a13ce54f3f4");
+		PlatformConfig.setQQZone("1105308430", "syUyuOHhdceCH4lj");
+		PlatformConfig.setSinaWeibo("3510796324", "0f7fc6202df0627623b1889a32accdc4", "http://sns.whalecloud.com");
+	}
+	private void initUmengShare() {
+		//开启debug模式，方便定位错误，具体错误检查方式可以查看http://dev.umeng.com/social/android/quick-integration的报错必看，正式发布，请关闭该模式
+		Config.DEBUG = true;
+		QueuedWork.isUseThreadPool = false;
+		UMShareAPI.get(this);
+	}
 
 }
