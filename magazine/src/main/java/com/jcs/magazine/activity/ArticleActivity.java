@@ -24,7 +24,7 @@ public class ArticleActivity extends BaseActivity {
 	private TabLayout tlTitle;
 	private ViewPager vp;
 	private List<ArticleFragment> lists;
-	private String TAG="ArticleActivity";
+	private String TAG = "ArticleActivity";
 	private List<ContentsBean> contents;
 
 	@Override
@@ -36,16 +36,16 @@ public class ArticleActivity extends BaseActivity {
 
 	private void initView() {
 
-		BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet= (BaseListTemplet<ContentsBean>) getIntent().getSerializableExtra("contents");
-		Log.e(TAG, "accept: "+contentsBeanListBeanTemplet.getMsg()
-				+"\n目录列表级别："+contentsBeanListBeanTemplet.getResults().toString()
-				+"\n单个目录下的文章列表级别"+contentsBeanListBeanTemplet.getResults().getBody().get(0).toString()
-				+"\n单个目录下的文章列表下的单篇文章级别"+contentsBeanListBeanTemplet.getResults().getBody().get(0).getArticles().get(0).toString()
+		BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet = (BaseListTemplet<ContentsBean>) getIntent().getSerializableExtra("contents");
+		Log.e(TAG, "accept: " + contentsBeanListBeanTemplet.getMsg()
+				+ "\n目录列表级别：" + contentsBeanListBeanTemplet.getResults().toString()
+				+ "\n单个目录下的文章列表级别" + contentsBeanListBeanTemplet.getResults().getBody().get(0).toString()
+				+ "\n单个目录下的文章列表下的单篇文章级别" + contentsBeanListBeanTemplet.getResults().getBody().get(0).getArticles().get(0).toString()
 		);
 		//所有目录
-		contents=contentsBeanListBeanTemplet.getResults().getBody();
+		contents = contentsBeanListBeanTemplet.getResults().getBody();
 
-		String position=getIntent().getStringExtra("position");
+		String position = getIntent().getStringExtra("position");
 
 		initViewPager(position);
 		initToolbar();
@@ -69,7 +69,7 @@ public class ArticleActivity extends BaseActivity {
 
 	}
 
-	private void initViewPager( String position) {
+	private void initViewPager(String position) {
 		lists = new ArrayList<>();
 		for (ContentsBean content : contents) {
 			ArticleFragment articleFragment = new ArticleFragment(content);
@@ -88,7 +88,7 @@ public class ArticleActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 //		getMenuInflater().inflate(R.menu.main_menu, menu);
 		for (int i = 0; i < contents.size(); i++) {
-			menu.add(1,i,1,contents.get(i).getName());
+			menu.add(1, i, 1, contents.get(i).getName());
 		}
 		/*menu.add(1, 100, 1, "获取缓存大小");//动态添加一个按钮；
 		menu.add(1, 101, 1, "删除所有缓存");//注意：第二个参数是Item的ID值；
@@ -100,12 +100,15 @@ public class ArticleActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		vp.setCurrentItem(item.getItemId());
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		} else
+			vp.setCurrentItem(item.getItemId());
 		/*//让toolbar的返回按钮具有返回功能
 			switch (item.getItemId()) {
 				case android.R.id.home:
-					finish();
-					return true;
+
 				case 100:
 					UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
 					break;

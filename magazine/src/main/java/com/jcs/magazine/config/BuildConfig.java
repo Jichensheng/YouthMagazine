@@ -64,10 +64,6 @@ public class BuildConfig {
 	 * 系统崩溃日志目录
 	 */
 	public static final String APP_LOG_CRASH_DIR = "crash";
-	/**
-	 * APK安装包下载地址
-	 */
-	public static final String APP_UPGRADE_DIR = "upgrade";
 
 	/**
 	 * 下载目录

@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
 		initViews();
-
 	}
 
 	private void initViews() {
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivity {
 		MagazineFragment magazineFragment = new MagazineFragment();
 
 /*        Bundle bundle = new Bundle();
-        bundle.putSerializable("arg", getIntent().getSerializableExtra("covers"));
+		bundle.putSerializable("arg", getIntent().getSerializableExtra("covers"));
         magazineFragment.setArguments(bundle);*/
 
 		magazineFragment.setTitle("期刊");
@@ -78,6 +77,7 @@ public class MainActivity extends BaseActivity {
 
 		return fragments;
 	}
+
 	private long pressTime;
 
 	@Override

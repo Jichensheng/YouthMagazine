@@ -53,7 +53,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 		if (crashLog != null) {
 			crashLog.setError(sb.toString());
 		}
-		OutputStreamWriter oStreamWriter=null;
+		OutputStreamWriter oStreamWriter = null;
 		try {
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 				File dir = LocalFileManager.getInstance().getCrashLogDir();
@@ -63,7 +63,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 				}
 				oStreamWriter = new OutputStreamWriter(new FileOutputStream(file), "utf-8");
 				if (null != crashLog)
-				oStreamWriter.append(crashLog.toString());
+					oStreamWriter.append(crashLog.toString());
 			}
 			return CRASHFILENAME;
 		} catch (Exception e) {
@@ -122,7 +122,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 			}
 		} catch (PackageManager.NameNotFoundException e) {
 		}
-		DisplayMetrics dm = new DisplayMetrics();
+		DisplayMetrics dm ;
 		dm = context.getResources().getDisplayMetrics();
 		Field[] fields = Build.class.getDeclaredFields();
 		crashLog.setWidth(String.valueOf(dm.widthPixels));
@@ -183,6 +183,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
 	/**
 	 * 此处可以用RxJava响应式上传
+	 *
 	 * @param paramThread
 	 * @param paramThrowable
 	 */
@@ -191,16 +192,15 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 		this.crashLog = new CrashLog();
 		collectDeviceInfo(this.mContext);
 		saveCrashLog2File(paramThrowable);
+		ActivityStack.exic();
 /*		//网络允许的话上传
 		if (true) {
 			uploadLog(paramThrowable);
 		}*/
-		try {
+/*		try {
 			Thread.sleep(2000);
-			ActivityStack.exic();
-			return;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }

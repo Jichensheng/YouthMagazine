@@ -4,10 +4,15 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
+import com.jcs.magazine.util.LocalFileManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -29,10 +34,16 @@ public class BaseApplication extends Application {
         initApplication();
 //		MockConfig.printPathLog(this);
 		initUmengShare();
-
+		initBugly();
 	}
 
-
+	private void initBugly() {
+		Beta.smallIconId = R.drawable.download_small;
+		Beta.upgradeDialogLayoutId = R.layout.upgrade_layout;
+		Beta.storageDir = LocalFileManager.getInstance().getAppDownloadDir();
+		Bugly.init(getApplicationContext(), "0557130f5a", false);
+		CrashReport.initCrashReport(getApplicationContext());
+	}
 
 
 	public static BaseApplication getInstance(){

@@ -5,11 +5,14 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.jcs.magazine"
-        minSdkVersion 21
+//        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.0"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64", "x86"
+        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -32,6 +35,7 @@ android {
             keyAlias "key0"
             keyPassword "nji9VFR\$"
         }
+
     }
 
     lintOptions {
@@ -61,4 +65,7 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.1@aar'
     //log拦截器
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    //bugly
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
 }
