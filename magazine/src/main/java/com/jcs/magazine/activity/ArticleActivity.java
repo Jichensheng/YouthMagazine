@@ -110,9 +110,9 @@ public class ArticleActivity extends BaseActivity {
 				case android.R.id.home:
 
 				case 100:
-					UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
+					UiUtil.toast();
 					break;
-				case 101:
+				case 101:LocalFileManager.getInstance().getCacheSize()
 					LocalFileManager.getInstance().cleanCache();
 					break;
 		}*/

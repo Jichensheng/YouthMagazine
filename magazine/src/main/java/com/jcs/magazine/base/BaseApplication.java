@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.jcs.magazine.R;
+import com.jcs.magazine.activity.MainActivity;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
 import com.jcs.magazine.util.LocalFileManager;
@@ -41,6 +42,7 @@ public class BaseApplication extends Application {
 		Beta.smallIconId = R.drawable.download_small;
 		Beta.upgradeDialogLayoutId = R.layout.upgrade_layout;
 		Beta.storageDir = LocalFileManager.getInstance().getAppDownloadDir();
+        Beta.canShowUpgradeActs.add(MainActivity.class);
 		Bugly.init(getApplicationContext(), "0557130f5a", false);
 		CrashReport.initCrashReport(getApplicationContext());
 	}

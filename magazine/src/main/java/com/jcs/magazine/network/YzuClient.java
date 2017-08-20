@@ -29,8 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class YzuClient {
 //	public static final String HOST="http://s1m7444195.iask.in/magazine/";
-//	public static final String HOST="http://192.168.0.108:3000/";
-	public static final String HOST="http://192.168.191.1:3000/";
+	public static final String HOST="http://192.168.0.108:3000/";
+//	public static final String HOST="http://192.168.191.1:3000/";
 //	public static final String HOST="http://172.31.59.74:3000/";
 	private static ApiService yzuServer;
 	private static Retrofit retrofit;

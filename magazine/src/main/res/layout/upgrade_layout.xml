@@ -3,17 +3,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:background="#55000000"
+              android:background="#77000000"
               android:orientation="vertical">
     <LinearLayout
-        android:padding="50dp"
+        android:padding="30dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="156dp"
             android:scaleType="centerCrop"
             android:src="@drawable/rocket_bg"
             android:tag="beta_upgrade_banner"
@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="-1dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:background="@android:color/white"
             android:layout_height="match_parent">
             <TextView

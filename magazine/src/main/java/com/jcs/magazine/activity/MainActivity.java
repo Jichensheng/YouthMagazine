@@ -7,6 +7,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.fragment.MagazineFragment;
+import com.jcs.magazine.fragment.MineFragment;
 import com.jcs.magazine.fragment.MomentFragment;
 import com.jcs.magazine.fragment.TalkFragment;
 import com.jcs.magazine.util.UiUtil;
@@ -69,10 +70,10 @@ public class MainActivity extends BaseActivity {
 		contactFragment.setIconId(R.drawable.tab_user_selector);
 		fragments.add(contactFragment);
 
-		BaseFragment recordFragment = new BaseFragment();
-		recordFragment.setTitle("实验2");
-		recordFragment.setIconId(R.drawable.tab_record_selector);
-		fragments.add(recordFragment);
+        MineFragment minefragment = new MineFragment();
+		minefragment.setTitle("我的");
+		minefragment.setIconId(R.drawable.tab_record_selector);
+		fragments.add(minefragment);
 
 
 		return fragments;
