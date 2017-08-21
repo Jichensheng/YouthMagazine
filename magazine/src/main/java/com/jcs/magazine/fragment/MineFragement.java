@@ -50,7 +50,7 @@ public class MineFragement extends BaseFragment {
 		CircleImageView civ_avater= (CircleImageView) containor.findViewById(R.id.civ_avater);
 //		civ_avater.setImageResource(R.drawable.hmm);
 		final ImageView blurImageView = (ImageView) containor.findViewById(R.id.iv_img);
-		String url="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503316211276&di=12a0c990c0d6eea75c36c27db2f2aac1&imgtype=0&src=http%3A%2F%2Fpic.ffpic.com%2Ffiles%2F2015%2F0117%2F0117fbbjmjzsjbzdq10.jpg";
+		String url="http://tva1.sinaimg.cn/crop.0.0.996.996.180/6d04a765jw8f4xgeqeitoj20ro0rpjui.jpg";
 		Picasso.with(getContext()).load(url).transform(new BlurTransform()).into(blurImageView);
 		Picasso.with(getContext()).load(url).into(civ_avater);
 
