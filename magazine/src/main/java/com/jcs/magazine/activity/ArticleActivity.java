@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -37,11 +36,11 @@ public class ArticleActivity extends BaseActivity {
 	private void initView() {
 
 		BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet = (BaseListTemplet<ContentsBean>) getIntent().getSerializableExtra("contents");
-		Log.e(TAG, "accept: " + contentsBeanListBeanTemplet.getMsg()
+		/*Log.e(TAG, "accept: " + contentsBeanListBeanTemplet.getMsg()
 				+ "\n目录列表级别：" + contentsBeanListBeanTemplet.getResults().toString()
 				+ "\n单个目录下的文章列表级别" + contentsBeanListBeanTemplet.getResults().getBody().get(0).toString()
 				+ "\n单个目录下的文章列表下的单篇文章级别" + contentsBeanListBeanTemplet.getResults().getBody().get(0).getArticles().get(0).toString()
-		);
+		);*/
 		//所有目录
 		contents = contentsBeanListBeanTemplet.getResults().getBody();
 
@@ -105,17 +104,6 @@ public class ArticleActivity extends BaseActivity {
 			return true;
 		} else
 			vp.setCurrentItem(item.getItemId());
-		/*//让toolbar的返回按钮具有返回功能
-			switch (item.getItemId()) {
-				case android.R.id.home:
-
-				case 100:
-					UiUtil.toast(LocalFileManager.getInstance().getCacheSize());
-					break;
-				case 101:
-					LocalFileManager.getInstance().cleanCache();
-					break;
-		}*/
 		return super.onOptionsItemSelected(item);
 	}
 

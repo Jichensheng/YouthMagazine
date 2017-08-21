@@ -3,7 +3,6 @@ package com.jcs.magazine.share;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jcs.topsnackbar.Prompt;
 import com.jcs.topsnackbar.TSnackbar;
@@ -17,7 +16,7 @@ public class CustomShareListener implements UMShareListener {
 	private View view;
 
 	public CustomShareListener(Activity activity) {
-		this.view = (ViewGroup) activity.findViewById(android.R.id.content).getRootView();
+		this.view =  activity.findViewById(android.R.id.content).getRootView();
 	}
 
 	@Override

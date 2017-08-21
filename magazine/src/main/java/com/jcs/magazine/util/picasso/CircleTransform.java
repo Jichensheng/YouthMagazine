@@ -1,7 +1,8 @@
-package com.jcs.magazine.util;
+package com.jcs.magazine.util.picasso;
 
 import android.graphics.Bitmap;
 
+import com.jcs.magazine.util.BitmapUtil;
 import com.squareup.picasso.Transformation;
 
 /**

@@ -7,11 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.ArticleDetialActivity;
 import com.jcs.magazine.adapter.ArtRvAdapter;
@@ -36,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 @SuppressLint("ValidFragment")
 public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemClickListener {
-	private RecyclerView recyclerView;
+	private XRecyclerView recyclerView;
 	//某章的文章列表
 	private List<ContentsBean.ArticlesBean> list;
 	private ArtRvAdapter artRvAdapter;
@@ -65,11 +66,58 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 		for (ContentsBean.ArticlesBean articlesBean : content.getArticles()) {
 			list.add(articlesBean);
 		}
-		recyclerView = (RecyclerView) parent.findViewById(R.id.rv_content);
+		recyclerView = (XRecyclerView) parent.findViewById(R.id.rv_content);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+		//上拉下拉风格
+		recyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallScaleMultiple);
+		//设置箭头
+		recyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
+
 		artRvAdapter = new ArtRvAdapter(getContext(), list);
 		artRvAdapter.setOnArtItemClickListener(this);
 		recyclerView.setAdapter(artRvAdapter);
+		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+			@Override
+			public void onRefresh() {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(1000);
+							getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									recyclerView.refreshComplete();
+								}
+							});
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+
+			@Override
+			public void onLoadMore() {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(1000);getActivity().runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									recyclerView.loadMoreComplete();
+								}
+							});
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+		});
 
 
 	}
