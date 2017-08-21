@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.mock.MockConfig;
-import com.jcs.magazine.util.CircleTransform;
+import com.jcs.magazine.util.picasso.CircleTransform;
 import com.jcs.magazine.widget.CDView;
 import com.squareup.picasso.Picasso;
 
