@@ -28,7 +28,6 @@
             android:layout_height="65dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:src="@drawable/hmm"
             />
 
         <TextView
@@ -133,6 +132,7 @@
                 />
 
             <com.allen.library.SuperTextView
+                android:id="@+id/stv_cache"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:sLeftIconMarginLeft="20dp"

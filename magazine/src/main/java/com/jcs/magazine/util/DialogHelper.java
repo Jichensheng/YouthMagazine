@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 import com.jcs.magazine.R;
 
@@ -59,7 +60,46 @@ public class DialogHelper {
         }
         return dialog.show();
     }
-
+    /**
+     * 最全的dialog
+     *
+     * @param listenerOk
+     * @param cancelable
+     * @param view
+     * @param style
+     * @param title
+     * @param content
+     * @param negative
+     * @return
+     */
+    public AlertDialog show(DialogInterface.OnClickListener listenerOk,
+                            boolean cancelable, View view,
+                            @StyleRes int style, String title, String content, boolean negative
+    ) {
+        AlertDialog.Builder dialog;
+        //带样式的
+        if (style != 0) {
+            dialog = new AlertDialog.Builder(context, R.style.CustomDialog);
+        } else
+            dialog = new AlertDialog.Builder(context);
+        if (title != null) {
+            dialog.setTitle(title);
+        }
+        if (content != null) {
+            dialog.setMessage(content);
+        }
+        dialog.setCancelable(cancelable);
+        if (listenerOk != null) {
+            dialog.setPositiveButton("确定", listenerOk);
+        }
+        if (negative) {
+            dialog.setNegativeButton("取消", null);
+        }
+        if (view != null) {
+            dialog.setView(view);
+        }
+        return dialog.show();
+    }
     /**
      * 背景透明的dialog,适合loading
      *

@@ -33,16 +33,17 @@ public class BaseApplication extends Application {
 		initCrash();
 		initImageLoader();
         initApplication();
-//		MockConfig.printPathLog(this);
 		initUmengShare();
 		initBugly();
 	}
+
+
 
 	private void initBugly() {
 		Beta.smallIconId = R.drawable.download_small;
 		Beta.upgradeDialogLayoutId = R.layout.upgrade_layout;
 		Beta.storageDir = LocalFileManager.getInstance().getAppDownloadDir();
-		Beta.canNotShowUpgradeActs.add(MainActivity.class);
+		Beta.canShowUpgradeActs.add(MainActivity.class);
 		Beta.defaultBannerId=R.drawable.rocket_bg;
 		Bugly.init(getApplicationContext(), "0557130f5a", false);
 		CrashReport.initCrashReport(getApplicationContext());

@@ -6,14 +6,14 @@
               android:background="#55000000"
               android:orientation="vertical">
     <LinearLayout
-        android:padding="50dp"
+        android:padding="30dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="156dp"
             android:scaleType="centerCrop"
             android:src="@drawable/rocket_bg"
             android:tag="beta_upgrade_banner"

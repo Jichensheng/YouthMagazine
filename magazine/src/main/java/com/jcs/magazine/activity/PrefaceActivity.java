@@ -1,5 +1,6 @@
 package com.jcs.magazine.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,8 +10,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.PrefaceRvAdapter;
@@ -19,7 +22,10 @@ import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.share.CustomShareListener;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.FileUtil;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -91,7 +97,7 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 	}
 
 	private void initShare() {
-		mShareListener = new CustomShareListener();
+		mShareListener = new CustomShareListener(this);
 		/*增加自定义按钮的分享面板*/
 		mShareAction = new ShareAction(PrefaceActivity.this)
 				//各大平台按钮
@@ -130,16 +136,41 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_share:
-				//中部弹出分享页
-				ShareBoardConfig config = new ShareBoardConfig();
-				config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
-				config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR); // 圆角背景
-				config.setShareboardBackgroundColor(Color.WHITE);
-				config.setTitleVisibility(false);
-				config.setIndicatorVisibility(false);
-				config.setCancelButtonTextColor(ContextCompat.getColor(this, R.color.btn_red));
-				//构造函数open（）是默认下边弹出分享页，带config参数的可以控制位置
-				mShareAction.open(config);
+				final ImageView imageView=new ImageView(this);
+				LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				imageView.setAdjustViewBounds(true);
+				imageView.setLayoutParams(params);
+				imageView.setMaxWidth(500);
+				Picasso.with(this)
+						.load( new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_SHAER_NAME))
+						.memoryPolicy(MemoryPolicy.NO_CACHE)
+						.into(imageView, new Callback() {
+							@Override
+							public void onSuccess() {
+								new DialogHelper(PrefaceActivity.this).show(new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										//中部弹出分享页
+										ShareBoardConfig config = new ShareBoardConfig();
+										config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
+										config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR); // 圆角背景
+										config.setShareboardBackgroundColor(Color.WHITE);
+										config.setTitleVisibility(false);
+										config.setIndicatorVisibility(false);
+										config.setCancelButtonTextColor(ContextCompat.getColor(PrefaceActivity.this, R.color.btn_red));
+										//构造函数open（）是默认下边弹出分享页，带config参数的可以控制位置
+										mShareAction.open(config);
+									}
+								},false,imageView,0,"分享本期封面",null,true);
+							}
+
+							@Override
+							public void onError() {
+
+							}
+						});
+
+
 				break;
 		}
 	}
