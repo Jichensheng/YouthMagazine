@@ -93,11 +93,15 @@
             />
     </LinearLayout>
 
-    <ScrollView
+    <com.jcs.magazine.widget.FlexibleScrollView
         android:layout_marginTop="5dp"
         android:scrollbars="none"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -163,7 +167,7 @@
                 app:sLeftIconRes="@drawable/v0"/>
 
         </LinearLayout>
-    </ScrollView>
+    </com.jcs.magazine.widget.FlexibleScrollView>
 
 </LinearLayout>
 
