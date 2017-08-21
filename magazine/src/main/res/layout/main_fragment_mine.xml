@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#11000000"
+            />
+
+        <com.jcs.magazine.widget.CircleImageView
+            android:id="@+id/civ_avater"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/hmm"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/civ_avater"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="Jcs"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="资料完善度80% >"
+            android:textColor="#88ffffff"
+            android:textSize="13sp"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_img"
+            android:src="@drawable/mask_arc"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="-10dp"
+        android:paddingBottom="10dp"
+        android:background="#fff"
+        android:layout_height="wrap_content">
+        <com.jcs.magazine.widget.IconFontTabView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            app:iconFont="@string/fatie"
+            app:iconText="我的帖子"
+            />
+        <com.jcs.magazine.widget.IconFontTabView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            app:iconFont="@string/shoucangjia"
+            app:iconText="收藏夹"
+            />
+        <com.jcs.magazine.widget.IconFontTabView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            app:iconFont="@string/dingyue"
+            app:iconText="已关注"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_marginTop="5dp"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sLeftTextString="个人信息"
+                app:sLeftIconRes="@drawable/uy" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sLeftTextString="我的相册"
+                app:sLeftIconRes="@drawable/uv" />
+            <com.allen.library.SuperTextView
+                android:id="@+id/stv_notation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:layout_marginTop="10dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sDividerLineType="both"
+                app:sUseRipple="false"
+                app:sLeftTextString="推送通知"
+                app:sLeftIconRes="@drawable/v1"
+                app:sRightViewType="switchBtn"
+                />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sLeftTextString="清除缓存"
+                app:sLeftIconRes="@drawable/v2"
+                app:sRightTextColor="@color/gray"
+                app:sRightTextSize="12sp"
+                app:sRightViewMarginRight="20dp"
+                app:sRightTextString="5.32MB" />
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sLeftTextString="版本更新"
+                app:sLeftIconRes="@drawable/uu"
+                app:sRightTextColor="@color/gray"
+                app:sRightViewMarginRight="20dp"
+                app:sRightTextSize="12sp"
+                app:sRightTextString="已是最新版本"  />
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sDividerLineType="both"
+                app:sLeftTextString="分享"
+                app:sLeftIconRes="@drawable/v0"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
