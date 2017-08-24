@@ -3,13 +3,13 @@ package com.jcs.magazine.widget.nine_grid;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.View;
 
+import com.jcs.magazine.R;
 import com.jcs.magazine.activity.CommentPicActivity;
-import com.jcs.magazine.util.ImageLoaderUtil;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,20 +32,9 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     protected boolean displayOneImage(final RatioImageView imageView, String url, final int parentWidth) {
-
-        ImageLoaderUtil.displayImage(mContext, imageView, url, ImageLoaderUtil.getPhotoImageOption(), new ImageLoadingListener() {
+        Picasso.with(mContext).load(url).into(new Target() {
             @Override
-            public void onLoadingStarted(String imageUri, View view) {
-
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 int w = bitmap.getWidth();
                 int h = bitmap.getHeight();
 
@@ -62,19 +51,34 @@ public class NineGridTestLayout extends NineGridLayout {
                     newH = h * newW / w;
                 }
                 setOneImageLayoutParams(imageView, newW, newH);
+                imageView.setImageBitmap(bitmap);
             }
 
             @Override
-            public void onLoadingCancelled(String imageUri, View view) {
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
         });
         return false;
     }
 
+    /**
+     *    DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+     .showImageForEmptyUri(R.drawable.banner_default).showImageOnFail(R.drawable.banner_default)
+     .showImageOnLoading(R.drawable.banner_default)
+     .extraForDownloader(extra)
+     .bitmapConfig(Bitmap.Config.RGB_565).build();
+     * @param imageView
+     * @param url
+     */
     @Override
     protected void displayImage(RatioImageView imageView, String url) {
-        ImageLoaderUtil.getImageLoader(mContext).displayImage(url, imageView, ImageLoaderUtil.getPhotoImageOption());
+        Picasso.with(mContext).load(url).placeholder(R.drawable.banner_default).into(imageView);
     }
 
     /**

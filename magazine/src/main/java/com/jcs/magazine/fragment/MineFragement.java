@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.allen.library.SuperTextView;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseFragment;
+import com.jcs.magazine.mock.MockConfig;
 import com.jcs.magazine.share.CustomShareListener;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.LocalFileManager;
@@ -50,7 +51,7 @@ public class MineFragement extends BaseFragment {
 		CircleImageView civ_avater= (CircleImageView) containor.findViewById(R.id.civ_avater);
 //		civ_avater.setImageResource(R.drawable.hmm);
 		final ImageView blurImageView = (ImageView) containor.findViewById(R.id.iv_img);
-		String url="http://tva1.sinaimg.cn/crop.0.0.996.996.180/6d04a765jw8f4xgeqeitoj20ro0rpjui.jpg";
+		String url= MockConfig.HEAD;
 		Picasso.with(getContext()).load(url).transform(new BlurTransform()).into(blurImageView);
 		Picasso.with(getContext()).load(url).into(civ_avater);
 

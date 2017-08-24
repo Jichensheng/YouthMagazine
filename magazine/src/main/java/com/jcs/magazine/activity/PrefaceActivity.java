@@ -76,7 +76,6 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 		linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 		rv_preface.setLayoutManager(linearLayoutManager);
 		rv_preface.setItemAnimator(new DefaultItemAnimator());
-
 		Picasso.with(this)
 				.load(getIntent().getStringExtra("img"))
 				.noFade()

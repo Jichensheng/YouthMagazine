@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
+import com.jcs.magazine.bean.BannerItem;
+import com.jcs.magazine.mock.MockConfig;
+import com.jcs.magazine.widget.banner.BannerView;
+import com.jcs.magazine.widget.banner.BannerViewFactory;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
 import java.io.Serializable;
@@ -17,64 +21,103 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by liudong on 17/4/12.
+ * author：Jics
+ * 17/4/12 10:54
  */
 
 public class MomentListAdapter extends RecyclerView.Adapter {
-    private Context context;
-    private List<String> urls;
-    private String[] mUrls = new String[]{
-            "http://img4.imgtn.bdimg.com/it/u=3445377427,2645691367&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=2644422079,4250545639&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=1444023808,3753293381&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=882039601,2636712663&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=4119861953,350096499&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=1717647885,4193212272&fm=21&gp=0.jpg",
-            "http://img2.imgtn.bdimg.com/it/u=3251359643,4211266111&fm=21&gp=0.jpg",
-            "http://preview.quanjing.com/ojo001/pe0060887.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=2024625579,507531332&fm=21&gp=0.jpg"};
-    public MomentListAdapter(Context context) {
-        this.context = context;
-        urls=new ArrayList<>();
-        for (String mUrl : mUrls) {
-            urls.add(mUrl);
-        }
-    }
+	private static final int TYPE_BANNER = 1;
+	private static final int TYPE_List = 2;
+	private Context context;
+	private List<String> urls;
+	private List<BannerItem> listB;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.holder_moments, parent, false);
-        return new MomentListHolder(view);
-    }
+	public MomentListAdapter(Context context) {
+		this.context = context;
+		//说说图片列表
+		//Todo 文字是死的还要在此获取
+		urls = new ArrayList<>();
+		for (String mUrl : MockConfig.URLS) {
+			urls.add(mUrl);
+		}
+		//banner数据
+		listB = new ArrayList<>();
+		for (int i = 0; i < MockConfig.URLS.length; i++) {
+			BannerItem item = new BannerItem();
+			//图片
+			item.image = MockConfig.URLS[i];
+			//标题
+			item.title = MockConfig.BANNER_TITLES[i];
+			listB.add(item);
+		}
+	}
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof MomentListHolder) {
-            ((MomentListHolder) holder).layout.setUrlList(urls);
-        }
-    }
+	@Override
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View view;
+		switch (viewType) {
+			case TYPE_BANNER:
+				view = LayoutInflater.from(context).inflate(R.layout.holder_banner, parent, false);
+				return new BannerHolder(view);
+			default:
+				view = LayoutInflater.from(context).inflate(R.layout.holder_moments, parent, false);
+				return new MomentListHolder(view);
 
-    @Override
-    public int getItemCount() {
-        return 30;
-    }
+		}
+	}
 
-    class MomentListHolder extends RecyclerView.ViewHolder {
-        NineGridTestLayout layout;
-        TextView tv_content;
-        public MomentListHolder(View itemView) {
-            super(itemView);
-            layout= (NineGridTestLayout) itemView.findViewById(R.id.layout_nine_grid);
-            tv_content= (TextView) itemView.findViewById(R.id.tv_content);
-            tv_content.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent=new Intent(context,MomentActivity.class);
-                    intent.putExtra("urls", (Serializable) urls);
-                    intent.putExtra("nickname","Jcs");
-                    context.startActivity(intent);
-                }
-            });
-        }
-    }
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+		if (holder instanceof MomentListHolder) {
+			((MomentListHolder) holder).layout.setUrlList(urls);
+		} else if(holder instanceof BannerHolder){
+			((BannerHolder) holder).bv_banner.setViewFactory(new BannerViewFactory());
+			((BannerHolder) holder).bv_banner.setDataList(listB);
+			((BannerHolder) holder).bv_banner.start();
+		}
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		switch (position) {
+			case 0:
+				return TYPE_BANNER;
+			default:
+				return TYPE_List;
+		}
+	}
+
+	@Override
+	public int getItemCount() {
+		return 10+1;
+	}
+
+	class MomentListHolder extends RecyclerView.ViewHolder {
+		NineGridTestLayout layout;
+		TextView tv_content;
+
+		public MomentListHolder(View itemView) {
+			super(itemView);
+			layout = (NineGridTestLayout) itemView.findViewById(R.id.layout_nine_grid);
+			tv_content = (TextView) itemView.findViewById(R.id.tv_content);
+			tv_content.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, MomentActivity.class);
+					intent.putExtra("urls", (Serializable) urls);
+					intent.putExtra("nickname", "Jcs");
+					context.startActivity(intent);
+				}
+			});
+		}
+	}
+
+	class BannerHolder extends RecyclerView.ViewHolder {
+		BannerView bv_banner;
+		public BannerHolder(View itemView) {
+			super(itemView);
+			bv_banner= (BannerView) itemView.findViewById(R.id.bv_banner);
+
+		}
+	}
 }

@@ -8,9 +8,9 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MainActivity;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
+import com.jcs.magazine.network.OkHttp3Downloader;
 import com.jcs.magazine.util.LocalFileManager;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.squareup.picasso.Picasso;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -25,16 +25,16 @@ import com.umeng.socialize.common.QueuedWork;
  */
 public class BaseApplication extends Application {
 	private static BaseApplication instance;
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		instance=this;
 		initCrash();
-		initImageLoader();
         initApplication();
 		initUmengShare();
 		initBugly();
+		Picasso picasso = new Picasso.Builder(this).downloader(new OkHttp3Downloader(LocalFileManager.getInstance().getCacheDir("picasso-cache"))).build();
+		Picasso.setSingletonInstance(picasso);
 	}
 
 
@@ -53,10 +53,6 @@ public class BaseApplication extends Application {
 	public static BaseApplication getInstance(){
 		return instance;
 	}
-	private void initImageLoader() {
-		ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
-		ImageLoader.getInstance().init(configuration);
-	}
 
 	private void initCrash() {
 		CrashHandler.getInstance().setCustomCrashHanler(getApplicationContext());
@@ -73,6 +69,7 @@ public class BaseApplication extends Application {
     }
 
 	{
+		//Umeng-share
 		//这里是appid和secret，签名是用软件计算出来的
 		PlatformConfig.setWeixin("wx65b8cefeabe59828", "60ab003d09baa17440a92a13ce54f3f4");
 		PlatformConfig.setQQZone("1105308430", "syUyuOHhdceCH4lj");

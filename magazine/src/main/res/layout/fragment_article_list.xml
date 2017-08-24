@@ -4,17 +4,23 @@
               android:layout_height="match_parent"
               android:background="@android:color/white"
               android:orientation="vertical">
+    <com.jcs.magazine.widget.FlexibleScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-<!--    <android.support.v7.widget.RecyclerView
+        </android.support.v7.widget.RecyclerView>
+    </com.jcs.magazine.widget.FlexibleScrollView>
+
+  <!--  <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>-->
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>-->
 </LinearLayout>

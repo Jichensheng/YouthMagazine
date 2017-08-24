@@ -32,7 +32,6 @@
         android:gravity="center_horizontal"
         android:layerType="software"
         android:orientation="horizontal" >
-
         <com.jcs.magazine.yzu_viewPager.NoneOverScrollShadowView
             android:id="@+id/id_viewpager"
             android:layout_width="wrap_content"

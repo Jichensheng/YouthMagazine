@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
-import com.jcs.magazine.util.ImageLoaderUtil;
+import com.jcs.magazine.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,7 +57,8 @@ public class CommentPicAdapter extends PagerAdapter {
 		imv.setLayoutParams(llp);
 		imv.setScaleType(ImageView.ScaleType.FIT_XY);
 		imv.setAdjustViewBounds(true);
-		ImageLoaderUtil.getImageLoader(mContext).displayImage(mUrls.get(position), imv, ImageLoaderUtil.getPhotoImageOption());
+		Picasso.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
+//		ImageLoaderUtil.getImageLoader(mContext).displayImage(mUrls.get(position), imv, ImageLoaderUtil.getPhotoImageOption());
 		linearLayout.addView(imv);
 		container.addView(linearLayout);
 		return linearLayout;
