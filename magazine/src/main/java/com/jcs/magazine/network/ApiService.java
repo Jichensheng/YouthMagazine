@@ -1,10 +1,13 @@
 package com.jcs.magazine.network;
 
 import com.jcs.magazine.bean.ArticleBean;
+import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
+import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.UserBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -39,6 +42,13 @@ public interface ApiService {
 	 */
 	@GET("magazine/article/{articleId}")
 	Observable<BaseMgz<ArticleBean>> getArticle(@Path("articleId") String id);
+	/**
+	 *
+	 * @param id 根据用户id获取信息
+	 * @return
+	 */
+	@GET("magazine/user/{uid}")
+	Observable<BaseMgz<UserBean>> getUser(@Path("uid") String id);
 
 	/**
 	 *
@@ -48,6 +58,19 @@ public interface ApiService {
 	@GET("magazine/version/{versionNo}")
 	Observable<BaseMgz<ArticleBean>> checkUpdata(@Path("articleId") String versionNo);
 
-
-
+	/**
+	 *	获取广场列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/moment/{page}/{count}")
+	Observable<BaseListTemplet<MomentBean>> getMomentLists(@Path("page") int page, @Path("count") int count);
+	/**
+	 *
+	 * 获取广场banner
+	 * @return
+	 */
+	@GET("magazine/moment/banner")
+	Observable<BaseListTemplet<BannerItem>> getMomentBannder();
 }

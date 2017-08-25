@@ -11,8 +11,7 @@ import android.view.MenuItem;
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
 import com.jcs.magazine.base.BaseActivity;
-
-import java.util.List;
+import com.jcs.magazine.bean.MomentBean;
 
 /**
  * author：Jics
@@ -20,8 +19,9 @@ import java.util.List;
  */
 public class MomentActivity extends BaseActivity {
 	private RecyclerView recyclerView;
-	private List<String> urls;
+	private MomentBean mb;
 	private Toolbar toolbar;
+	private MomentDetailAdapter adapter;
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,11 +35,12 @@ public class MomentActivity extends BaseActivity {
 		toolbar.setTitle(getIntent().getStringExtra("nickname"));
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		urls= (List<String>) getIntent().getSerializableExtra("urls");
+		mb= (MomentBean) getIntent().getSerializableExtra("mb");
 		recyclerView= (RecyclerView) findViewById(R.id.rv_moment_detial);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setAdapter(new MomentDetailAdapter(this,urls));
+		adapter = new MomentDetailAdapter(this, mb);
+
+		recyclerView.setAdapter(adapter);
 		recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 	}
 

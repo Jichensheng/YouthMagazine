@@ -51,6 +51,7 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 	private BaseListTemplet<ContentsBean> contentsBeanListBeanTemplet;
 	private ShareAction mShareAction;
 	private UMShareListener mShareListener;
+	private boolean canShare=true;
 
 
 	@Override
@@ -135,40 +136,43 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_share:
-				final ImageView imageView=new ImageView(this);
-				LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-				imageView.setAdjustViewBounds(true);
-				imageView.setLayoutParams(params);
-				imageView.setMaxWidth(500);
-				Picasso.with(this)
-						.load( new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_SHAER_NAME))
-						.memoryPolicy(MemoryPolicy.NO_CACHE)
-						.into(imageView, new Callback() {
-							@Override
-							public void onSuccess() {
-								new DialogHelper(PrefaceActivity.this).show(new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										//中部弹出分享页
-										ShareBoardConfig config = new ShareBoardConfig();
-										config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
-										config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR); // 圆角背景
-										config.setShareboardBackgroundColor(Color.WHITE);
-										config.setTitleVisibility(false);
-										config.setIndicatorVisibility(false);
-										config.setCancelButtonTextColor(ContextCompat.getColor(PrefaceActivity.this, R.color.btn_red));
-										//构造函数open（）是默认下边弹出分享页，带config参数的可以控制位置
-										mShareAction.open(config);
-									}
-								},false,imageView,0,"分享本期封面",null,true);
-							}
+				if (canShare) {
+					canShare=false;
+					final ImageView imageView=new ImageView(this);
+					LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+					imageView.setAdjustViewBounds(true);
+					imageView.setLayoutParams(params);
+					imageView.setMaxWidth(500);
+					Picasso.with(this)
+							.load( new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_SHAER_NAME))
+							.memoryPolicy(MemoryPolicy.NO_CACHE)
+							.into(imageView, new Callback() {
+								@Override
+								public void onSuccess() {
+									canShare=true;
+									new DialogHelper(PrefaceActivity.this).show(new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											//中部弹出分享页
+											ShareBoardConfig config = new ShareBoardConfig();
+											config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
+											config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR); // 圆角背景
+											config.setShareboardBackgroundColor(Color.WHITE);
+											config.setTitleVisibility(false);
+											config.setIndicatorVisibility(false);
+											config.setCancelButtonTextColor(ContextCompat.getColor(PrefaceActivity.this, R.color.btn_red));
+											//构造函数open（）是默认下边弹出分享页，带config参数的可以控制位置
+											mShareAction.open(config);
+										}
+									},false,imageView,0,"分享本期封面",null,true);
+								}
 
-							@Override
-							public void onError() {
-
-							}
-						});
-
+								@Override
+								public void onError() {
+									canShare=true;
+								}
+							});
+				}
 
 				break;
 		}

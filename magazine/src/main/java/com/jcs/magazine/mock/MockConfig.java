@@ -35,7 +35,8 @@ public class MockConfig {
 //			"端午节这种",
 			"团圆的节日"
 	};
-	public static final String  HEAD="http://tva1.sinaimg.cn/crop.0.0.996.996.180/6d04a765jw8f4xgeqeitoj20ro0rpjui.jpg";
+//	public static final String  HEAD="http://tva1.sinaimg.cn/crop.0.0.996.996.180/6d04a765jw8f4xgeqeitoj20ro0rpjui.jpg";
+	public static final String  HEAD="http://tva3.sinaimg.cn/crop.0.0.512.512.180/6ef9803cjw8evztqvm4c0j20e80e8t95.jpg";
 	/**
 	 * 打印各个路径
 	 */

@@ -14,9 +14,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.jcs.magazine.R;
+import com.jcs.magazine.base.BaseApplication;
+import com.jcs.magazine.util.DimentionUtils;
 
 
 /**
@@ -25,15 +26,15 @@ import com.jcs.magazine.R;
  * @author huangxz
  *
  */
-public class CircleImageView extends ImageView {
+public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
 	private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
 	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 	private static final int COLORDRAWABLE_DIMENSION = 1;
 
-	private static final int DEFAULT_BORDER_WIDTH = 0;
-	private static final int DEFAULT_BORDER_COLOR = Color.WHITE;
+	private static final int DEFAULT_BORDER_WIDTH = DimentionUtils.dip2px(BaseApplication.getInstance(),1);
+	private static final int DEFAULT_BORDER_COLOR = Color.argb(125,255,255,255);
 
 	private final RectF mDrawableRect = new RectF();
 	private final RectF mBorderRect = new RectF();

@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.PrefaceActivity;
@@ -25,7 +26,9 @@ import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.BitmapUtil;
 import com.jcs.magazine.util.DialogHelper;
+import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.NetworkUtil;
+import com.jcs.magazine.util.StatusBarUtil;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
 import java.util.List;
@@ -57,6 +60,12 @@ public class MagazineFragment extends BaseFragment {
 		coverBeens = mgzCoverBeanBaseMgz.getResults().getBody();
 
 		mViewPager = (ViewPager) view.findViewById(R.id.id_viewpager);
+		LinearLayout.LayoutParams lp= (LinearLayout.LayoutParams) mViewPager.getLayoutParams();
+		lp.setMargins(DimentionUtils.dip2px(getContext(),40),
+				StatusBarUtil.getStatusBarHeight(getContext()),
+				DimentionUtils.dip2px(getContext(),40),
+				StatusBarUtil.getStatusBarHeight(getContext()));
+		mViewPager.setLayoutParams(lp);
 		// 设置Page间间距
 		mViewPager.setPageMargin(10);
 		// 设置缓存的页面数量

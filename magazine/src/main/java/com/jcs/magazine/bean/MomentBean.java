@@ -8,24 +8,27 @@ import java.util.List;
  * author：Jics
  * 2017/8/24 16:41
  */
-//TODO 评论的图地址、文字内容、用户id、时间、点赞数、评论数、分享数实体
 public class MomentBean implements Serializable {
 	//帖子id,用于查询此贴的评论列表
 	private String mid;
 	//发帖人id
 	private String uid;
+	//昵称
+	private String nick;
+	//头像地址
+	private String head;
 	//最新的三个赞的用户id
-	private List<String> praiser;
+	private List<UserBean> praiser;
 	//帖子文字
 	private String excerpt;
 	//帖子图片
-	private List<String> images;
+	private List<ImageList> images;
 	//发帖时间
 	private String date;
 	//赞数
-	private String praise;
+	private int praise;
 	//评论数
-	private String comment;
+	private int comment;
 
 	public String getMid() {
 		return mid;
@@ -43,11 +46,27 @@ public class MomentBean implements Serializable {
 		this.uid = uid;
 	}
 
-	public List<String> getPraiser() {
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getHead() {
+		return head;
+	}
+
+	public void setHead(String head) {
+		this.head = head;
+	}
+
+	public List<UserBean> getPraiser() {
 		return praiser;
 	}
 
-	public void setPraiser(List<String> praiser) {
+	public void setPraiser(List<UserBean> praiser) {
 		this.praiser = praiser;
 	}
 
@@ -59,11 +78,11 @@ public class MomentBean implements Serializable {
 		this.excerpt = excerpt;
 	}
 
-	public List<String> getImages() {
+	public List<ImageList> getImages() {
 		return images;
 	}
 
-	public void setImages(List<String> images) {
+	public void setImages(List<ImageList> images) {
 		this.images = images;
 	}
 
@@ -75,19 +94,19 @@ public class MomentBean implements Serializable {
 		this.date = date;
 	}
 
-	public String getPraise() {
+	public int getPraise() {
 		return praise;
 	}
 
-	public void setPraise(String praise) {
+	public void setPraise(int praise) {
 		this.praise = praise;
 	}
 
-	public String getComment() {
+	public int getComment() {
 		return comment;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(int comment) {
 		this.comment = comment;
 	}
 
@@ -96,12 +115,26 @@ public class MomentBean implements Serializable {
 		return "MomentBean{" +
 				"mid='" + mid + '\'' +
 				", uid='" + uid + '\'' +
+				", nick='" + nick + '\'' +
+				", head='" + head + '\'' +
 				", praiser=" + praiser +
 				", excerpt='" + excerpt + '\'' +
 				", images=" + images +
 				", date='" + date + '\'' +
-				", praise='" + praise + '\'' +
-				", comment='" + comment + '\'' +
+				", praise=" + praise +
+				", comment=" + comment +
 				'}';
+	}
+
+	public static class ImageList implements Serializable  {
+		private String url;
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
 	}
 }

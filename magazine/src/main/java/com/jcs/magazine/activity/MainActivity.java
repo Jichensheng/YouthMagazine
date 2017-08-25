@@ -10,6 +10,7 @@ import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MineFragement;
 import com.jcs.magazine.fragment.MomentFragment;
 import com.jcs.magazine.fragment.TalkFragment;
+import com.jcs.magazine.util.StatusBarUtil;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.navigatordemo.FragmentAdapter;
 import com.jcs.magazine.widget.navigatordemo.IconTabPageIndicator;
@@ -32,7 +33,10 @@ public class MainActivity extends BaseActivity {
 
 	private void initViews() {
 
+		//注意了，这里使用了第三方库 StatusBarUtil，目的是改变状态栏的alpha
+		StatusBarUtil.setTransparentForImageView(this, null);
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
+
 		mIndicator = (IconTabPageIndicator) findViewById(R.id.indicator);
 		List<BaseFragment> fragments = initFragments();
 		FragmentAdapter adapter = new FragmentAdapter(fragments, getSupportFragmentManager());

@@ -89,6 +89,7 @@
             android:orientation="horizontal"
         >
             <TextView
+                android:id="@+id/tv_praise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="999+"
@@ -97,6 +98,7 @@
                 android:drawableLeft="@drawable/praise"
             />
             <TextView
+                android:id="@+id/tv_comment"
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +107,7 @@
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/comment"
             />
-            <TextView
+<!--            <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +115,7 @@
                 android:textColor="@color/light_gray"
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/share"
-            />
+            />-->
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

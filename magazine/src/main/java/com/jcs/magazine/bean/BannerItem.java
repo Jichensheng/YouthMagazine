@@ -1,8 +1,12 @@
 package com.jcs.magazine.bean;
 
+/**
+ * 轮播图
+ */
 public class BannerItem {
-	public String image;
-	public String title;
+	private String image;
+	private String title;
+	private String link;
 
 	public String getImage() {
 		return image;
@@ -20,8 +24,20 @@ public class BannerItem {
 		this.title = title;
 	}
 
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	/**
+	 * 必须fanhuititle
+	 * @return
+	 */
 	@Override
 	public String toString() {
-		return title;
+		return getTitle();
 	}
 }
