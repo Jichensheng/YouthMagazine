@@ -148,6 +148,8 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
                                 public void run() {
                                     recyclerView.refreshComplete();
                                     recyclerView.setPullRefreshEnabled(true);
+
+                                    reInitPlayState();
                                 }
                             });
                         } catch (InterruptedException e) {
@@ -170,6 +172,8 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
                                     recyclerView.setPullRefreshEnabled(true);
                                     recyclerView.loadMoreComplete();
                                     recyclerView.setNoMore(true);
+
+                                    reInitPlayState();
                                 }
                             });
                         } catch (InterruptedException e) {
@@ -184,9 +188,17 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
     @Override
     public void onResume() {
         super.onResume();
+        reInitPlayState();
+
+    }
+
+    /**
+     * 重新请求状态
+     */
+    private void reInitPlayState() {
         //请求当前播放的position
         Message msg=new Message();
-        msg.what=Constant.PLAYING_ACTIVITY_PLAY_NOW;
+        msg.what= Constant.PLAYING_ACTIVITY_PLAY_NOW;
         if (mServiceMessenger != null) {
             try {
                 mServiceMessenger.send(msg);
@@ -242,10 +254,11 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
                     break;
                 case Constant.MEDIA_PLAYER_SERVICE_IS_PLAYING:
                     if (1 == msgFromService.arg1) {//正在播放
-
-
+                        adapter.setmActivePosition(msgFromService.arg2);
+                        adapter.notifyDataSetChanged();
                     } else {
-
+                        adapter.setmActivePosition(-1);
+                        adapter.notifyDataSetChanged();
 
                     }
                     break;
@@ -266,12 +279,6 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
             super.handleMessage(msgFromService);
         }
     }
-
-
-
-
-
-
 
 
 

@@ -236,6 +236,10 @@ public class MediaPlayerService extends Service implements OnPreparedListener, O
 					service.playSong(newPosition, -1);
 					Log.e(TAG, "上一首或下一首执行playSong()");
 					break;
+
+				case Constant.PLAYING_ACTIVITY_PLAY_NOW:
+					sendIsPlayingMsg();
+					break;
 				//客户端初始化ServiceConnection的时候传入歌曲list，播放的时候只用传入position即可
 				case Constant.PLAYING_ACTIVITY_INIT:
 					Bundle songsData = msgFromClient.getData();
