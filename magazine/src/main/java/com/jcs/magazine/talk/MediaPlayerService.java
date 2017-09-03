@@ -343,6 +343,7 @@ public class MediaPlayerService extends Service implements OnPreparedListener, O
 		Log.e(TAG, "stop()");
 		if (null == mediaPlayer) return;
 		mediaPlayer.stop();
+        sendIsPlayingMsg();//发送播放器是否在播放的状态
 		currentTime = 0;//停止音乐，将当前播放时间置为0
 
 	}

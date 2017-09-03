@@ -192,6 +192,18 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
 
     }
 
+    @Override
+    public void onDestroy() {
+        Log.e(TAG, "onDestroy");
+        getActivity().unbindService(mServiceConnection);
+        if (null != myHandler) {
+            myHandler.removeCallbacksAndMessages(null);//移除消息队列中所有的消息和所有的Runnable
+            myHandler = null;
+        }
+        System.gc();
+        super.onDestroy();
+    }
+
     /**
      * 重新请求状态
      */

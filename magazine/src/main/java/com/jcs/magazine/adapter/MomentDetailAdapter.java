@@ -32,6 +32,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 	private static final int COMMENT_HOLDER = 1;
 	private List<String> urls;
 	private List<UserBean> praiser;
+    private boolean first;
 	private MomentBean mb;
 
 	public MomentDetailAdapter(Context context, MomentBean mb) {
@@ -69,7 +70,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 			((MomentHolder) holder).tv_public_time.setText(mb.getDate());
 			((MomentHolder) holder).tv_content.setText(mb.getExcerpt());
 			((MomentHolder) holder).tv_praise.setText("" + mb.getPraise());
-			if (praiser != null) {
+			if (praiser != null&&!first) {
 				for (final UserBean userBean : praiser) {
 					ImageView imageView=new ImageView(context);
 					LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(DimentionUtils.dip2px(context,35),DimentionUtils.dip2px(context,35));
@@ -83,6 +84,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 						}
 					});
 				}
+                first=true;
 			}
 
 		}

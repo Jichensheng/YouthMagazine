@@ -14,6 +14,7 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.MomentBean;
 
 /**
+ * 说说详情页
  * author：Jics
  * 2017/4/11 14:31
  */

@@ -1,41 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/notification_contanier"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/notification_contanier"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="68dp"
+    >
     <ImageView
         android:id="@+id/img_song"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="1dp"
-        android:layout_centerVertical="true"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:scaleType="centerCrop"
         android:src="@mipmap/notification_img_holder"
-    />
+        />
 
     <LinearLayout
         android:id="@+id/song_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_toLeftOf="@+id/linear_righht"
-        android:layout_toRightOf="@+id/img_song"
+        android:layout_width="150dp"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tv_song_name"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fadingEdge="horizontal"
             android:fadingEdgeLength="@dimen/notification_fadingEdgeLength"
             android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="#535353"
-            android:textSize="16sp"
-        />
+            android:maxLines="1"
+            style="@style/NotificationTitle"
+            />
         <TextView
             android:id="@+id/tv_singer"
             android:layout_width="wrap_content"
@@ -44,21 +38,19 @@
             android:fadingEdge="horizontal"
             android:fadingEdgeLength="@dimen/notification_fadingEdgeLength"
             android:padding="5dp"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="胡夏"
-            android:textColor="#8c8c8c"
-            android:textSize="@dimen/notification_singer_size"
-        />
+            style="@style/NotificationInfo"
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linear_righht"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-    >
+        >
         <ImageButton
             android:id="@+id/img_play"
             android:layout_width="25dp"
@@ -68,7 +60,7 @@
             android:background="@drawable/notification_selector"
             android:scaleType="centerInside"
             android:src="@mipmap/notification_pause"
-        />
+            />
         <ImageButton
             android:id="@+id/img_next"
             android:layout_width="25dp"
@@ -78,7 +70,7 @@
             android:background="@drawable/notification_selector"
             android:scaleType="centerInside"
             android:src="@mipmap/notification_next"
-        />
+            />
         <ImageButton
             android:id="@+id/img_close"
             android:layout_width="25dp"
@@ -87,7 +79,7 @@
             android:background="@drawable/notification_selector"
             android:scaleType="centerInside"
             android:src="@mipmap/notification_close"
-        />
+            />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

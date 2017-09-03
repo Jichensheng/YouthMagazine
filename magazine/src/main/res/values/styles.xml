@@ -51,4 +51,12 @@
 
         <item name="android:background">#00000000</item>
     </style>
+
+
+    <style
+        name="NotificationInfo"
+        parent="android:TextAppearance.StatusBar.EventContent" />
+    <style
+        name="NotificationTitle"
+        parent="android:TextAppearance.StatusBar.EventContent.Title" />
 </resources>
