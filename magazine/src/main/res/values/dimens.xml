@@ -4,4 +4,11 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="space">10dp</dimen>
     <dimen name="toolbar_size">45dp</dimen>
+
+    <dimen name="notification_marginleft">10dp</dimen>
+    <dimen name="notification_fadingEdgeLength">10dp</dimen>
+    <dimen name="notification_songname_size">16sp</dimen>
+    <dimen name="notification_singer_size">12sp</dimen>
+    <dimen name="notification_linear_height">41dp</dimen>
+    <dimen name="notification_img_size">70dp</dimen>
 </resources>

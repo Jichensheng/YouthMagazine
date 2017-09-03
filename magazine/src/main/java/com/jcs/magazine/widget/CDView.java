@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +19,7 @@ import java.util.TimerTask;
 
 public class CDView extends android.support.v7.widget.AppCompatImageView {
     private static final String TAG = "CDView";
+    private int position;//属于哪个item
     private Paint mPaint;//画笔
     private int mCDRadius;//CD宽度
     private int mViewWidth;//view宽度
@@ -51,15 +51,22 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
      * 初始化工作
      */
     private void init() {
-        Log.e(TAG, "init: ----实例化---");
         setBackgroundColor(Color.TRANSPARENT);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mIsPlaying = false;
         mPosRotate = 0;
         mTimer = new Timer();
+
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -75,6 +82,10 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
         mCDRadius = (int) ((mViewWidth - Math.max(VPadding, HPadding)) / 2);
         mCenterXY = mViewWidth / 2;
         mBtnCRadius = mCDRadius / 6;
+
+
+        setPivotX(mViewWidth / 2);
+        setPivotY(mViewWidth / 2);
     }
 
 
@@ -89,6 +100,7 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(mCenterXY, mCenterXY, mCDRadius - 5, mPaint);
         mPaint.setStyle(Paint.Style.FILL);
+
     }
 
     /**
@@ -171,12 +183,12 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
                 if (mIsPlaying) {
                     stopMusic();
                     if (mStopListener != null) {
-                        mStopListener.onStop();
+                        mStopListener.onStopMusic(getPosition());
                     }
                 } else {
                     playMusic();
                     if (mPlayListener != null) {
-                        mPlayListener.onPlay();
+                        mPlayListener.onPlayMusic(getPosition());
                     }
                 }
                 break;
@@ -189,7 +201,7 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
      * 开始播放音乐
      * 使用timer每0.1s叠加0.6°旋转角度
      */
-    private void playMusic() {
+    public void playMusic() {
         Log.i(TAG, "playMusic");
         mIsPlaying = true;
         if (mTimer == null) {
@@ -202,8 +214,6 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
                 post(new Runnable() {
                     @Override
                     public void run() {
-                        setPivotX(mViewWidth / 2);
-                        setPivotY(mViewWidth / 2);
                         setRotation(mPosRotate);
                         invalidate();
                     }
@@ -215,10 +225,12 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
     /**
      * 停止播放音乐
      */
-    private void stopMusic() {
+    public void stopMusic() {
         Log.i(TAG, "stopMusic");
         mIsPlaying = false;
-        mTimer.cancel();
+        if (mTimer != null) {
+            mTimer.cancel();
+        }
         mTimer = null;
         invalidate();
     }
@@ -236,14 +248,14 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
      * 开始播放的监听
      */
     public interface OnPlayListener {
-        void onPlay();
+        void onPlayMusic(int position);
     }
 
     /**
      * 停止播放的监听
      */
     public interface OnStopListener {
-        void onStop();
+        void onStopMusic(int position);
     }
 
     /**
@@ -262,5 +274,17 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
      */
     public void setOnStopListener(OnStopListener listener) {
         this.mStopListener = listener;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.e("*********", "onDetachedFromWindow: "+getPosition());
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Log.e("*********", "onAttachedToWindow: "+getPosition());
     }
 }

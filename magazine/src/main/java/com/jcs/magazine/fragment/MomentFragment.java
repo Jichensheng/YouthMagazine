@@ -49,7 +49,6 @@ public class MomentFragment extends BaseFragment {
 
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 		//上拉下拉风格
-		recyclerView.setRefreshProgressStyle(ProgressStyle.LineScalePulseOut);
 		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
 		//设置箭头
 		recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);

@@ -7,6 +7,7 @@ import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.bean.UserBean;
 
 import io.reactivex.Observable;
@@ -73,4 +74,13 @@ public interface ApiService {
 	 */
 	@GET("magazine/moment/banner")
 	Observable<BaseListTemplet<BannerItem>> getMomentBannder();
+
+	/**
+	 *	获取Talk列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/talk/{page}/{count}")
+	Observable<BaseListTemplet<TalkBean>> getTalkLists(@Path("page") int page, @Path("count") int count);
 }

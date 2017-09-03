@@ -17,4 +17,5 @@
     <color name="gray">#FFB4B4B4</color>
     <color name="subtitle_text_gray">#999999</color>
     <color name="menu_grey">#33485C</color>
+    <color name="notification_bak">#47fafafa</color>
 </resources>

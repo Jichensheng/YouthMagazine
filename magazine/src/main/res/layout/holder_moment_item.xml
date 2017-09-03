@@ -21,9 +21,9 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
         >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,27 +104,35 @@
             android:gravity="center"
             android:text="赞:"
         />
-        <com.jcs.magazine.widget.CircleImageView
-            android:id="@+id/civ_head1"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/hmm"
-        />
-        <com.jcs.magazine.widget.CircleImageView
-            android:id="@+id/civ_head2"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/hmm"
-        />
-        <com.jcs.magazine.widget.CircleImageView
-            android:id="@+id/civ_head3"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/hmm"
-        />
+        <LinearLayout
+            android:id="@+id/ll_head_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+        >
+            <!--<com.jcs.magazine.widget.CircleImageView
+                android:id="@+id/civ_head1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/hmm"
+            />
+            <com.jcs.magazine.widget.CircleImageView
+                android:id="@+id/civ_head2"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/hmm"
+            />
+            <com.jcs.magazine.widget.CircleImageView
+                android:id="@+id/civ_head3"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/hmm"
+            />-->
+        </LinearLayout>
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -135,12 +143,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:drawableLeft="@drawable/praise"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:padding="3dp"
             android:text="203"
             android:textColor="@color/light_gray"
-            android:drawableLeft="@drawable/praise"
             android:textSize="11sp"
         />
     </LinearLayout>

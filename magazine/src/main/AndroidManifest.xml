@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jcs.magazine">
+          package="com.jcs.magazine">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:name="com.jcs.magazine.base.BaseApplication"
         android:allowBackup="true"
@@ -14,33 +14,34 @@
             android:name="com.jcs.magazine.activity.StartPage"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!--activity-->
         <activity
             android:name="com.jcs.magazine.activity.CommentPicActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ImageTheme" />
+            android:theme="@style/ImageTheme"/>
         <activity
             android:name="com.jcs.magazine.activity.MomentActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.jcs.magazine.activity.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.jcs.magazine.activity.ArticleActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PrefaceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ArticleDetialActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
 
         <!--umeng share-->
@@ -95,6 +96,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <service android:name=".talk.MediaPlayerService"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
