@@ -47,8 +47,8 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 //			((CDListHolder) holder).tv_title.setText(talkList.get(position).getTitle());
 //			((CDListHolder) holder).tv_athor.setText(talkList.get(position).getAuthor());
 			((CDListHolder) holder).vtv_title.setTitle(talkList.get(position).getTitle());
-			((CDListHolder) holder).vtv_title.setAuthors("文/"+talkList.get(position).getAuthor()
-					,"音/"+talkList.get(position).getDj());
+			((CDListHolder) holder).vtv_title.setAuthors("文 "+talkList.get(position).getAuthor()
+					,"音 "+talkList.get(position).getDj());
 			((CDListHolder) holder).tv_excerpt.setText(talkList.get(position).getExcerpt());
 			((CDListHolder) holder).tv_time.setText(talkList.get(position).getCreateTime());
 			((CDListHolder) holder).tv_praise.setText("" + talkList.get(position).getPraise());

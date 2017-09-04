@@ -24,10 +24,10 @@ public class VirticleTitleView extends View {
 	private static final int MAX_COUNT = 5;
 	//文字大小
 	private int titleFontSize = 25;
-	private int authorFontSize = 15;
+	private int authorFontSize = 14;
 	//文字大小px
 	private int titleFontSizePx = 25;
-	private int authorFontSizePx = 16;
+	private int authorFontSizePx = 14;
 	//单文字框尺寸
 	private int titleRectSize;
 	private int authorRectSize;
@@ -39,7 +39,7 @@ public class VirticleTitleView extends View {
 	private int paddingAuthor = 2;
 	//画笔
 	private Paint mPaint;
-
+    private Typeface fontFace;
 	//超过五个字并且激活状态下就开始动画
 	private float deltaY;
 	private boolean isNeedScroll;
@@ -73,7 +73,8 @@ public class VirticleTitleView extends View {
 		authorRectSize = getSingleMaxLength(authorFontSizePx);
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setStyle(Paint.Style.FILL);
-
+        fontFace = Typeface.createFromAsset(context.getAssets(),
+                "fzqk.TTF");
 
 	}
 
@@ -255,7 +256,7 @@ public class VirticleTitleView extends View {
 			canvas.translate(0, -deltaY);
 		} else
 			canvas.translate(0, 0);
-		mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+		mPaint.setTypeface(fontFace);
 		for (int i = 0; i < titles.length; i++) {
 			int  tempPadding=0;
 			//是汉字就间距大一点，否则间距小一点
