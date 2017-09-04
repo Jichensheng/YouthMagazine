@@ -89,7 +89,7 @@
             android:gravity="center"
             android:layout_height="wrap_content"
             app:iconFont="@string/dingyue"
-            app:iconText="已关注"
+            app:iconText="伙伴"
             />
     </LinearLayout>
 
@@ -115,12 +115,7 @@
                 app:sLeftTextString="个人信息"
                 app:sLeftIconRes="@drawable/uy" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:sLeftIconMarginLeft="20dp"
-                app:sLeftTextString="我的相册"
-                app:sLeftIconRes="@drawable/uv" />
+
             <com.allen.library.SuperTextView
                 android:id="@+id/stv_notation"
                 android:layout_width="match_parent"
@@ -165,7 +160,12 @@
                 app:sDividerLineType="both"
                 app:sLeftTextString="分享"
                 app:sLeftIconRes="@drawable/v0"/>
-
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:sLeftIconMarginLeft="20dp"
+                app:sLeftTextString="联系我们"
+                app:sLeftIconRes="@drawable/uv" />
         </LinearLayout>
     </com.jcs.magazine.widget.FlexibleScrollView>
 

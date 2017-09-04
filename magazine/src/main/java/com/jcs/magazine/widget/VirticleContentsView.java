@@ -28,7 +28,7 @@ public class VirticleContentsView extends View {
 	private int chapterRectSize;
 	private int titleRectSize;
 	//文字内容
-	private String chapter = "你好呀";
+	private String chapter = "扬大青年";
 	private String[] titles = new String[0];
 	//间距问题
 	private int paddingChapter = 6;

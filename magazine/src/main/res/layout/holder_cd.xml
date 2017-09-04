@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/back"
               android:orientation="vertical">
-    <TextView
+  <!--  <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,14 +23,30 @@
         android:text="文 / 正南七白"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-    />
-
+    />-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginBottom="5dp"
+>
+    <com.jcs.magazine.widget.VirticleTitleView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/vtv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <com.jcs.magazine.widget.CDView
         android:id="@+id/cd_music"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
         android:layout_gravity="center"
-        />
+    />
+</LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_excerpt"

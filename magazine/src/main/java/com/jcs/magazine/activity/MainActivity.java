@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity {
 
 	private void initViews() {
 
-		//注意了，这里使用了第三方库 StatusBarUtil，目的是改变状态栏的alpha
+		//注意了，这里使用了第三方库 StatusBarUtil
 		StatusBarUtil.setTransparentForImageView(this, null);
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -51,9 +51,6 @@ public class MainActivity extends BaseActivity {
 
 		MagazineFragment magazineFragment = new MagazineFragment();
 
-/*        Bundle bundle = new Bundle();
-		bundle.putSerializable("arg", getIntent().getSerializableExtra("covers"));
-        magazineFragment.setArguments(bundle);*/
 
 		magazineFragment.setTitle("期刊");
 		magazineFragment.setIconId(R.drawable.tab_record_selector);
@@ -61,22 +58,22 @@ public class MainActivity extends BaseActivity {
 
 		TalkFragment talkFragment = new TalkFragment();
 		talkFragment.setTitle("尔闻");
-		talkFragment.setIconId(R.drawable.tab_user_selector);
+		talkFragment.setIconId(R.drawable.tab_talk_selector);
 		fragments.add(talkFragment);
 
 		MomentFragment momentFragment = new MomentFragment();
 		momentFragment.setTitle("广场");
-		momentFragment.setIconId(R.drawable.tab_record_selector);
+		momentFragment.setIconId(R.drawable.tab_moment_selector);
 		fragments.add(momentFragment);
 
 		BaseFragment contactFragment = new BaseFragment();
-		contactFragment.setTitle("实验1");
-		contactFragment.setIconId(R.drawable.tab_user_selector);
+		contactFragment.setTitle("实验室");
+		contactFragment.setIconId(R.drawable.tab_laboratory_selector);
 		fragments.add(contactFragment);
 
 		MineFragement mineFragement = new MineFragement();
 		mineFragement.setTitle("我的");
-		mineFragement.setIconId(R.drawable.tab_record_selector);
+		mineFragement.setIconId(R.drawable.tab_user_selector);
 		fragments.add(mineFragement);
 
 

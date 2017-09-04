@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="tab_text_normal">#696969</color>
-    <color name="tab_text_selected">#696969</color>
+    <color name="tab_text_selected">#cb241c</color>
 
     <color name="colorPrimary">#aeaeae</color>
     <color name="colorPrimaryDark">#353535</color>
     <color name="colorAccent">#FF4081</color>
     <color name="rose_red">#fa6c6c</color>
     <color name="btn_red">#ea4b4b</color>
-    <color name="light_gray">#b3b3b3</color>
+    <color name="light_gray">#d4d4d4</color>
     <color name="light_gray_more">#efefef</color>
     <color name="dark_gray">#6c6c6c</color>
     <color name="text_main_black">#454545</color>

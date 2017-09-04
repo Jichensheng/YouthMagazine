@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -65,7 +64,6 @@ public class MusicNotification extends Notification {
         Log.e(TAG, "创建MusicNotification对象");
         this.context = BaseApplication.getInstance();
         remoteViews = new RemoteViews(BaseApplication.getInstance().getPackageName(), R.layout.notification_layout);//初始化远程视图对象，使用自定义的通知布局
-//        remoteViews = new RemoteViews(BaseApplication.getInstance().getPackageName(), R.layout.notification_layout);//初始化远程视图对象，使用自定义的通知布局
         builder = new Builder(context);//初始化建造者对象，
         //初始化控制的意图intent
         playIntent = new Intent();
@@ -113,8 +111,6 @@ public class MusicNotification extends Notification {
         PendingIntent pendingBackIntent = PendingIntent.getActivity(BaseApplication.getInstance(),REQUEST_CODE,backIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.notification_contanier,pendingBackIntent);*/
 
-        //通知栏颜色适配
-//        remoteViews.setInt(R.id.tv_song_name, "setTextColor", ColorMine.isDarkNotificationTheme(context)==true? Color.WHITE:Color.BLACK);
 
 
         builder.setContent(remoteViews)

@@ -13,7 +13,7 @@
         android:layout_width="25dp"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
-        android:layout_height="25dp" />
+        android:layout_height="20dp" />
 
     <TextView
         android:id="@+id/tab_text"

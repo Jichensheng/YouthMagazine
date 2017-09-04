@@ -14,6 +14,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.util.picasso.CircleTransform;
 import com.jcs.magazine.widget.CDView;
+import com.jcs.magazine.widget.VirticleTitleView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,8 +44,11 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 	public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 		if (holder instanceof CDListHolder) {
 
-			((CDListHolder) holder).tv_title.setText(talkList.get(position).getTitle());
-			((CDListHolder) holder).tv_athor.setText(talkList.get(position).getAuthor());
+//			((CDListHolder) holder).tv_title.setText(talkList.get(position).getTitle());
+//			((CDListHolder) holder).tv_athor.setText(talkList.get(position).getAuthor());
+			((CDListHolder) holder).vtv_title.setTitle(talkList.get(position).getTitle());
+			((CDListHolder) holder).vtv_title.setAuthors("文/"+talkList.get(position).getAuthor()
+					,"音/"+talkList.get(position).getDj());
 			((CDListHolder) holder).tv_excerpt.setText(talkList.get(position).getExcerpt());
 			((CDListHolder) holder).tv_time.setText(talkList.get(position).getCreateTime());
 			((CDListHolder) holder).tv_praise.setText("" + talkList.get(position).getPraise());
@@ -130,17 +134,19 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 
 	class CDListHolder extends RecyclerView.ViewHolder {
 		CDView cdView;
-		TextView tv_title, tv_athor, tv_excerpt, tv_time, tv_praise;
+		TextView  tv_excerpt, tv_time, tv_praise;
 		private LinearLayout ll_like;
 		private ImageView imv_like;
+		VirticleTitleView vtv_title;
 
 		public CDListHolder(View itemView) {
 			super(itemView);
-			tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-			tv_athor = (TextView) itemView.findViewById(R.id.tv_athor);
+//			tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+//			tv_athor = (TextView) itemView.findViewById(R.id.tv_athor);
 			tv_excerpt = (TextView) itemView.findViewById(R.id.tv_excerpt);
 			tv_time = (TextView) itemView.findViewById(R.id.tv_time);
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);
+			vtv_title= (VirticleTitleView) itemView.findViewById(R.id.vtv_title);
 
 			cdView = (CDView) itemView.findViewById(R.id.cd_music);
 			ll_like = (LinearLayout) itemView.findViewById(R.id.ll_like);

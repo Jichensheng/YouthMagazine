@@ -16,11 +16,9 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.NetworkUtil;
-import com.jcs.magazine.util.UiUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,9 +38,9 @@ public class StartPage extends BaseActivity {
         // 不显示系统的标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
-        UiUtil.toast("VersionCode: "+BuildConfig.getLocalVersionCode()+"  VersionName: "+BuildConfig.getLocalVersionName());
+//        UiUtil.toast("VersionCode: "+BuildConfig.getLocalVersionCode()+"  VersionName: "+BuildConfig.getLocalVersionName());
         animator = ValueAnimator.ofFloat(0, 1);
-        animator.setDuration(2000);
+        animator.setDuration(1000);
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

@@ -120,7 +120,7 @@ public class MediaPlayerService extends Service implements OnPreparedListener, O
 
 		//初始化音频管理对象
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		requestAudioFocus();
+//		requestAudioFocus();
 
 		//初始化服务端的Messenger
 		myHandler = new MyHandler(this);
@@ -289,18 +289,21 @@ public class MediaPlayerService extends Service implements OnPreparedListener, O
 	private void play(String musicUrl) {
 		//给予无网络提示
 		if (!NetworkUtil.isConnectingToInternet(BaseApplication.getInstance())) {
-			UiUtil.toast( "没有网络了哟，请检查网络设置");
+			sendIsPlayingMsg();
+			UiUtil.toast( "没有网络了，请检查网络设置");
+		}else{
+			Log.e(TAG, "play(String musicUrl)--musicUrl" + musicUrl);
+			if (null == mediaPlayer) return;
+			mediaPlayer.reset();//停止音乐后，不重置的话就会崩溃
+			try {
+				mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(musicUrl));
+				mediaPlayer.prepareAsync();
+				musicNotification.onUpdateMusicNotification(bean, mediaPlayer.isPlaying());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		Log.e(TAG, "play(String musicUrl)--musicUrl" + musicUrl);
-		if (null == mediaPlayer) return;
-		mediaPlayer.reset();//停止音乐后，不重置的话就会崩溃
-		try {
-			mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(musicUrl));
-			mediaPlayer.prepareAsync();
-			musicNotification.onUpdateMusicNotification(bean, mediaPlayer.isPlaying());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	/**

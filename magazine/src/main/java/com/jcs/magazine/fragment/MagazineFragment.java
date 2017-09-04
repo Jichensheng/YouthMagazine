@@ -64,7 +64,7 @@ public class MagazineFragment extends BaseFragment {
 		lp.setMargins(DimentionUtils.dip2px(getContext(),40),
 				StatusBarUtil.getStatusBarHeight(getContext()),
 				DimentionUtils.dip2px(getContext(),40),
-				StatusBarUtil.getStatusBarHeight(getContext()));
+				DimentionUtils.dip2px(getContext(),5));
 		mViewPager.setLayoutParams(lp);
 		// 设置Page间间距
 		mViewPager.setPageMargin(10);
