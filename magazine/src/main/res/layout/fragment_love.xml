@@ -35,7 +35,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.jcs.magazine.widget.viewpagerindicator.NonSlipViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/rv_coor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
