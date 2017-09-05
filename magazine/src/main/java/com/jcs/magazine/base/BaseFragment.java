@@ -15,7 +15,6 @@ import com.jcs.magazine.R;
  * User: Geek_Soledad(msdx.android@qq.com)
  * Date: 2014-08-27
  * Time: 09:01
- * FIXME
  */
 public class BaseFragment extends Fragment {
     private String title;

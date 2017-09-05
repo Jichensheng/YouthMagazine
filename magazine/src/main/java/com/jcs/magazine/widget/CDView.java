@@ -81,7 +81,7 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
         float HPadding = getPaddingLeft() + getPaddingRight();
         mCDRadius = (int) ((mViewWidth - Math.max(VPadding, HPadding)) / 2);
         mCenterXY = mViewWidth / 2;
-        mBtnCRadius = mCDRadius / 6;
+        mBtnCRadius = mCDRadius / 5;
 
 
         setPivotX(mViewWidth / 2);

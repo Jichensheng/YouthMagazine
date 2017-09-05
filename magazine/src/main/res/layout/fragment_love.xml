@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:orientation="vertical">
+        <com.jcs.magazine.widget.banner.BannerView
+            android:id="@+id/bv_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:bvAspectRatio="0.4853"
+            app:bvIndicatorColor="#cccccc"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:bvIndicatorColorSelected="@color/colorAccent"
+            app:bvIndicatorGravity="right"
+            app:bvTitleVisible="true"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tb_main_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:tabIndicatorColor="@color/tab_text_selected"
+            app:tabIndicatorHeight="1dp"
+            android:background="@color/white"
+        />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.jcs.magazine.widget.viewpagerindicator.NonSlipViewPager
+        android:id="@+id/rv_coor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -44,11 +44,9 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 	public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 		if (holder instanceof CDListHolder) {
 
-//			((CDListHolder) holder).tv_title.setText(talkList.get(position).getTitle());
-//			((CDListHolder) holder).tv_athor.setText(talkList.get(position).getAuthor());
 			((CDListHolder) holder).vtv_title.setTitle(talkList.get(position).getTitle());
-			((CDListHolder) holder).vtv_title.setAuthors("文 "+talkList.get(position).getAuthor()
-					,"音 "+talkList.get(position).getDj());
+			((CDListHolder) holder).vtv_title.setAuthors("文·"+talkList.get(position).getAuthor()
+					,"音·"+talkList.get(position).getDj());
 			((CDListHolder) holder).tv_excerpt.setText(talkList.get(position).getExcerpt());
 			((CDListHolder) holder).tv_time.setText(talkList.get(position).getCreateTime());
 			((CDListHolder) holder).tv_praise.setText("" + talkList.get(position).getPraise());
@@ -141,8 +139,6 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 
 		public CDListHolder(View itemView) {
 			super(itemView);
-//			tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-//			tv_athor = (TextView) itemView.findViewById(R.id.tv_athor);
 			tv_excerpt = (TextView) itemView.findViewById(R.id.tv_excerpt);
 			tv_time = (TextView) itemView.findViewById(R.id.tv_time);
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);

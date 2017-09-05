@@ -74,6 +74,13 @@ public interface ApiService {
 	 */
 	@GET("magazine/moment/banner")
 	Observable<BaseListTemplet<BannerItem>> getMomentBannder();
+	/**
+	 *
+	 * 获取广场banner
+	 * @return
+	 */
+	@GET("magazine/love/banner")
+	Observable<BaseListTemplet<BannerItem>> getLoveBannder();
 
 	/**
 	 *	获取Talk列表

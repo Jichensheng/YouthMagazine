@@ -14,15 +14,15 @@
 >
     <com.jcs.magazine.widget.VirticleTitleView
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="80dp"
         android:id="@+id/vtv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <com.jcs.magazine.widget.CDView
         android:id="@+id/cd_music"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_gravity="center"
     />
 </LinearLayout>

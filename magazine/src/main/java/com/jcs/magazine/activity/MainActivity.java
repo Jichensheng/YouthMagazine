@@ -9,7 +9,7 @@ import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MineFragement;
 import com.jcs.magazine.fragment.MomentFragment;
-import com.jcs.magazine.fragment.TalkFragment;
+import com.jcs.magazine.talk.fragment.LoveFragment;
 import com.jcs.magazine.util.StatusBarUtil;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.navigatordemo.FragmentAdapter;
@@ -56,20 +56,20 @@ public class MainActivity extends BaseActivity {
 		magazineFragment.setIconId(R.drawable.tab_record_selector);
 		fragments.add(magazineFragment);
 
-		TalkFragment talkFragment = new TalkFragment();
-		talkFragment.setTitle("尔闻");
-		talkFragment.setIconId(R.drawable.tab_talk_selector);
-		fragments.add(talkFragment);
+		LoveFragment loveFragment = new LoveFragment();
+		loveFragment.setTitle("L.O.V.E");
+		loveFragment.setIconId(R.drawable.tab_talk_selector);
+		fragments.add(loveFragment);
 
 		MomentFragment momentFragment = new MomentFragment();
 		momentFragment.setTitle("广场");
 		momentFragment.setIconId(R.drawable.tab_moment_selector);
 		fragments.add(momentFragment);
 
-		BaseFragment contactFragment = new BaseFragment();
-		contactFragment.setTitle("实验室");
-		contactFragment.setIconId(R.drawable.tab_laboratory_selector);
-		fragments.add(contactFragment);
+		BaseFragment baseFragment = new BaseFragment();
+		baseFragment.setTitle("实验室");
+		baseFragment.setIconId(R.drawable.tab_laboratory_selector);
+		fragments.add(baseFragment);
 
 		MineFragement mineFragement = new MineFragement();
 		mineFragement.setTitle("我的");

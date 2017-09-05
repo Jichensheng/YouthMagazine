@@ -51,6 +51,7 @@ public class MineFragement extends BaseFragment {
 		CircleImageView civ_avater= (CircleImageView) containor.findViewById(R.id.civ_avater);
 //		civ_avater.setImageResource(R.drawable.hmm);
 		final ImageView blurImageView = (ImageView) containor.findViewById(R.id.iv_img);
+		//Todo 头像数据来源
 		String url= MockConfig.HEAD;
 		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
 		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);

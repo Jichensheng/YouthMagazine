@@ -23,11 +23,11 @@ import com.jcs.magazine.util.DimentionUtils;
 public class VirticleTitleView extends View {
 	private static final int MAX_COUNT = 5;
 	//文字大小
-	private int titleFontSize = 25;
-	private int authorFontSize = 14;
+	private int titleFontSize = 20;
+	private int authorFontSize = 11;
 	//文字大小px
-	private int titleFontSizePx = 25;
-	private int authorFontSizePx = 14;
+	private int titleFontSizePx = 20;
+	private int authorFontSizePx = 11;
 	//单文字框尺寸
 	private int titleRectSize;
 	private int authorRectSize;
@@ -35,8 +35,8 @@ public class VirticleTitleView extends View {
 	private String title = "扬大青年";
 	private String[] authors = null;
 	//间距问题
-	private int paddingTitle = 6;
-	private int paddingAuthor = 2;
+	private int paddingTitle = 5;
+	private int paddingAuthor = 1;
 	//画笔
 	private Paint mPaint;
     private Typeface fontFace;
@@ -219,9 +219,9 @@ public class VirticleTitleView extends View {
 			String author = authors[i];
 			String[] authorSingle = string2strings(author);
 			int out = canvas.save();
-			int  tempPadding=0;
+			int  tempPadding=i==0?paddingAuthor:0;
 			//是汉字就间距大一点，否则间距小一点
-			if((author.charAt(0) >= 0x4e00)&&(author.charAt(0) <= 0x9fbb)) {
+			if(i>=1&&(authors[i-1].charAt(0) >= 0x4e00)&&(authors[i-1].charAt(0) <= 0x9fbb)) {
 				tempPadding=paddingAuthor;
 			}
 			//列级平移
@@ -258,9 +258,9 @@ public class VirticleTitleView extends View {
 			canvas.translate(0, 0);
 		mPaint.setTypeface(fontFace);
 		for (int i = 0; i < titles.length; i++) {
-			int  tempPadding=0;
+			int  tempPadding=i==0?paddingTitle:0;
 			//是汉字就间距大一点，否则间距小一点
-			if((titles[i].charAt(0) >= 0x4e00)&&(titles[i].charAt(0) <= 0x9fbb)) {
+			if(i>=1&&(titles[i-1].charAt(0) >= 0x4e00)&&(titles[i-1].charAt(0) <= 0x9fbb)) {
 				tempPadding=paddingTitle;
 			}
 			canvas.save();
