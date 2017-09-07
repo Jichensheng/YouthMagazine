@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
+import com.jcs.magazine.mock.MockConfig;
 import com.jcs.magazine.util.DialogHelper;
-import com.jcs.magazine.util.HtmlUtil;
 
 import static com.jcs.magazine.R.id.webView;
 
@@ -78,7 +78,10 @@ public class ArticleDetialActivity extends BaseActivity {
 		});
 		WebSettings settings = mWebView.getSettings();
 		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-		mWebView.loadDataWithBaseURL("about:blank", HtmlUtil.fmt(content), "text/html", "utf-8", null);
+		settings.setJavaScriptEnabled(true);
+//		mWebView.loadUrl("https://mp.weixin.qq.com/s?__biz=MzA4NTM3MTA2NQ==&mid=2651391185&idx=1&sn=ea61b912beff537048762bb5a5be821a");
+//		mWebView.loadDataWithBaseURL("about:blank", HtmlUtil.fmt(content), "text/html", "utf-8", null);
+		mWebView.loadDataWithBaseURL("about:blank", MockConfig.uedit, "text/html", "utf-8", null);
 
 	}
 }

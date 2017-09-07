@@ -34,71 +34,81 @@ public class MomentFragment extends BaseFragment {
 	private List<MomentBean> momentBeanList;
 	private List<BannerItem> bannerItemList;
 
+	private View rootView;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.main_fragment_moment, container, false);
-		momentBeanList=new ArrayList<>();
-		bannerItemList=new ArrayList<>();
-		final XRecyclerView recyclerView = (XRecyclerView) view.findViewById(R.id.rv_main_talk);
-		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		getBannerData();
-		getListData();
-		adapter = new MomentListAdapter(getContext(),momentBeanList,bannerItemList);
+		if (rootView == null) {
+			rootView = inflater.inflate(R.layout.main_fragment_moment, container, false);
+			momentBeanList=new ArrayList<>();
+			bannerItemList=new ArrayList<>();
+			final XRecyclerView recyclerView = (XRecyclerView) rootView.findViewById(R.id.rv_main_talk);
+			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+			getBannerData();
+			getListData();
+			adapter = new MomentListAdapter(getContext(),momentBeanList,bannerItemList);
 
-		recyclerView.setAdapter(adapter);
+			recyclerView.setAdapter(adapter);
 
-		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
-		//上拉下拉风格
-		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
-		//设置箭头
-		recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-		//回调监听部分
-		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-			@Override
-			public void onRefresh() {
-				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									recyclerView.refreshComplete();
-									recyclerView.setPullRefreshEnabled(true);
-								}
-							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+			recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+			//上拉下拉风格
+			recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
+			//设置箭头
+			recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
+			//回调监听部分
+			recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+				@Override
+				public void onRefresh() {
+					recyclerView.setPullRefreshEnabled(false);
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Thread.sleep(1000);
+								getActivity().runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										recyclerView.refreshComplete();
+										recyclerView.setPullRefreshEnabled(true);
+									}
+								});
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				}).start();
-			}
+					}).start();
+				}
 
-			@Override
-			public void onLoadMore() {
-				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									recyclerView.setPullRefreshEnabled(true);
-									recyclerView.loadMoreComplete();
-									recyclerView.setNoMore(true);
-								}
-							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+				@Override
+				public void onLoadMore() {
+					recyclerView.setPullRefreshEnabled(false);
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Thread.sleep(1000);getActivity().runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										recyclerView.setPullRefreshEnabled(true);
+										recyclerView.loadMoreComplete();
+										recyclerView.setNoMore(true);
+									}
+								});
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				}).start();
+					}).start();
+				}
+			});
+		}else{
+			ViewGroup group= (ViewGroup) rootView.getParent();
+			if (group != null) {
+				group.removeView(rootView);
 			}
-		});
-		return view;
+		}
+
+		return rootView;
 	}
 
 	private void getListData(){

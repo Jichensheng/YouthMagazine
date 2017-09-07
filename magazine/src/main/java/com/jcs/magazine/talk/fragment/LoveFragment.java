@@ -38,19 +38,19 @@ public class LoveFragment extends BaseFragment {
 	private BannerView bannerView;
 	private List<BannerItem> list;
 	private LoveAdapter adapter;
-	/*private ChildTalk talk;
-	private ChildRadio radio;
-	private ChildEverything everything;*/
+	/*private ChildTalkFragment talk;
+	private ChildRadioFragment radio;
+	private ChildEverythingFragment everything;*/
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		children =new ArrayList<>();
-		ChildTalk talk = new ChildTalk();
-		talk.setTabName("说话");
-		ChildRadio radio = new ChildRadio();
-		radio.setTabName("电台");
-		ChildEverything everything = new ChildEverything();
+		ChildTalkFragment talk = new ChildTalkFragment();
+		talk.setTabName("电台");
+		ChildRadioFragment radio = new ChildRadioFragment();
+		radio.setTabName("说话");
+		ChildEverythingFragment everything = new ChildEverythingFragment();
 		everything.setTabName("万象");
 
 		children.add(talk);

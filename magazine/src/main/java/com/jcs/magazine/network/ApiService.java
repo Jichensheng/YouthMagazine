@@ -90,4 +90,21 @@ public interface ApiService {
 	 */
 	@GET("magazine/talk/{page}/{count}")
 	Observable<BaseListTemplet<TalkBean>> getTalkLists(@Path("page") int page, @Path("count") int count);
+
+	/**
+	 *	获取Talk列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/radio/{page}/{count}")
+	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getRadioLists(@Path("page") int page, @Path("count") int count);
+	/**
+	 *	获取Talk列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/everything/{page}/{count}")
+	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
 }

@@ -1,4 +1,4 @@
-package com.jcs.magazine.adapter;
+package com.jcs.magazine.talk.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,34 +11,23 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.mock.MockConfig;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Random;
 
-/**
- * author：Jics
- * 1、holder负责将recyclerView中的控件实例化出来
- * 2、holder中的view是Adapter的onCreatViewHolder解析布局文件生成的
- * 3、onBindViewHolder是给holder中的控件赋值的
- * 4、getItemViewType是给特定位置的holder定义类型的
- * 顺序应该是 定义不同的holder ——> 根据特定条件通过getItemViewType设定不同位置显示类型 ——>  通过onCreatViewHolder根据不同的类型生成并返回不同holder实体 ——> 在onBindViewHolder里具体给控件具体赋值
- * 2017/4/5 13:45
- */
-public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RadioRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private OnArtItemClickListener onArtItemClickListener;
 	private List<ContentsBean.ArticlesBean> items;
 	private Context context;
 
-	public ArtRvAdapter(Context context, List<ContentsBean.ArticlesBean> items) {
+	public RadioRvAdapter(Context context, List<ContentsBean.ArticlesBean> items) {
 		this.context = context;
 		this.items = items;
 	}
 
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		return new StoryHolder(LayoutInflater.from(context).inflate(R.layout.holder_store, parent, false));
+		return new StoryHolder(LayoutInflater.from(context).inflate(R.layout.holder_radio_list, parent, false));
 	}
 
 	@Override
@@ -55,9 +44,7 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 				}
 			});
 			Picasso.with(context)
-//					.load(items.get(position).getImage())
-					.load(MockConfig.URLS[new Random().nextInt(MockConfig.URLS.length)])
-					.noFade()
+					.load(items.get(position).getImage())
 					.placeholder(R.mipmap.cover)
 					.error(R.mipmap.cover)
 					.fit().centerCrop()

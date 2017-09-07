@@ -11,7 +11,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +28,7 @@ import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.talk.Constant;
 import com.jcs.magazine.talk.MediaPlayerService;
 import com.jcs.magazine.talk.interfaces.LoveInterface;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 
 import java.io.Serializable;
@@ -45,7 +46,7 @@ import static android.content.Context.BIND_AUTO_CREATE;
  * author：Jics
  * 2017/9/5 14:38
  */
-public class ChildTalk extends Fragment implements LoveInterface, TalkListAdapter.OnClickTalkListener {
+public class ChildTalkFragment extends Fragment implements LoveInterface, TalkListAdapter.OnClickTalkListener {
 	private static final String TAG = TalkFragment.class.getName();
 	public Messenger mServiceMessenger;//来自服务端的Messenger
 	private Messenger mClientMessenger;
@@ -80,12 +81,12 @@ public class ChildTalk extends Fragment implements LoveInterface, TalkListAdapte
 		recyclerView = (XRecyclerView) view.findViewById(R.id.rv_main_talk);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		talkList = new ArrayList<>();
-
-		initData();
+		AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
+		initData(loading);
 		adapter = new TalkListAdapter(getContext(), talkList);
 		adapter.setOnClickTalkListener(this);
 		recyclerView.setAdapter(adapter);
-		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+//		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 		recyclerView.setLoadingListener(initListener());
 		return view;
 	}
@@ -237,7 +238,7 @@ public class ChildTalk extends Fragment implements LoveInterface, TalkListAdapte
 		super.onDestroy();
 	}
 
-	private void initData() {
+	private void initData(final AlertDialog loading) {
 
 		YzuClient.getInstance()
 				.getTalkLists(1, 10)
@@ -250,6 +251,7 @@ public class ChildTalk extends Fragment implements LoveInterface, TalkListAdapte
 						talkList.addAll(talkBeanBaseListTemplet.getResults().getBody());
 						adapter.notifyDataSetChanged();
 						initServer();
+						loading.dismiss();
 					}
 				}, new Consumer<Throwable>() {
 					@Override
@@ -276,15 +278,15 @@ public class ChildTalk extends Fragment implements LoveInterface, TalkListAdapte
 	}
 
 	class MyHandler extends Handler {
-		private WeakReference<ChildTalk> weakActivity;
+		private WeakReference<ChildTalkFragment> weakActivity;
 
-		public MyHandler(ChildTalk fragment) {
+		public MyHandler(ChildTalkFragment fragment) {
 			weakActivity = new WeakReference<>(fragment);
 		}
 
 		@Override
 		public void handleMessage(Message msgFromService) {
-			ChildTalk fragment = weakActivity.get();
+			ChildTalkFragment fragment = weakActivity.get();
 			if (null == fragment) return;
 			switch (msgFromService.what) {
 				case Constant.MEDIA_PLAYER_SERVICE_PROGRESS://更新进度条

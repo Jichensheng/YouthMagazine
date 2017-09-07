@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.jcs.magazine.util.DimentionUtils;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,6 +34,7 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
     private float mDownY;//按下时的Y坐标
     private OnPlayListener mPlayListener;//开始播放的监听
     private OnStopListener mStopListener;//停止播放的监听
+	private Context context;
 
     public CDView(Context context) {
         this(context, null);
@@ -43,6 +46,7 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
 
     public CDView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+		this.context=context;
         init();
     }
 
@@ -83,7 +87,6 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
         mCenterXY = mViewWidth / 2;
         mBtnCRadius = mCDRadius / 5;
 
-
         setPivotX(mViewWidth / 2);
         setPivotY(mViewWidth / 2);
     }
@@ -95,10 +98,11 @@ public class CDView extends android.support.v7.widget.AppCompatImageView {
         canvas.rotate(-mPosRotate, mViewWidth / 2, mViewWidth / 2);
         drawCD(canvas);
         drawCenter(canvas);
-        mPaint.setStrokeWidth(10);
+        //装饰圆环
+        mPaint.setStrokeWidth(DimentionUtils.dip2px(context,2));
         mPaint.setColor(0x88eeeeee);
         mPaint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(mCenterXY, mCenterXY, mCDRadius - 5, mPaint);
+        canvas.drawCircle(mCenterXY, mCenterXY, mCDRadius - DimentionUtils.dip2px(context,1), mPaint);
         mPaint.setStyle(Paint.Style.FILL);
 
     }

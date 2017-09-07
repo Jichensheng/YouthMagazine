@@ -21,7 +21,7 @@ public class HtmlUtil {
                 "<meta charset=\"utf-8\">" +
                 "<title>Sign in | Score System</title>" +
                 "<style type=\"text/css\">\n" +
-                "img{margin-top:15px;margin-bottom:15px;width:100%; height:auto;}" +
+                "img{margin-top:15px;margin-bottom:15px;max-width:100%; height:auto;}" +
                 "body{display:flex;flex-direction:column;justify-content:center;}" +
                 "</style>" +
                 "</head>" +

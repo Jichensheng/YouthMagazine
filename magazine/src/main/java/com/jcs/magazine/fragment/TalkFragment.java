@@ -56,18 +56,28 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
     private List<TalkBean> talkList;
     private TalkListAdapter adapter;
     private XRecyclerView recyclerView;
+
+    private View rootView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_fragment_moment, container, false);
-        recyclerView = (XRecyclerView) view.findViewById(R.id.rv_main_talk);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        initData();
-        adapter = new TalkListAdapter(getContext(), talkList);
-        adapter.setOnClickTalkListener(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
-        recyclerView.setLoadingListener(initListener());
-        return view;
+        if (rootView==null) {
+            rootView = inflater.inflate(R.layout.main_fragment_moment, container, false);
+            recyclerView = (XRecyclerView) rootView.findViewById(R.id.rv_main_talk);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            initData();
+            adapter = new TalkListAdapter(getContext(), talkList);
+            adapter.setOnClickTalkListener(this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
+            recyclerView.setLoadingListener(initListener());
+        }
+        // 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
+        ViewGroup parent = (ViewGroup) rootView.getParent();
+        if (parent != null)
+        {
+            parent.removeView(rootView);
+        }
+        return rootView;
     }
 
     private void initServer() {

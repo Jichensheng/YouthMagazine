@@ -38,13 +38,20 @@ import com.umeng.socialize.utils.ShareBoardlistener;
  * 2017/8/21 09:16
  */
 public class MineFragement extends BaseFragment {
-
+private View rootView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = LayoutInflater.from(getContext()).inflate(R.layout.main_fragment_mine, container, false);
+		if (rootView==null) {
+			rootView = LayoutInflater.from(getContext()).inflate(R.layout.main_fragment_mine, container, false);
+			initview(rootView);
+		}else {
+			ViewGroup viewGroup= (ViewGroup) rootView.getParent();
+			if (viewGroup!=null) {
+				viewGroup.removeView(rootView);
+			}
+		}
 
-		initview(view);
-		return view;
+		return rootView;
 	}
 
 	private void initview(View containor) {

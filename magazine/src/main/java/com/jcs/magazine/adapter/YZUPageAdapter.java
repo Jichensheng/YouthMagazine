@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.jcs.magazine.config.BuildConfig;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,7 +52,8 @@ public class YZUPageAdapter extends PagerAdapter {
                 .noFade()
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
-                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+                .fit()
+//                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
                 .centerCrop()
                 .into(imv);
 
