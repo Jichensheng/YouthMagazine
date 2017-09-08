@@ -17,6 +17,7 @@ import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,8 @@ public class MomentFragment extends BaseFragment {
 			recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
 			//设置箭头
 			recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
+
+			recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
 			//回调监听部分
 			recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 				@Override

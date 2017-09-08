@@ -8,9 +8,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MainActivity;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.crash.CrashHandler;
-import com.jcs.magazine.network.OkHttp3Downloader;
 import com.jcs.magazine.util.LocalFileManager;
-import com.squareup.picasso.Picasso;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -33,8 +31,8 @@ public class BaseApplication extends Application {
         initApplication();
 		initUmengShare();
 		initBugly();
-		Picasso picasso = new Picasso.Builder(this).downloader(new OkHttp3Downloader(LocalFileManager.getInstance().getCacheDir("picasso-cache"))).build();
-		Picasso.setSingletonInstance(picasso);
+//		Picasso picasso = new Picasso.Builder(this).downloader(new OkHttp3Downloader(LocalFileManager.getInstance().getCacheDir("picasso-cache"))).build();
+//		Picasso.setSingletonInstance(picasso);
 	}
 
 

@@ -23,6 +23,7 @@ import com.jcs.magazine.talk.adapter.RadioRvAdapter;
 import com.jcs.magazine.talk.interfaces.LoveInterface;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class ChildRadioFragment extends Fragment implements LoveInterface,RadioR
 		recyclerView = (XRecyclerView) parent.findViewById(R.id.rv_content);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+		recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
 	/*	//上拉下拉风格
 		recyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
 		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallScaleMultiple);

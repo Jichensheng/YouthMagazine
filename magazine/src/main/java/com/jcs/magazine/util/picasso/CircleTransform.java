@@ -1,3 +1,4 @@
+/*
 package com.jcs.magazine.util.picasso;
 
 import android.graphics.Bitmap;
@@ -5,9 +6,11 @@ import android.graphics.Bitmap;
 import com.jcs.magazine.util.BitmapUtil;
 import com.squareup.picasso.Transformation;
 
+*/
 /**
  * Picasso裁切圆形图
- */
+ *//*
+
 
 public class CircleTransform implements Transformation {
 
@@ -21,3 +24,4 @@ public class CircleTransform implements Transformation {
         return "circle";
     }
 }
+*/

@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import com.allen.library.SuperTextView;
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.mock.MockConfig;
@@ -20,11 +21,10 @@ import com.jcs.magazine.share.CustomShareListener;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.LocalFileManager;
 import com.jcs.magazine.util.UiUtil;
-import com.jcs.magazine.util.picasso.BlurTransform;
+import com.jcs.magazine.util.glide.GlideBlurTransform;
 import com.jcs.magazine.widget.Bitmaptest;
 import com.jcs.magazine.widget.CircleImageView;
 import com.jcs.magazine.widget.FastBlur;
-import com.squareup.picasso.Picasso;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -60,8 +60,10 @@ private View rootView;
 		final ImageView blurImageView = (ImageView) containor.findViewById(R.id.iv_img);
 		//Todo 头像数据来源
 		String url= MockConfig.HEAD;
-		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
-		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
+//		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
+		Glide.with(getContext()).load(url).error(R.drawable.default_avater).transform(new GlideBlurTransform(getContext())).into(blurImageView);
+//		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
+		Glide.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
 
 		//开关通知
 		SuperTextView superTextView= (SuperTextView) containor.findViewById(R.id.stv_notation);

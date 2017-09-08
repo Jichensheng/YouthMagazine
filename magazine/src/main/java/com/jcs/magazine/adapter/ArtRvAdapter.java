@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.mock.MockConfig;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Random;
@@ -54,13 +54,20 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 					onArtItemClickListener.onItemClick(v, position);
 				}
 			});
-			Picasso.with(context)
+			/*Picasso.with(context)
 //					.load(items.get(position).getImage())
 					.load(MockConfig.URLS[new Random().nextInt(MockConfig.URLS.length)])
 					.noFade()
 					.placeholder(R.mipmap.cover)
 					.error(R.mipmap.cover)
 					.fit().centerCrop()
+					.into(((StoryHolder) holder).imv_cover);*/
+			Glide.with(context)
+//					.load(items.get(position).getImage())
+					.load(MockConfig.URLS[new Random().nextInt(MockConfig.URLS.length)])
+					.placeholder(R.mipmap.cover)
+					.error(R.mipmap.cover)
+					.centerCrop()
 					.into(((StoryHolder) holder).imv_cover);
 		}
 	}

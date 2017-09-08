@@ -183,6 +183,7 @@ public abstract class NineGridLayout extends ViewGroup {
     private RatioImageView createImageView(final int i, final String url) {
         final RatioImageView imageView = new RatioImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setImageResource(R.drawable.banner_default);
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

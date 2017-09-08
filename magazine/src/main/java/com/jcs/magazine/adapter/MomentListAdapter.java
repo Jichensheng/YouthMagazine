@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
 import com.jcs.magazine.bean.BannerItem;
@@ -16,7 +17,6 @@ import com.jcs.magazine.widget.CircleImageView;
 import com.jcs.magazine.widget.banner.BannerView;
 import com.jcs.magazine.widget.banner.BannerViewFactory;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,8 @@ public class MomentListAdapter extends RecyclerView.Adapter {
 		if (holder instanceof MomentListHolder) {
 			final MomentBean mb = momentBeanList.get(position - 1);
 
-			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
+//			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
+			Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
 			final List<String> urls = new ArrayList<>();
 			for (MomentBean.ImageList imageList : mb.getImages()) {
 				urls.add(imageList.getUrl());

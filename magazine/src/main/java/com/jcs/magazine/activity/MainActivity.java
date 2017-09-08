@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.base.BaseFragment;
+import com.jcs.magazine.fragment.LaboratoryFragment;
 import com.jcs.magazine.fragment.MagazineFragment;
 import com.jcs.magazine.fragment.MineFragement;
 import com.jcs.magazine.fragment.MomentFragment;
@@ -66,10 +67,10 @@ public class MainActivity extends BaseActivity {
 		momentFragment.setIconId(R.drawable.tab_moment_selector);
 		fragments.add(momentFragment);
 
-		BaseFragment baseFragment = new BaseFragment();
-		baseFragment.setTitle("实验室");
-		baseFragment.setIconId(R.drawable.tab_laboratory_selector);
-		fragments.add(baseFragment);
+		LaboratoryFragment laboratoryFragment = new LaboratoryFragment();
+		laboratoryFragment.setTitle("实验室");
+		laboratoryFragment.setIconId(R.drawable.tab_laboratory_selector);
+		fragments.add(laboratoryFragment);
 
 		MineFragement mineFragement = new MineFragement();
 		mineFragement.setTitle("我的");

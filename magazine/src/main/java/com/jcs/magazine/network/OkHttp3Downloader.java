@@ -1,3 +1,4 @@
+/*
 package com.jcs.magazine.network;
 
 import android.content.Context;
@@ -50,11 +51,13 @@ public final class OkHttp3Downloader implements Downloader {
     return Math.max(Math.min(size, MAX_DISK_CACHE_SIZE), MIN_DISK_CACHE_SIZE);
   }
 
-  /**
+  */
+/**
    * Creates a {@link Cache} that would have otherwise been created by calling
    * {@link #OkHttp3Downloader(Context)}. This allows you to build your own {@link OkHttpClient}
    * while still getting the default disk cache.
-   */
+   *//*
+
   public static Cache createDefaultCache(Context context) {
     File dir = defaultCacheDir(context);
     return new Cache(dir, calculateDiskCacheSize(dir));
@@ -69,41 +72,49 @@ public final class OkHttp3Downloader implements Downloader {
   private final Call.Factory client;
   private final Cache cache;
 
-  /**
+  */
+/**
    * Create new downloader that uses OkHttp. This will install an image cache into your application
    * cache directory.
-   */
+   *//*
+
   public OkHttp3Downloader(Context context) {
     this(defaultCacheDir(context));
   }
 
-  /**
+  */
+/**
    * Create new downloader that uses OkHttp. This will install an image cache into the specified
    * directory.
    *
    * @param cacheDir The directory in which the cache should be stored
-   */
+   *//*
+
   public OkHttp3Downloader(File cacheDir) {
     this(cacheDir, calculateDiskCacheSize(cacheDir));
   }
 
-  /**
+  */
+/**
    * Create new downloader that uses OkHttp. This will install an image cache into your application
    * cache directory.
    *
    * @param maxSize The size limit for the cache.
-   */
+   *//*
+
   public OkHttp3Downloader(final Context context, final long maxSize) {
     this(defaultCacheDir(context), maxSize);
   }
 
-  /**
+  */
+/**
    * Create new downloader that uses OkHttp. This will install an image cache into the specified
    * directory.
    *
    * @param cacheDir The directory in which the cache should be stored
    * @param maxSize The size limit for the cache.
-   */
+   *//*
+
   public OkHttp3Downloader(File cacheDir, long maxSize) {
     this(createOkHttpClient(cacheDir, maxSize));
   }
@@ -162,4 +173,4 @@ public final class OkHttp3Downloader implements Downloader {
       }
     }
   }
-}
+}*/

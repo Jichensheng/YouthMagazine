@@ -102,6 +102,9 @@
             android:name="UMENG_APPKEY"
             android:value="598c0d41677baa4e41000fce">
         </meta-data>
+        <meta-data
+            android:name="com.jcs.magazine.util.glide.MgzGlideModule"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

@@ -65,7 +65,6 @@ public class MagazineFragment extends BaseFragment {
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
-
 							BitmapUtil.getViewBitmap(bookView);
 						}
 					}).start();
@@ -129,6 +128,9 @@ public class MagazineFragment extends BaseFragment {
 			WeakReference<YZUPageAdapter> weakReference = new WeakReference<YZUPageAdapter>(mAdapter);
 
 			final ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.id_viewpager);
+
+
+
 			LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mViewPager.getLayoutParams();
 			lp.setMargins(DimentionUtils.dip2px(getContext(), 40),
 					StatusBarUtil.getStatusBarHeight(getContext()),

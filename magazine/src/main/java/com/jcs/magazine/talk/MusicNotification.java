@@ -6,15 +6,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseApplication;
 import com.jcs.magazine.bean.TalkBean;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 
 /**
@@ -135,7 +135,7 @@ public class MusicNotification extends Notification {
         //更新歌手名字
         remoteViews.setTextViewText(R.id.tv_singer, (bean.getDj() == null ? "" : bean.getDj()));
         //更新歌曲图片
-        Picasso.with(context).load(bean.getImage()).into(new Target() {
+       /* Picasso.with(context).load(bean.getImage()).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 remoteViews.setImageViewBitmap(R.id.img_song, bitmap);
@@ -150,8 +150,13 @@ public class MusicNotification extends Notification {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
+        });*/
+        Glide.with(context).load(bean.getImage()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                remoteViews.setImageViewBitmap(R.id.img_song,resource);
+            }
         });
-
 
         //更新播放状态：播放或者暂停
         if (isplay) {

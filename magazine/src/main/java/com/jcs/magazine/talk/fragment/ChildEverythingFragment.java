@@ -22,6 +22,7 @@ import com.jcs.magazine.talk.adapter.RadioRvAdapter;
 import com.jcs.magazine.talk.interfaces.LoveInterface;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,8 @@ public class ChildEverythingFragment extends Fragment implements LoveInterface,R
 		artRvAdapter = new RadioRvAdapter(getContext(), list);
 		artRvAdapter.setOnArtItemClickListener(this);
 		recyclerView.setAdapter(artRvAdapter);
+
+		recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
 		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 			@Override
 			public void onRefresh() {

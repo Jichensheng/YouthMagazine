@@ -9,15 +9,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.UiUtil;
-import com.jcs.magazine.util.picasso.CircleTransform;
+import com.jcs.magazine.util.glide.GlideCircleTransform;
 import com.jcs.magazine.widget.CircleImageView;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,9 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		//说说详情
 		if (holder instanceof MomentHolder) {
 
-			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
+//			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
+			Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
+
 			final List<String> urls = new ArrayList<>();
 			for (MomentBean.ImageList imageList : mb.getImages()) {
 				urls.add(imageList.getUrl());
@@ -75,7 +77,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 					ImageView imageView=new ImageView(context);
 					LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(DimentionUtils.dip2px(context,35),DimentionUtils.dip2px(context,35));
 					lp.setMargins(DimentionUtils.dip2px(context,5),0,0,0);
-					Picasso.with(context).load(userBean.getHead()).transform(new CircleTransform()).error(R.drawable.default_avater).into(imageView);
+//					Picasso.with(context).load(userBean.getHead()).transform(new CircleTransform()).error(R.drawable.default_avater).into(imageView);
+					Glide.with(context).load(userBean.getHead())
+							.transform(new GlideCircleTransform(context))
+							.placeholder(R.drawable.default_avater)
+							.error(R.drawable.default_avater)
+							.into(imageView);
 					((MomentHolder) holder).ll_head_container.addView(imageView,lp);
 					imageView.setOnClickListener(new View.OnClickListener() {
 						@Override

@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.ContentsBean;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,11 +43,17 @@ public class RadioRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 					onArtItemClickListener.onItemClick(v, position);
 				}
 			});
-			Picasso.with(context)
+			/*Picasso.with(context)
 					.load(items.get(position).getImage())
 					.placeholder(R.mipmap.cover)
 					.error(R.mipmap.cover)
 					.fit().centerCrop()
+					.into(((StoryHolder) holder).imv_cover);*/
+			Glide.with(context)
+					.load(items.get(position).getImage())
+					.placeholder(R.mipmap.cover)
+					.error(R.mipmap.cover)
+					.centerCrop()
 					.into(((StoryHolder) holder).imv_cover);
 		}
 	}

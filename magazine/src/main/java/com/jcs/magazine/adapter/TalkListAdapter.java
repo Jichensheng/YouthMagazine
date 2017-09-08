@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.TalkBean;
-import com.jcs.magazine.util.picasso.CircleTransform;
+import com.jcs.magazine.util.glide.GlideCircleTransform;
 import com.jcs.magazine.widget.CDView;
 import com.jcs.magazine.widget.VirticleTitleView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -81,12 +81,18 @@ public class TalkListAdapter extends RecyclerView.Adapter implements CDView.OnSt
 				}
 			}
 
-			Picasso.with(context)
+			/*Picasso.with(context)
 					.load(talkList.get(position).getImage())
 					.transform(new CircleTransform())
 					.error(R.drawable.banner_default_circle)
 					.placeholder(R.drawable.banner_default_circle)
 					.noFade()
+					.into(cdView);*/
+			Glide.with(context)
+					.load(talkList.get(position).getImage())
+					.transform(new GlideCircleTransform(context))
+					.error(R.drawable.banner_default_circle)
+					.placeholder(R.drawable.banner_default_circle)
 					.into(cdView);
 
 			((CDListHolder) holder).ll_like.setOnClickListener(new View.OnClickListener() {

@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.squareup.picasso.Picasso;
+import com.jcs.magazine.config.BuildConfig;
 
 import java.util.List;
 
@@ -47,13 +48,21 @@ public class YZUPageAdapter extends PagerAdapter {
         tv_chief_editor.setText("主  编：" + coverBeens.get(position).getEditorship());
         tv_vol.setText("Vol." + coverBeens.get(position).getVol());
         tv_sub_editor.setText("副主编：" + coverBeens.get(position).getSubeditor());
-		Picasso.with(context)
+		/*Picasso.with(context)
                 .load(coverBeens.get(position).getImage())
                 .noFade()
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
                 .fit()
 //                .resize(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+                .centerCrop()
+                .into(imv);*/
+		Glide.with(context)
+                .load(coverBeens.get(position).getImage())
+                .placeholder(R.drawable.l_content)
+                .error(R.drawable.l_content)
+                .dontAnimate()
+                .override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
                 .centerCrop()
                 .into(imv);
 
@@ -90,7 +99,7 @@ public class YZUPageAdapter extends PagerAdapter {
         void onClickPage(View bookView,ImageView view, int position);
     }
 
-    // 可以删除这段代码看看，数据源更新而viewpager不更新的情况
+   /* // 可以删除这段代码看看，数据源更新而viewpager不更新的情况
     private int mChildCount = 0;
 
     @Override
@@ -110,5 +119,5 @@ public class YZUPageAdapter extends PagerAdapter {
         }
         // 这个则是缓存不刷新视图
         return super.getItemPosition(object);
-    }
+    }*/
 }

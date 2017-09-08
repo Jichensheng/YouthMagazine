@@ -21,6 +21,7 @@ import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 
 		artRvAdapter = new ArtRvAdapter(getContext(), list);
 		artRvAdapter.setOnArtItemClickListener(this);
+		recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
 		recyclerView.setAdapter(artRvAdapter);
 		/*recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 			@Override

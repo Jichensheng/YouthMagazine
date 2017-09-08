@@ -27,6 +27,7 @@ import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.talk.Constant;
 import com.jcs.magazine.talk.MediaPlayerService;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -68,6 +69,8 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
             adapter = new TalkListAdapter(getContext(), talkList);
             adapter.setOnClickTalkListener(this);
             recyclerView.setAdapter(adapter);
+
+            recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
             recyclerView.setLoadingListener(initListener());
         }

@@ -3,13 +3,13 @@ package com.jcs.magazine.widget.nine_grid;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.CommentPicActivity;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,7 +32,7 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     protected boolean displayOneImage(final RatioImageView imageView, String url, final int parentWidth) {
-        Picasso.with(mContext).load(url).into(new Target() {
+      /*  Picasso.with(mContext).load(url).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 int w = bitmap.getWidth();
@@ -63,6 +63,29 @@ public class NineGridTestLayout extends NineGridLayout {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
+        });*/
+
+        Glide.with(mContext).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                int w = resource.getWidth();
+                int h = resource.getHeight();
+
+                int newW;
+                int newH;
+                if (h > w * MAX_W_H_RATIO) {//h:w = 5:3
+                    newW = parentWidth / 2;
+                    newH = newW * 5 / 3;
+                } else if (h < w) {//h:w = 2:3
+                    newW = parentWidth * 2 / 3;
+                    newH = newW * 2 / 3;
+                } else {//newH:h = newW :w
+                    newW = parentWidth / 2;
+                    newH = h * newW / w;
+                }
+                setOneImageLayoutParams(imageView, newW, newH);
+                imageView.setImageBitmap(resource);
+            }
         });
         return false;
     }
@@ -78,7 +101,11 @@ public class NineGridTestLayout extends NineGridLayout {
      */
     @Override
     protected void displayImage(RatioImageView imageView, String url) {
-        Picasso.with(mContext).load(url).placeholder(R.drawable.banner_default).into(imageView);
+//        Picasso.with(mContext).load(url).placeholder(R.drawable.banner_default).into(imageView);
+        Glide.with(mContext).load(url)
+                .placeholder(R.drawable.banner_default)
+                .error(R.drawable.banner_default)
+                .into(imageView);
     }
 
     /**

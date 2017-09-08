@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -23,5 +24,23 @@ public class NoneOverScrollShadowView extends ViewPager {
 		}
 
 	}
-
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		getParent().requestDisallowInterceptTouchEvent(true);
+		return super.dispatchTouchEvent(ev);
+	}
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		boolean res = super.onInterceptTouchEvent(ev);
+		if(ev.getAction() == MotionEvent.ACTION_DOWN) {
+			preX = ev.getX();
+		} else {
+			if( Math.abs(ev.getX() - preX)> 4 ) {
+				return true;
+			} else {
+				preX = ev.getX();
+			}
+		}
+		return res;
+	}
 }
