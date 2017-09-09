@@ -182,6 +182,7 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 					Glide.with(this)
 							.load( new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_SHAER_NAME))
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
 							.into(new SimpleTarget<GlideDrawable>() {
 								@Override
 								public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
