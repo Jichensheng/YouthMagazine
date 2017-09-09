@@ -1,11 +1,13 @@
 package com.jcs.magazine.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.LaboratoryBean;
@@ -34,18 +36,36 @@ public class LaboratoryAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup container, final int position) {
-		final View bookView = LayoutInflater.from(context).inflate(R.layout.holder_laboratory, container, false);
-		final ImageView imv = (ImageView) bookView.findViewById(R.id.imv_yzu_lab);
-		bookView.setOnClickListener(new View.OnClickListener() {
+	public Object instantiateItem(final ViewGroup container, final int position) {
+		final View rootView = LayoutInflater.from(context).inflate(R.layout.holder_laboratory, container, false);
+
+		initView(position, rootView);
+
+		//注意别忘记了
+		container.addView(rootView);
+		return rootView;
+	}
+
+	private void initView(final int position, View rootView) {
+		ImageView imv = (ImageView) rootView.findViewById(R.id.imv_lb_cover);
+		imv.setImageResource(list.get(position).getRes());
+
+		TextView tv_title = (TextView) rootView.findViewById(R.id.tv_lb_title);
+		TextView tv_description = (TextView) rootView.findViewById(R.id.tv_lb_description);
+
+		tv_title.setText(list.get(position).getTitle());
+		tv_description.setText(list.get(position).getDescription());
+
+
+		rootView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				listener.onClickPage(bookView, position);
+				Intent intent = list.get(position).getIntent();
+				if (intent != null) {
+					context.startActivity(intent);
+				}
 			}
 		});
-		//注意别忘记了
-		container.addView(bookView);
-		return bookView;
 	}
 
 	@Override

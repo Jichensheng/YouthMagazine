@@ -2,18 +2,20 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:gravity="center_horizontal"
     android:baselineAligned="false"
     android:orientation="vertical">
-
     <ImageView
-        android:id="@+id/imv_yzu_lab"
-        android:layout_width="match_parent"
+        android:id="@+id/imv_lb_cover"
+        android:layout_width="225dp"
         android:layout_height="300dp"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:src="@drawable/l_content"
     />
     <LinearLayout
@@ -23,19 +25,21 @@
         android:orientation="vertical"
     >
         <TextView
+            android:id="@+id/tv_lb_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:text="标题"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="25sp"
-            android:text="标题"
         />
         <TextView
+            android:id="@+id/tv_lb_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/colorPrimary"
             android:text="内容"
+            android:textColor="@color/colorPrimary"
         />
     </LinearLayout>
 </LinearLayout>

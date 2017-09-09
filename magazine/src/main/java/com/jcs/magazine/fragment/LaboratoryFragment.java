@@ -36,13 +36,13 @@ public class LaboratoryFragment extends BaseFragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		list=initData();
-		mAdapter = new LaboratoryAdapter(getContext(),list);
+		list = initData();
+		mAdapter = new LaboratoryAdapter(getContext(), list);
 		mAdapter.setOnClickPageListener(new LaboratoryAdapter.OnClickPageListener() {
 
 			@Override
 			public void onClickPage(View view, int position) {
-				UiUtil.toast(""+position);
+				UiUtil.toast("" + position);
 			}
 		});
 	}
@@ -77,19 +77,30 @@ public class LaboratoryFragment extends BaseFragment {
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) rootView.getParent();
-		if (parent != null)
-		{
+		if (parent != null) {
 			parent.removeView(rootView);
 		}
 		return rootView;
 
 	}
-	private List<LaboratoryBean> initData(){
-		List<LaboratoryBean> list=new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
-			LaboratoryBean bean=new LaboratoryBean();
-			list.add(bean);
-		}
+
+	private List<LaboratoryBean> initData() {
+		List<LaboratoryBean> list = new ArrayList<>();
+		LaboratoryBean shudong = new LaboratoryBean();
+		shudong.setTitle("树洞");
+		shudong.setRes(R.drawable.shudong);
+		shudong.setDescription("告诉我你的小秘密");
+		shudong.setIntent(null);
+		list.add(shudong);
+
+		LaboratoryBean yangli = new LaboratoryBean();
+		yangli.setTitle("扬历");
+		yangli.setRes(R.drawable.huangli);
+		yangli.setDescription("日常小迷信");
+		yangli.setIntent(null);
+		list.add(yangli);
+
+
 		return list;
 	}
 
