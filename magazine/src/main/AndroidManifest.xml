@@ -43,6 +43,10 @@
             android:name=".activity.ArticleDetialActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activity.LoginActicity"
+            android:screenOrientation="portrait"/>
+
 
         <!--umeng share-->
 

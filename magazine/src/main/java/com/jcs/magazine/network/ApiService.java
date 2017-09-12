@@ -11,7 +11,10 @@ import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.bean.UserBean;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -19,6 +22,7 @@ import retrofit2.http.Path;
  * 2017/7/31 13:29
  */
 public interface ApiService {
+
 	/**
 	 *
 	 * @param page 分页中的第page页
@@ -36,6 +40,7 @@ public interface ApiService {
 	@GET("magazine/contents/{volId}")
 	Observable<BaseListTemplet<ContentsBean>> getContents(@Path("volId") int id);
 
+
 	/**
 	 *
 	 * @param id 文章id获取文章正文
@@ -50,6 +55,15 @@ public interface ApiService {
 	 */
 	@GET("magazine/user/{uid}")
 	Observable<BaseMgz<UserBean>> getUser(@Path("uid") String id);
+
+	//Todo 测试临时用 get
+	@GET("magazine/user/login/{nick}/{psw}")
+	Observable<BaseMgz<UserBean>> login(@Path("nick") String nick,@Path("psw") String psw);
+
+	@FormUrlEncoded
+	@POST("magazine/user/login")
+	Observable<BaseMgz<UserBean>> loginPost(@Field("nick") int page, @Field("psw") int size );
+
 
 	/**
 	 *
