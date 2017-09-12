@@ -100,7 +100,7 @@ public class DialogHelper {
         }
         return dialog.show();
     }
-    /**
+    /**R
      * 背景透明的dialog,适合loading
      *
      * @param viewId

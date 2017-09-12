@@ -1,5 +1,7 @@
 package com.jcs.magazine.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -13,6 +15,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.UserBean;
+import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.SuperEditText;
@@ -48,6 +51,10 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 		btn_login= (Button) findViewById(R.id.btn_login);
 		btn_regist= (Button) findViewById(R.id.btn_regist);
 		tv_forget= (TextView) findViewById(R.id.tv_forget);
+
+        btn_login.setOnClickListener(this);
+        btn_regist.setOnClickListener(this);
+        tv_forget.setOnClickListener(this);
 	}
 
 	@Override
@@ -75,6 +82,21 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 						@Override
 						public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
 							UiUtil.toast(userBeanBaseMgz.getResults().getToken());
+
+                            UserBean user = userBeanBaseMgz.getResults();
+                            //更新全局变量
+                            LoginUserHelper.getInstance().setLoginUser(user);
+                            /**
+                             * 登录成功更新本地数据
+                             */
+                            SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sp.edit();
+                            editor.putBoolean("user_info_isloged",true);
+                            editor.putString("user_info_nicname",user.getNick());
+                            editor.putLong("user_info_time", System.currentTimeMillis());
+                            editor.putString("user_info_token",user.getToken());
+                            editor.commit();
+
 						}
 					}, new Consumer<Throwable>() {
 						@Override

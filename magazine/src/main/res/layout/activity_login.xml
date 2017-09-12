@@ -17,8 +17,8 @@
     >
         <ImageView
             android:src="@drawable/ydqn_white"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="20dp"
         />
         <TextView
@@ -80,7 +80,7 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="80dp"
             android:background="@drawable/login_btn"
             android:textColor="@color/dark_gray"
             android:text="登录"
@@ -89,7 +89,7 @@
             android:id="@+id/btn_regist"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/regist_btn"
             android:textColor="@color/white"
             android:text="注册"
