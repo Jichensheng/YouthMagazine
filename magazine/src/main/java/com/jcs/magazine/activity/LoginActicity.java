@@ -122,7 +122,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 								finish();
 							}
 
-							EventBus.getDefault().post(new MessageEvent("success"));
+							EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
 						}
 					}, new Consumer<Throwable>() {
 						@Override

@@ -5,11 +5,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="个人信息页"
-    />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,6 +52,7 @@
                     android:id="@+id/civ_avater"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/default_avater"
                 />
@@ -74,6 +70,8 @@
                 stv:sDividerLineType="both"
                 stv:sLeftTextString="姓名"
                 stv:sRightTextString="待完善"
+                stv:sRightTextColor="@color/light_gray"
+                stv:sRightTextSize="13sp"
                 android:paddingLeft="10dp"
                 stv:sRightIconRes="@drawable/arrow_right"/>
 
@@ -85,6 +83,8 @@
                 stv:sDividerLineType="both"
                 android:paddingLeft="10dp"
                 stv:sLeftTextString="昵称"
+                stv:sRightTextColor="@color/light_gray"
+                stv:sRightTextSize="13sp"
                 stv:sRightTextString="待完善"
                 stv:sRightIconRes="@drawable/arrow_right"/>
 
@@ -95,6 +95,8 @@
                 stv:sDividerLineType="both"
                 android:paddingLeft="10dp"
                 stv:sLeftTextString="电话"
+                stv:sRightTextColor="@color/light_gray"
+                stv:sRightTextSize="13sp"
                 stv:sRightTextString="待完善"
                 stv:sRightIconRes="@drawable/arrow_right"/>
 
@@ -105,6 +107,8 @@
                 stv:sDividerLineType="both"
                 android:paddingLeft="10dp"
                 stv:sLeftTextString="学院"
+                stv:sRightTextColor="@color/light_gray"
+                stv:sRightTextSize="13sp"
                 stv:sRightTextString="待完善"
                 stv:sRightIconRes="@drawable/arrow_right"/>
 
@@ -122,7 +126,7 @@
         android:background="@drawable/radius_btn"
         android:text="退 出 登 录"
         android:textColor="#fff"
-        android:textSize="18sp"
+        android:textSize="17sp"
 
     />
 </LinearLayout>

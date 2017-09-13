@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
+import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
 import com.jcs.magazine.activity.mine.ContactUsActivity;
 import com.jcs.magazine.activity.mine.PartnerActivity;
@@ -53,7 +54,7 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 	private SuperTextView stv_catch;
 	private CircleImageView civ_avater;
 	private ImageView blurImageView;
-	private TextView tv_nick,tv_complete;
+	private TextView tv_nick,tv_complete,tv_login;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,12 +83,19 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 		blurImageView = (ImageView) containor.findViewById(R.id.iv_img);
 		tv_nick= (TextView) containor.findViewById(R.id.tv_inck_name);
 		tv_complete= (TextView) containor.findViewById(R.id.tv_complete);
+        tv_login= (TextView) containor.findViewById(R.id.tv_login);
 
 		String url = "";
 		if (LoginUserHelper.getInstance().isLogined()) {
 			url=LoginUserHelper.getInstance().getUser().getHead();
 			tv_nick.setText(LoginUserHelper.getInstance().getUser().getNick());
-		}
+            tv_complete.setVisibility(View.VISIBLE);
+            tv_login.setVisibility(View.GONE);
+		}else {
+            tv_nick.setText("游客");
+            tv_complete.setVisibility(View.GONE);
+            tv_login.setVisibility(View.VISIBLE);
+        }
 //		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
 		Glide.with(getContext()).load(url).error(R.drawable.default_avater_blur).transform(new GlideBlurTransform(getContext())).into(blurImageView);
 //		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
@@ -127,6 +135,7 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 
 		civ_avater.setOnClickListener(this);
 		tv_complete.setOnClickListener(this);
+        tv_login.setOnClickListener(this);
 	}
 
 	@Override
@@ -183,6 +192,11 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 				intent = new Intent(getContext(), UserInfoActivity.class);
 				PermissionHelper.getHelper().startActivity(getContext(), intent);
 				break;
+			//资料完善度
+			case R.id.tv_login:
+				intent = new Intent(getContext(), LoginActicity.class);
+				startActivity(intent);
+				break;
 
 		}
 	}
@@ -224,12 +238,18 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void refreshInfo(MessageEvent messageEvent){
-		if (messageEvent.getMessage().equals("success")) {
+		if (messageEvent.getMessage().equals("refresh_login_state")) {
 			String url = "";
 			if (LoginUserHelper.getInstance().isLogined()) {
 				url=LoginUserHelper.getInstance().getUser().getHead();
 				tv_nick.setText(LoginUserHelper.getInstance().getUser().getNick());
-			}
+                tv_complete.setVisibility(View.VISIBLE);
+                tv_login.setVisibility(View.GONE);
+			}else{
+                tv_nick.setText("游客");
+                tv_complete.setVisibility(View.GONE);
+                tv_login.setVisibility(View.VISIBLE);
+            }
 			Glide.with(getContext()).load(url).error(R.drawable.default_avater_blur).transform(new GlideBlurTransform(getContext())).into(blurImageView);
 			Glide.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
 		}

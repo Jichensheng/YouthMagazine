@@ -59,7 +59,7 @@ public class StartPage extends BaseActivity {
         //用户每次登陆的时候重置
         long user_info_time=sp.getLong("user_info_time",0);
         //超时就清空
-        if (System.currentTimeMillis()-user_info_time>10*1000) {
+        if (System.currentTimeMillis()-user_info_time>0.5*60*60*1000) {
             sp.edit().putBoolean("user_info_isloged",false).apply();
             UiUtil.toast("过时了");
         }else {

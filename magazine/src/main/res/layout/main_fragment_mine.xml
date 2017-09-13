@@ -39,7 +39,7 @@
             android:gravity="center_horizontal"
             android:text="游客"
             android:textColor="@android:color/white"
-            android:textSize="17sp"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -50,8 +50,23 @@
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:text="资料完善度80% >"
-            android:textColor="#88ffffff"
+            android:textColor="@color/trans_withe"
             android:textSize="13sp"
+            />
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_below="@+id/tv_inck_name"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center"
+            android:text="登　录"
+            android:textColor="@color/trans_withe"
+            android:background="@drawable/textview_shape"
+            android:textSize="13sp"
+            android:layout_centerHorizontal="true"
             />
 
         <ImageView
