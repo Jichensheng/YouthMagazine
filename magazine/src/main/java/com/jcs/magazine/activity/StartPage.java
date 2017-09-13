@@ -3,11 +3,14 @@ package com.jcs.magazine.activity;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,10 +18,14 @@ import android.view.WindowManager;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
+import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.MgzCoverBean;
+import com.jcs.magazine.bean.UserBean;
+import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.NetworkUtil;
+import com.jcs.magazine.util.UiUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,7 +48,39 @@ public class StartPage extends BaseActivity {
 //        UiUtil.toast("VersionCode: "+BuildConfig.getLocalVersionCode()+"  VersionName: "+BuildConfig.getLocalVersionName());
         animator = ValueAnimator.ofFloat(0, 1);
         animator.setDuration(1000);
-        animator.addListener(new Animator.AnimatorListener() {
+        animator.addListener(getListener());
+        requestPermission();
+        initLogin();
+
+    }
+
+    private void initLogin() {
+        SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        //用户每次登陆的时候重置
+        long user_info_time=sp.getLong("user_info_time",0);
+        //超时就清空
+        if (System.currentTimeMillis()-user_info_time>10*1000) {
+            sp.edit().putBoolean("user_info_isloged",false).apply();
+            UiUtil.toast("过时了");
+        }else {
+            YzuClient.getInstance()
+                    .login(sp.getString("user_info_nicname",""),sp.getString("user_info_psw","aaa"))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<BaseMgz<UserBean>>(){
+                        @Override
+                        public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+                            UserBean user = userBeanBaseMgz.getResults();
+                            //更新全局变量
+                            LoginUserHelper.getInstance().setLoginUser(user);
+                        }
+                    });
+        }
+    }
+
+    @NonNull
+    private Animator.AnimatorListener getListener() {
+        return new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -98,9 +137,7 @@ public class StartPage extends BaseActivity {
             public void onAnimationRepeat(Animator animation) {
 
             }
-        });
-        requestPermission();
-
+        };
     }
 
     /**

@@ -31,21 +31,22 @@
             />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_inck_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/civ_avater"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:text="Jcs"
+            android:text="游客"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="17sp"
             />
 
         <TextView
+            android:id="@+id/tv_complete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/tv_inck_name"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:text="资料完善度80% >"
@@ -68,14 +69,16 @@
         android:background="#fff"
         android:layout_height="wrap_content">
         <com.jcs.magazine.widget.IconFontTabView
+            android:id="@+id/iftv_post"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_height="wrap_content"
             app:iconFont="@string/fatie"
             app:iconText="我的帖子"
-            />
+        />
         <com.jcs.magazine.widget.IconFontTabView
+            android:id="@+id/iftv_collect"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -84,6 +87,7 @@
             app:iconText="收藏夹"
             />
         <com.jcs.magazine.widget.IconFontTabView
+            android:id="@+id/iftv_partner"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -109,6 +113,7 @@
 
 
             <com.allen.library.SuperTextView
+                android:id="@+id/stv_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:sLeftIconMarginLeft="20dp"
@@ -161,6 +166,7 @@
                 app:sLeftTextString="分享"
                 app:sLeftIconRes="@drawable/v0"/>
             <com.allen.library.SuperTextView
+                android:id="@+id/stv_contract_us"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:sLeftIconMarginLeft="20dp"

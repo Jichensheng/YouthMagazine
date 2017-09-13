@@ -1,6 +1,8 @@
 package com.jcs.magazine.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +19,11 @@ import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.MessageEvent;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.SuperEditText;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -33,6 +38,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 	private SuperEditText set_nick,set_psw;
 	private Button btn_login,btn_regist;
 	private TextView tv_forget;
+	private Intent planTo;
 
 	@Override
 	protected void onCreate(@Nullable Bundle paramBundle) {
@@ -81,6 +87,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 					.subscribe(new Consumer<BaseMgz<UserBean>>() {
 						@Override
 						public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+
 							UiUtil.toast(userBeanBaseMgz.getResults().getToken());
 
                             UserBean user = userBeanBaseMgz.getResults();
@@ -93,10 +100,29 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
                             SharedPreferences.Editor editor=sp.edit();
                             editor.putBoolean("user_info_isloged",true);
                             editor.putString("user_info_nicname",user.getNick());
+                            editor.putString("user_info_psw",user.getPsw());
                             editor.putLong("user_info_time", System.currentTimeMillis());
                             editor.putString("user_info_token",user.getToken());
-                            editor.commit();
+                            editor.apply();
 
+							//判断是否有计划跳转的页面
+							if (getIntent().getExtras() != null && getIntent().getExtras().getString("className") != null) {
+								String className = getIntent().getExtras().getString("className");
+								getIntent().removeExtra("className");
+								if (className != null ) {
+									try {
+										ComponentName componentName = new ComponentName(LoginActicity.this, Class.forName(className));
+										startActivity(getIntent().setComponent(componentName));
+										finish();
+									} catch (ClassNotFoundException e) {
+										e.printStackTrace();
+									}
+								}
+							}else{//没有计划跳转的页面就finish掉
+								finish();
+							}
+
+							EventBus.getDefault().post(new MessageEvent("success"));
 						}
 					}, new Consumer<Throwable>() {
 						@Override

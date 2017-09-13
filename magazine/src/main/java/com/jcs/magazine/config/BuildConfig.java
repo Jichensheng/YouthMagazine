@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
  * 2017/7/31 14:33
  */
 public class BuildConfig {
+	public static final long DEAD_TIME=7*24*60*60*1000;
 	public static final Boolean DEBUG = true;
 	/**
 	 * 封面默认宽高px

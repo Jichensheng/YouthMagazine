@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:stv="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="个人信息页"
+    />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+            <!--  private String uid;//用户ID
+              private String name;//姓名
+              private String nick;//昵称
+              private String regData;//注册时间
+              private String head;//头像地址
+              private String phone;//电话
+              private String sId;//学号
+              private String college;//学院
+              private String psw;
+              private String token;-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@drawable/item_press"
+            >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_main_black"
+                    android:text="头像"
+                />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+                <com.jcs.magazine.widget.CircleImageView
+                    android:id="@+id/civ_avater"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/default_avater"
+                />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/arrow_right"
+                />
+            </LinearLayout>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/stv_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                stv:sDividerLineType="both"
+                stv:sLeftTextString="姓名"
+                stv:sRightTextString="待完善"
+                android:paddingLeft="10dp"
+                stv:sRightIconRes="@drawable/arrow_right"/>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/stv_nick"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                stv:sDividerLineType="both"
+                android:paddingLeft="10dp"
+                stv:sLeftTextString="昵称"
+                stv:sRightTextString="待完善"
+                stv:sRightIconRes="@drawable/arrow_right"/>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/stv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                stv:sDividerLineType="both"
+                android:paddingLeft="10dp"
+                stv:sLeftTextString="电话"
+                stv:sRightTextString="待完善"
+                stv:sRightIconRes="@drawable/arrow_right"/>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/stv_college"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                stv:sDividerLineType="both"
+                android:paddingLeft="10dp"
+                stv:sLeftTextString="学院"
+                stv:sRightTextString="待完善"
+                stv:sRightIconRes="@drawable/arrow_right"/>
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_exit"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/radius_btn"
+        android:text="退 出 登 录"
+        android:textColor="#fff"
+        android:textSize="18sp"
+
+    />
+</LinearLayout>

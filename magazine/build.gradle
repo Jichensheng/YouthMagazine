@@ -55,7 +55,8 @@ dependencies {
     //图片框架
 //    compile 'com.squareup.picasso:picasso:2.5.2'
     compile'com.github.bumptech.glide:glide:3.7.0'
-
+    //事件总线
+    compile 'org.greenrobot:eventbus:3.0.0'
     //RxJava+Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

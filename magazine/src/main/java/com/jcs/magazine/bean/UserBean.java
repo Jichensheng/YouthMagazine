@@ -15,6 +15,7 @@ public class UserBean implements Serializable {
 	private String phone;//电话
 	private String sId;//学号
 	private String college;//学院
+	private String psw;
 	private String token;
 
 	public String getUid() {
@@ -23,6 +24,14 @@ public class UserBean implements Serializable {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public String getPsw() {
+		return psw;
+	}
+
+	public void setPsw(String psw) {
+		this.psw = psw;
 	}
 
 	public String getName() {
