@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,13 +22,17 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.BitmapUtil;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.DimentionUtils;
+import com.jcs.magazine.util.FileUtil;
 import com.jcs.magazine.util.MessageEvent;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.CircleImageView;
@@ -166,6 +171,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 		final EditText edittext = new EditText(UserInfoActivity.this);
 
 		edittext.setText(view.getRightString());
+		edittext.setTextSize(16);
 		edittext.setBackgroundColor(Color.TRANSPARENT);
 		edittext.setPadding(DimentionUtils.dip2px(this, 28), DimentionUtils.dip2px(this, 30), DimentionUtils.dip2px(this, 30), DimentionUtils.dip2px(this, 10));
 		edittext.setSelection(view.getRightString().length());
@@ -185,9 +191,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				Editable text = edittext.getText();
 				if (!TextUtils.isEmpty(text) && !text.equals(view.getRightString())) {
 					view.setRightString(text);
-
 				}
-
 				if (text.toString().equals(remote)) {
 					count = count == 0 ? 0 : count - 1;
 				} else {
@@ -198,7 +202,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				for (Integer integer : changeState.values()) {
 					temp += integer;
 				}
-				if (temp <= 0) {
+				if (temp <= 0&&headPath.length()==0) {
 					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.light_gray));
 					needSave = false;
 				} else {
@@ -210,15 +214,16 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 	}
 
 	private void save() {
-		File file=headPath.length()!=0?new File(headPath):null;
+		//选中的头像
+		File file=headPath.length()!=0?new File(FileUtil.getProjectRootFile(),FileUtil.DEFAULT_PIC_HEAD_NAME):null;
 
 		MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-		if (TextUtils.isEmpty(stv_name.getRightString())) requestBodyBuilder.addFormDataPart("nick",stv_name.getRightString());
-		if (TextUtils.isEmpty(stv_college.getRightString())) requestBodyBuilder.addFormDataPart("college",stv_college.getRightString());
+		if (!TextUtils.isEmpty(stv_nick.getRightString())) requestBodyBuilder.addFormDataPart("nick",stv_nick.getRightString());
+		if (!TextUtils.isEmpty(stv_college.getRightString())) requestBodyBuilder.addFormDataPart("college",stv_college.getRightString());
 
-		if(file.exists()){
-			requestBodyBuilder.addFormDataPart("head","head.png", RequestBody.create(MediaType.parse("image/*"),file));
+		if(file!=null&&file.exists()){
+			requestBodyBuilder.addFormDataPart("head","head.jpg", RequestBody.create(MediaType.parse("image/*"),file));
 		}
 
 		YzuClient.getInstance()
@@ -294,7 +299,20 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.btn_red));
 			List<String> list = Matisse.obtainPathResult(data);
 			headPath= list.get(0);
-			Glide.with(this).load(headPath).error(R.drawable.default_avater).into(civ_avater);
+//			Glide.with(this).load(headPath).error(R.drawable.default_avater).into(civ_avater);
+			Glide.with(this).load(headPath).asBitmap().error(R.drawable.default_avater)
+					.into(new SimpleTarget<Bitmap>(300,400) {
+						@Override
+						public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+							civ_avater.setImageBitmap(resource);
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									BitmapUtil.saveBitmap(FileUtil.DEFAULT_PIC_HEAD_NAME,resource);
+								}
+							}).start();
+						}
+					});
 		}
 	}
 }

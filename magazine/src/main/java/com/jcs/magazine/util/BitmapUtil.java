@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -107,7 +108,7 @@ public class BitmapUtil {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 70, fOut);
         try {
             fOut.flush();
         } catch (IOException e) {
@@ -117,6 +118,53 @@ public class BitmapUtil {
             fOut.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void byte2File(byte[] buf, String filePath, String fileName)
+    {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        File file = null;
+        try
+        {
+            File dir = new File(filePath);
+            if (!dir.exists() && dir.isDirectory())
+            {
+                dir.mkdirs();
+            }
+            file = new File(filePath + File.separator + fileName);
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(buf);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (bos != null)
+            {
+                try
+                {
+                    bos.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null)
+            {
+                try
+                {
+                    fos.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

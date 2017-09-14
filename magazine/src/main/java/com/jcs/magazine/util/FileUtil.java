@@ -30,7 +30,7 @@ import java.util.zip.ZipFile;
  */
 public class FileUtil {
   public static final String DEFAULT_PIC_HEAD_NAME="avatar.jpg";
-  public static final String DEFAULT_PIC_SHAER_NAME="share.png";
+  public static final String DEFAULT_PIC_SHAER_NAME="share.jpg";
 
   /**
    * 获取文件大小工具方法

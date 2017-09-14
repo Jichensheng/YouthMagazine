@@ -98,7 +98,7 @@ public class MatisseActivity extends AppCompatActivity implements
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
+//        toolbar.setNavigationIcon(R.drawable.ic_back);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);

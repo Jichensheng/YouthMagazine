@@ -8,9 +8,9 @@ android {
         minSdkVersion 11
         targetSdkVersion 25
     }
-    lintOptions {
+/*    lintOptions {
         abortOnError false
-    }
+    }*/
 }
 
 ext.supportLibVersion = '25.3.1'
