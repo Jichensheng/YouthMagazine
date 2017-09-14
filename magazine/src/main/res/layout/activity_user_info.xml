@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:stv="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+    >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_toolbar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:layout_height="@dimen/toolbar_size">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+            >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="编辑资料"
+                    android:paddingRight="15dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/dark_gray"
+                />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="保存"
+            android:paddingRight="15dp"
+            android:textSize="16dp"
+            android:textColor="@color/light_gray"
+        />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,50 +106,50 @@
                 android:id="@+id/stv_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                stv:sDividerLineType="both"
-                stv:sLeftTextString="姓名"
-                stv:sRightTextString="待完善"
-                stv:sRightTextColor="@color/light_gray"
-                stv:sRightTextSize="13sp"
-                android:paddingLeft="10dp"
-                stv:sRightIconRes="@drawable/arrow_right"/>
+                app:sDividerLineType="top"
+                app:sLeftTextString="姓名"
+                app:sRightTextString="待完善"
+                app:sRightTextColor="@color/light_gray"
+                app:sRightTextSize="13sp"
+                android:paddingRight="25dp"
+                android:paddingLeft="10dp" />
 
             <com.allen.library.SuperTextView
                 android:id="@+id/stv_nick"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="20dp"
-                stv:sDividerLineType="both"
+                app:sDividerLineType="top"
                 android:paddingLeft="10dp"
-                stv:sLeftTextString="昵称"
-                stv:sRightTextColor="@color/light_gray"
-                stv:sRightTextSize="13sp"
-                stv:sRightTextString="待完善"
-                stv:sRightIconRes="@drawable/arrow_right"/>
+                app:sLeftTextString="昵称"
+                app:sRightTextColor="@color/gray"
+                app:sRightTextSize="13sp"
+                app:sRightTextString="待完善"
+                app:sRightIconRes="@drawable/arrow_right"/>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/stv_phone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                stv:sDividerLineType="both"
+                app:sDividerLineType="top"
                 android:paddingLeft="10dp"
-                stv:sLeftTextString="电话"
-                stv:sRightTextColor="@color/light_gray"
-                stv:sRightTextSize="13sp"
-                stv:sRightTextString="待完善"
-                stv:sRightIconRes="@drawable/arrow_right"/>
+                app:sLeftTextString="电话"
+                app:sRightTextColor="@color/light_gray"
+                app:sRightTextSize="13sp"
+                app:sRightTextString="待完善"
+                app:sRightIconRes="@drawable/arrow_right"/>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/stv_college"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                stv:sDividerLineType="both"
+                app:sDividerLineType="top"
                 android:paddingLeft="10dp"
-                stv:sLeftTextString="学院"
-                stv:sRightTextColor="@color/light_gray"
-                stv:sRightTextSize="13sp"
-                stv:sRightTextString="待完善"
-                stv:sRightIconRes="@drawable/arrow_right"/>
+                app:sLeftTextString="学院"
+                app:sRightTextColor="@color/gray"
+                app:sRightTextSize="13sp"
+                app:sRightTextString="待完善"
+                app:sRightIconRes="@drawable/arrow_right"/>
 
         </LinearLayout>
     </ScrollView>
@@ -119,7 +158,7 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="40dp"

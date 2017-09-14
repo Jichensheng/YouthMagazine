@@ -11,6 +11,8 @@ import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.bean.UserBean;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -81,6 +83,15 @@ public interface ApiService {
 	 */
 	@GET("magazine/moment/{page}/{count}")
 	Observable<BaseListTemplet<MomentBean>> getMomentLists(@Path("page") int page, @Path("count") int count);
+
+	/**
+	 *	获取某用户的发帖列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/user/{uid}/{page}/{count}")
+	Observable<BaseListTemplet<MomentBean>> getUserPostLists(@Path("uid") String uid,@Path("page") int page, @Path("count") int count);
 	/**
 	 *
 	 * 获取广场banner
@@ -121,4 +132,12 @@ public interface ApiService {
 	 */
 	@GET("magazine/everything/{page}/{count}")
 	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
+
+	/**
+	 * 更新用户信息 RequestBody形式
+	 * @param Body
+	 * @return
+	 */
+	@POST("magazine/user/updataUserInfo")
+	Observable<UserBean> updataUserInfo(@Body RequestBody Body);
 }

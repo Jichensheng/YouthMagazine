@@ -124,6 +124,17 @@
         <meta-data
             android:name="com.jcs.magazine.util.glide.MgzGlideModule"
             android:value="GlideModule" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jcs.pic.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>

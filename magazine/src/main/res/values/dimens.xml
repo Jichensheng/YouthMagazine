@@ -11,4 +11,8 @@
     <dimen name="notification_singer_size">12sp</dimen>
     <dimen name="notification_linear_height">41dp</dimen>
     <dimen name="notification_img_size">70dp</dimen>
+
+    <dimen name="grid_expected_size">100dp</dimen>
+    <dimen name="item_margin_horizontal">24dp</dimen>
+    <dimen name="item_margin_vertical">8dp</dimen>
 </resources>

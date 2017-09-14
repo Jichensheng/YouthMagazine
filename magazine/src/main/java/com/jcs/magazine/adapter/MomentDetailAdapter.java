@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.bean.UserBean;
+import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.util.glide.GlideCircleTransform;
@@ -62,6 +63,16 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 
 //			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
 			Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
+			//用户已登录且是自己发的帖子
+			if (LoginUserHelper.getInstance().isLogined()
+					&&LoginUserHelper.getInstance().getUser().getUid().equals(mb.getUid())) {
+				((MomentHolder) holder).tv_btn.setText("删除");
+				// TODO: 2017/9/14 删除逻辑
+			}else {
+				((MomentHolder) holder).tv_btn.setText("+关注");
+				// TODO: 2017/9/14 关注逻辑
+			}
+
 
 			final List<String> urls = new ArrayList<>();
 			for (MomentBean.ImageList imageList : mb.getImages()) {
@@ -111,7 +122,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		LinearLayout ll_head_container;
 		NineGridTestLayout nineGridTestLayout;
 		CircleImageView civ;
-		TextView nick, tv_content, tv_public_time, tv_praise;
+		TextView nick, tv_content, tv_public_time, tv_praise,tv_btn;
 
 		public MomentHolder(View itemView) {
 			super(itemView);
@@ -120,6 +131,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 			tv_content = (TextView) itemView.findViewById(R.id.tv_content);
 			civ = (CircleImageView) itemView.findViewById(R.id.civ_head);
 			nick = (TextView) itemView.findViewById(R.id.tv_nickname);
+			tv_btn = (TextView) itemView.findViewById(R.id.tv_btn);
 			tv_public_time = (TextView) itemView.findViewById(R.id.tv_public_time);
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);
 		}

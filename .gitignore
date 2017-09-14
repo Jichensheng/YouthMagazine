@@ -1,11 +1,10 @@
 /build
 /.idea
-/.gradle
 /captures
 /local.properties
-/app
-/tab＋viewpager
 /README.md
 YouthMagazine.iml
 magazine/magazine.iml
 rtext/libs/
+/matisse/matisse.iml
+topsnackbar/libs/
