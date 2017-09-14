@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhihu.matisse.engine.ImageEngine;
 
 /**
@@ -35,6 +36,7 @@ public class GlideEngine implements ImageEngine {
         Glide.with(context)
                 .load(uri)
                 .asBitmap()  // some .jpeg files are actually gif
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(placeholder)
                 .override(resize, resize)
                 .centerCrop()
@@ -47,6 +49,7 @@ public class GlideEngine implements ImageEngine {
         Glide.with(context)
                 .load(uri)
                 .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(placeholder)
                 .override(resize, resize)
                 .centerCrop()
@@ -57,6 +60,7 @@ public class GlideEngine implements ImageEngine {
     public void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
         Glide.with(context)
                 .load(uri)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .override(resizeX, resizeY)
                 .priority(Priority.HIGH)
                 .into(imageView);
@@ -67,6 +71,7 @@ public class GlideEngine implements ImageEngine {
         Glide.with(context)
                 .load(uri)
                 .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .override(resizeX, resizeY)
                 .priority(Priority.HIGH)
                 .into(imageView);
