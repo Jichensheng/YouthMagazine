@@ -58,6 +58,7 @@ public class StartPage extends BaseActivity {
      * 初始化登录信息
      */
     private void initLogin() {
+        // TODO: 2017/9/15 加密版本的sp
         SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
         if (sp.getBoolean("user_info_isloged",false)) {//登陆过就判断是否超时
             //用户每次登陆的时候重置
