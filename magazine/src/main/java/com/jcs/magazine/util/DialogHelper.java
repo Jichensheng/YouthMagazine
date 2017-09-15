@@ -19,9 +19,36 @@ public class DialogHelper {
         this.context = context;
 
     }
-
+    public AlertDialog show(DialogInterface.OnClickListener listenerOk,
+                            boolean cancelable, int viewId,
+                            @StyleRes int style, String title, String content, DialogInterface.OnClickListener listenerCancle
+    ) {
+        AlertDialog.Builder dialog;
+        //带样式的
+        if (style != 0) {
+            dialog = new AlertDialog.Builder(context, R.style.CustomDialog);
+        } else
+            dialog = new AlertDialog.Builder(context);
+        if (title != null) {
+            dialog.setTitle(title);
+        }
+        if (content != null) {
+            dialog.setMessage(content);
+        }
+        dialog.setCancelable(cancelable);
+        if (listenerOk != null) {
+            dialog.setPositiveButton("确定", listenerOk);
+        }
+        if (listenerCancle!=null) {
+            dialog.setNegativeButton("取消", listenerCancle);
+        }
+        if (viewId != 0) {
+            dialog.setView(viewId);
+        }
+        return dialog.show();
+    }
     /**
-     * 最全的dialog
+     * 自定义view用id
      *
      * @param listenerOk
      * @param cancelable
@@ -61,7 +88,7 @@ public class DialogHelper {
         return dialog.show();
     }
     /**
-     * 最全的dialog
+     * 自定义view用view
      *
      * @param listenerOk
      * @param cancelable
@@ -100,7 +127,7 @@ public class DialogHelper {
         }
         return dialog.show();
     }
-    /**R
+    /**
      * 背景透明的dialog,适合loading
      *
      * @param viewId

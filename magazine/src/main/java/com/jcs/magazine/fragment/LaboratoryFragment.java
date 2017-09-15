@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -69,12 +68,12 @@ public class LaboratoryFragment extends BaseFragment {
 			mViewPager.setOffscreenPageLimit(3);
 			mViewPager.setPageTransformer(true, new ScaleInTransformer());// 动画进大出小
 			//viewPager的父容器把事件拦截了，否则只能拖动最中间的那个view才能左右滑动
-			rootView.findViewById(R.id.container).setOnTouchListener(new View.OnTouchListener() {
+			/*rootView.findViewById(R.id.container).setOnTouchListener(new View.OnTouchListener() {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					return mViewPager.dispatchTouchEvent(event);
 				}
-			});
+			});*/
 			mViewPager.setAdapter(weakReference.get());
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。

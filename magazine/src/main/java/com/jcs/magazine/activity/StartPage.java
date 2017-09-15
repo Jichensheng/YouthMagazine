@@ -54,28 +54,34 @@ public class StartPage extends BaseActivity {
 
     }
 
+    /**
+     * 初始化登录信息
+     */
     private void initLogin() {
         SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        //用户每次登陆的时候重置
-        long user_info_time=sp.getLong("user_info_time",0);
-        //超时就清空
-        if (System.currentTimeMillis()-user_info_time>0.5*60*60*1000) {
-            sp.edit().putBoolean("user_info_isloged",false).apply();
-            UiUtil.toast("过时了");
-        }else {
-            YzuClient.getInstance()
-                    .login(sp.getString("user_info_nicname",""),sp.getString("user_info_psw","aaa"))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<BaseMgz<UserBean>>(){
-                        @Override
-                        public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
-                            UserBean user = userBeanBaseMgz.getResults();
-                            //更新全局变量
-                            LoginUserHelper.getInstance().setLoginUser(user);
-                        }
-                    });
+        if (sp.getBoolean("user_info_isloged",false)) {//登陆过就判断是否超时
+            //用户每次登陆的时候重置
+            long user_info_time=sp.getLong("user_info_time",0);
+            //超时就清空
+            if (System.currentTimeMillis()-user_info_time>0.5*60*60*1000) {
+                sp.edit().putBoolean("user_info_isloged",false).apply();
+                UiUtil.toast("过时了");
+            }else {
+                YzuClient.getInstance()
+                        .login(sp.getString("user_info_nicname",""),sp.getString("user_info_psw","aaa"))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<BaseMgz<UserBean>>(){
+                            @Override
+                            public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+                                UserBean user = userBeanBaseMgz.getResults();
+                                //更新全局变量
+                                LoginUserHelper.getInstance().setLoginUser(user);
+                            }
+                        });
+            }
         }
+
     }
 
     @NonNull
@@ -161,7 +167,12 @@ public class StartPage extends BaseActivity {
                                     startActivity(intent);
                                     finish();
                                 }
-                            },"友情提示","没有储存权限用户存取数据会受到影响，是否手动开启权限");
+                            }, true, 0, 0, ">_<", "没有储存权限用户存取数据会受到影响，是否手动开启权限", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    animator.start();
+                                }
+                            });
 
                         }
                     }
