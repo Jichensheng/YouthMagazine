@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.jcs.magazine.config.BuildConfig;
 
 import java.util.List;
 
@@ -62,8 +61,8 @@ public class YZUPageAdapter extends PagerAdapter {
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
                 .dontAnimate()
-                .override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
-                .centerCrop()
+//                .override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+//                .centerCrop()
                 .into(imv);
 
 //		imv.setImageResource(imgRes[position]);
@@ -99,7 +98,7 @@ public class YZUPageAdapter extends PagerAdapter {
         void onClickPage(View bookView,ImageView view, int position);
     }
 
-   /* // 可以删除这段代码看看，数据源更新而viewpager不更新的情况
+    // 可以删除这段代码看看，数据源更新而viewpager不更新的情况
     private int mChildCount = 0;
 
     @Override
@@ -119,5 +118,5 @@ public class YZUPageAdapter extends PagerAdapter {
         }
         // 这个则是缓存不刷新视图
         return super.getItemPosition(object);
-    }*/
+    }
 }
