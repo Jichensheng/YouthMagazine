@@ -169,7 +169,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 				break;
 			case MODE_REGIST_SMS://短信注册功能
 				// TODO: 2017/9/15 短信注册功能
-				UiUtil.toast("验证码提交服务");
+				UiUtil.toast("验证码提交服务\n"+set_phone.getText()+"\n"+set_sms.getText());
 				break;
 		}
 
@@ -185,7 +185,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 				break;
 			case MODE_REGIST_NORMAL://当前已经是注册模式的话就提交数据
 				// TODO: 2017/9/15 提交注册业务
-				UiUtil.toast("账号注册提交服务");
+				UiUtil.toast("账号注册提交服务\n"+set_nick.getText()+"\n"+set_psw.getText()+"\n"+set_psw_re.getText());
 				break;
 			case MODE_REGIST_SMS:
 				refreshLayout(MODE_REGIST_NORMAL);
