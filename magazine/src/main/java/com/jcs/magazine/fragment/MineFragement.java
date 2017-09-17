@@ -250,8 +250,11 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
                 tv_complete.setVisibility(View.GONE);
                 tv_login.setVisibility(View.VISIBLE);
             }
-			Glide.with(getContext()).load(url).error(R.drawable.default_avater_blur).transform(new GlideBlurTransform(getContext())).into(blurImageView);
-			Glide.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
+			Glide.with(getContext()).load(url)
+                    .error(R.drawable.default_avater_blur).skipMemoryCache(true)
+                    .transform(new GlideBlurTransform(getContext())).into(blurImageView);
+			Glide.with(getContext())
+                    .load(url).skipMemoryCache(true).error(R.drawable.default_avater).into(civ_avater);
 		}
 
 	}

@@ -60,7 +60,7 @@ public class YZUPageAdapter extends PagerAdapter {
                 .load(coverBeens.get(position).getImage())
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
-                .dontAnimate()
+//                .dontAnimate()
 //                .override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
 //                .centerCrop()
                 .into(imv);

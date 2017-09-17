@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
@@ -108,7 +109,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
 		user = LoginUserHelper.getInstance().getUser();
 		if (user != null) {
-			Glide.with(this).load(user.getHead()).error(R.drawable.default_avater).into(civ_avater);
+			Glide.with(this).load(user.getHead()).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_avater).into(civ_avater);
 			stv_name.setRightString(user.getName());
 			stv_nick.setRightString(user.getNick());
 			stv_phone.setRightString(user.getPhone());

@@ -29,6 +29,7 @@ import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.share.CustomShareListener;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.FileUtil;
+import com.jcs.magazine.util.StatusBarUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -59,6 +60,8 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_preface);
+        //注意了，这里使用了第三方库 StatusBarUtil
+        StatusBarUtil.setTransparentForImageView(this, null);
 		initView();
 		initShare();
 	}
@@ -88,8 +91,8 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 				.into(imageView);*/
 		Glide.with(this)
 				.load(getIntent().getStringExtra("img"))
-				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
-				.centerCrop()
+//				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+//				.centerCrop()
 				.placeholder(R.drawable.l_content)
 				.error(R.drawable.l_content)
 				.into(imageView);

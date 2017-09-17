@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.LaboratoryBean;
+import com.jcs.magazine.util.glide.GlideRoundConnerTransform;
 
 import java.util.List;
 
@@ -48,7 +50,11 @@ public class LaboratoryAdapter extends PagerAdapter {
 
 	private void initView(final int position, View rootView) {
 		ImageView imv = (ImageView) rootView.findViewById(R.id.imv_lb_cover);
-		imv.setImageResource(list.get(position).getRes());
+        Glide.with(context)
+                .load(list.get(position).getRes())
+                .override(337,292)
+                .transform(new GlideRoundConnerTransform(context,20)).into(imv);
+//        imv.setImageResource(list.get(position).getRes());
 
 		TextView tv_title = (TextView) rootView.findViewById(R.id.tv_lb_title);
 		TextView tv_description = (TextView) rootView.findViewById(R.id.tv_lb_description);

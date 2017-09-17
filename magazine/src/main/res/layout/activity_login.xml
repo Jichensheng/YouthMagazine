@@ -86,10 +86,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/regist_btn"
                 android:text="获取验证码"
-                android:minWidth="100dp"
-                android:textColor="@color/dark_gray"
+                android:minWidth="50dp"
+                android:textColor="@color/white"
                 android:visibility="gone"
             />
         </LinearLayout>

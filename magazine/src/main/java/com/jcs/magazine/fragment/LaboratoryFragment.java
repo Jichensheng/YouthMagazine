@@ -7,8 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.adapter.LaboratoryAdapter;
@@ -17,6 +19,7 @@ import com.jcs.magazine.bean.LaboratoryBean;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.StatusBarUtil;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.util.glide.GlideBlurTransform;
 import com.jcs.magazine.yzu_viewPager.ScaleInTransformer;
 
 import java.lang.ref.WeakReference;
@@ -51,7 +54,7 @@ public class LaboratoryFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.main_fragment_laboratory, container, false);
+			rootView = inflater.inflate(R.layout.main_fragment_laboratory_re, container, false);
 			WeakReference<LaboratoryAdapter> weakReference = new WeakReference<LaboratoryAdapter>(mAdapter);
 
 			final ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.id_viewpager);
@@ -63,7 +66,7 @@ public class LaboratoryFragment extends BaseFragment {
 					DimentionUtils.dip2px(getContext(), 5));
 			mViewPager.setLayoutParams(lp);
 			// 设置Page间间距
-			mViewPager.setPageMargin(10);
+			mViewPager.setPageMargin(DimentionUtils.dip2px(getContext(),25));
 			// 设置缓存的页面数量
 			mViewPager.setOffscreenPageLimit(3);
 			mViewPager.setPageTransformer(true, new ScaleInTransformer());// 动画进大出小
@@ -74,6 +77,27 @@ public class LaboratoryFragment extends BaseFragment {
 					return mViewPager.dispatchTouchEvent(event);
 				}
 			});*/
+            Glide.with(getContext()).load(list.get(0).getRes())
+                    .transform(new GlideBlurTransform(getContext()))
+                    .into((ImageView) rootView.findViewById(R.id.iv_bg));
+			mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    Glide.with(getContext()).load(list.get(position).getRes())
+                            .transform(new GlideBlurTransform(getContext()))
+                            .into((ImageView) rootView.findViewById(R.id.iv_bg));
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
 			mViewPager.setAdapter(weakReference.get());
 		}
 		// 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
