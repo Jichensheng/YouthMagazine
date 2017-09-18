@@ -1,5 +1,6 @@
 package com.jcs.magazine.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,13 +12,16 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
+import com.jcs.magazine.activity.MakePostActivity;
 import com.jcs.magazine.adapter.MomentListAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.global.PermissionHelper;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by liudong on 17/4/12.
  */
 
-public class MomentFragment extends BaseFragment {
+public class MomentFragment extends BaseFragment implements View.OnClickListener {
 	private MomentListAdapter adapter;
 	private List<MomentBean> momentBeanList;
 	private List<BannerItem> bannerItemList;
@@ -40,7 +44,7 @@ public class MomentFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.main_fragment_moment, container, false);
+			rootView = inflater.inflate(R.layout.main_fragment_moment_re, container, false);
 			momentBeanList=new ArrayList<>();
 			bannerItemList=new ArrayList<>();
 			final XRecyclerView recyclerView = (XRecyclerView) rootView.findViewById(R.id.rv_main_talk);
@@ -58,6 +62,12 @@ public class MomentFragment extends BaseFragment {
 			recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
 
 			recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
+
+			//附着在ListView，跟随ListView滚动滑入滑出
+			FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+			fab.setOnClickListener(this);
+			fab.attachToRecyclerView(recyclerView);
+
 			//回调监听部分
 			recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 				@Override
@@ -155,5 +165,15 @@ public class MomentFragment extends BaseFragment {
 
 					}
 				});
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()){
+			case R.id.fab:
+				Intent intent=new Intent(getContext(), MakePostActivity.class);
+				PermissionHelper.getHelper().startActivity(getContext(), intent);
+				break;
+		}
 	}
 }

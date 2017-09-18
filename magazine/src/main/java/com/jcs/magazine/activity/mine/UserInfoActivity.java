@@ -41,7 +41,6 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,6 +62,7 @@ import okhttp3.RequestBody;
 import static com.jcs.magazine.R.id.btn_exit;
 
 /**
+ * 信息取自单例LoginUserHelper
  * author：Jics
  * 2017/9/13 10:07
  */

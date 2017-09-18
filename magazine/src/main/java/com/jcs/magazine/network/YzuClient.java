@@ -32,7 +32,8 @@ public class YzuClient {
 //	public static final String HOST="http://192.168.0.108:3000/";
 //	public static final String HOST="http://192.168.191.1:3000/";
 	//京东
-	public static final String HOST="http://116.196.93.255:3000/";
+	public static final String HOST="http://www.yangdaqingnian.top:3000/";
+//	public static final String HOST="http://116.196.93.255:3000/";
 	private static ApiService yzuServer;
 	private static Retrofit retrofit;
 	private YzuClient(){

@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity {
 		mViewPager.setAdapter(adapter);
 		mIndicator.setViewPager(mViewPager);
 
-
 	}
 
 	private List<BaseFragment> initFragments() {
