@@ -17,6 +17,6 @@
         android:id="@+id/iv_delet"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="center"
+        android:layout_gravity="right|top"
         android:src="@drawable/delete"/>
 </FrameLayout>
