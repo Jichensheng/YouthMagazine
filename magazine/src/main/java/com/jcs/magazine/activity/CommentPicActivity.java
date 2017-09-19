@@ -15,7 +15,7 @@ import java.util.List;
  * author：Jics
  * 2017/4/10 16:24
  */
-public class CommentPicActivity extends BaseActivity {
+public class CommentPicActivity extends BaseActivity implements CommentPicAdapter.OnPicClickListener {
 	private ViewPager viewPager;
 	private List<String> mUrls;
 	private int index;
@@ -33,8 +33,11 @@ public class CommentPicActivity extends BaseActivity {
 		textView.setText(index+1+"/"+mUrls.size());
 
 		viewPager= (ViewPager) findViewById(R.id.vp_comment_pic);
-		viewPager.setAdapter(new CommentPicAdapter(this,mUrls));
+		CommentPicAdapter adapter = new CommentPicAdapter(this, mUrls);
+		adapter.setOnPicClickListener(this);
+		viewPager.setAdapter(adapter);
 		viewPager.setCurrentItem(index);
+
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -56,6 +59,11 @@ public class CommentPicActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		finish();
+	}
+
+	@Override
+	public void onPicClick() {
 		finish();
 	}
 }

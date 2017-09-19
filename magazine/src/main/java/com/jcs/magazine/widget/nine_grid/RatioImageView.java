@@ -7,16 +7,14 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 
 import com.jcs.magazine.R;
 
 
 /**
  * 根据宽高比例自动计算高度ImageView
- * Created by HMY on 2016/4/21.
  */
-public class RatioImageView extends ImageView {
+public class RatioImageView extends android.support.v7.widget.AppCompatImageView {
 
     /**
      * 宽高比例

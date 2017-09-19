@@ -134,6 +134,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 									editor.putLong("user_info_time", System.currentTimeMillis());
 									editor.putString("user_info_token",user.getToken());
 									editor.apply();
+									EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
 
 									//判断是否有计划跳转的页面
 									if (getIntent().getExtras() != null && getIntent().getExtras().getString("className") != null) {
@@ -152,7 +153,6 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 										finish();
 									}
 
-									EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
 								}
 							}, new Consumer<Throwable>() {
 								@Override

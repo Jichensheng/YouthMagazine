@@ -120,6 +120,35 @@ public class BitmapUtil {
             e.printStackTrace();
         }
     }
+    /**
+     * 存到包名自定义文件夹下
+     * @param f
+     * @param mBitmap
+     */
+    public static void saveBitmap(File f,Bitmap mBitmap) {
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+        try {
+            fOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void byte2File(byte[] buf, String filePath, String fileName)
     {
         BufferedOutputStream bos = null;

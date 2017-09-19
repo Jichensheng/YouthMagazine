@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
@@ -251,10 +252,10 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
                 tv_login.setVisibility(View.VISIBLE);
             }
 			Glide.with(getContext()).load(url)
-                    .error(R.drawable.default_avater_blur).skipMemoryCache(true)
+                    .error(R.drawable.default_avater_blur).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .transform(new GlideBlurTransform(getContext())).into(blurImageView);
 			Glide.with(getContext())
-                    .load(url).skipMemoryCache(true).error(R.drawable.default_avater).into(civ_avater);
+                    .load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_avater).into(civ_avater);
 		}
 
 	}

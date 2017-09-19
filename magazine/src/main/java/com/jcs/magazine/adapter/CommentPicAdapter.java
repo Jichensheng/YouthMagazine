@@ -23,6 +23,7 @@ import static android.view.ViewGroup.LayoutParams;
 public class CommentPicAdapter extends PagerAdapter {
 	private Context mContext;
 	private List<String> mUrls;
+	OnPicClickListener listener;
 
 	public CommentPicAdapter(Context mContext, List<String> mUrls) {
 		this.mContext = mContext;
@@ -61,6 +62,14 @@ public class CommentPicAdapter extends PagerAdapter {
 		Glide.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
 //		ImageLoaderUtil.getImageLoader(mContext).displayImage(mUrls.get(position), imv, ImageLoaderUtil.getPhotoImageOption());
 		linearLayout.addView(imv);
+		imv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (listener != null) {
+					listener.onPicClick();
+				}
+			}
+		});
 		container.addView(linearLayout);
 		return linearLayout;
 	}
@@ -68,5 +77,11 @@ public class CommentPicAdapter extends PagerAdapter {
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		container.removeView((View) object);
+	}
+	public interface OnPicClickListener{
+		void onPicClick();
+	}
+	public void setOnPicClickListener(OnPicClickListener listener){
+		this.listener = listener;
 	}
 }

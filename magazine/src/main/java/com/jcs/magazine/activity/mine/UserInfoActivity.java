@@ -302,7 +302,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			List<String> list = Matisse.obtainPathResult(data);
 			headPath= list.get(0);
 //			Glide.with(this).load(headPath).error(R.drawable.default_avater).into(civ_avater);
-			Glide.with(this).load(headPath).asBitmap().error(R.drawable.default_avater)
+			Glide.with(this).load(headPath).asBitmap().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_avater)
 					.into(new SimpleTarget<Bitmap>(300,400) {
 						@Override
 						public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {

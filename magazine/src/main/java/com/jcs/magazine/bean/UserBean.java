@@ -11,7 +11,7 @@ public class UserBean implements Serializable {
 	private String name;//姓名
 	private String nick;//昵称
 	private String regData;//注册时间
-	private String head;//头像地址
+	private String head;//头像地址永远不变
 	private String phone;//电话
 	private String sId;//学号
 	private String college;//学院

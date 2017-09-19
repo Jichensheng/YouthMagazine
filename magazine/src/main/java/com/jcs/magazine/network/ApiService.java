@@ -4,6 +4,7 @@ import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
+import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.MomentBean;
@@ -117,6 +118,14 @@ public interface ApiService {
 	 */
 	@GET("magazine/everything/{page}/{count}")
 	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
+	/**
+	 *	获取Talk列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/comment/{mid}/{page}/{count}")
+	Observable<BaseListTemplet<CommentBean>> getCommentLists(@Path("mid") String mid, @Path("page") int page, @Path("count") int count);
 
 
 	/**
@@ -150,4 +159,12 @@ public interface ApiService {
 	 */
 	@POST("magazine/user/updataUserInfo")
 	Observable<UserBean> registUserInfo(@Body RequestBody Body);
+	/**
+	 * 发表说说 RequestBody形式
+	 * @param Body
+	 * @return
+	 */
+	@POST("magazine/moment/post")
+//	@POST("upload")
+	Observable<BaseMgz> makePost(@Body RequestBody Body);
 }

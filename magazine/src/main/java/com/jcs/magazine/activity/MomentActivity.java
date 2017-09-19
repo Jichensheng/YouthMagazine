@@ -10,7 +10,17 @@ import android.view.MenuItem;
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
 import com.jcs.magazine.base.BaseActivity;
+import com.jcs.magazine.bean.BaseListTemplet;
+import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.network.YzuClient;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 说说详情页
@@ -22,6 +32,7 @@ public class MomentActivity extends BaseActivity {
 	private MomentBean mb;
 	private Toolbar toolbar;
 	private MomentDetailAdapter adapter;
+	private List<CommentBean> commentList;
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,6 +41,7 @@ public class MomentActivity extends BaseActivity {
 	}
 
 	public void initView() {
+		commentList=new ArrayList<>();
 
 		toolbar= (Toolbar) findViewById(R.id.tb_toolbar);
 		toolbar.setTitle(getIntent().getStringExtra("nickname"));
@@ -38,10 +50,30 @@ public class MomentActivity extends BaseActivity {
 		mb= (MomentBean) getIntent().getSerializableExtra("mb");
 		recyclerView= (RecyclerView) findViewById(R.id.rv_moment_detial);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		adapter = new MomentDetailAdapter(this, mb);
+		adapter = new MomentDetailAdapter(this, mb,commentList);
 
 		recyclerView.setAdapter(adapter);
+		initData();
 //		recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+	}
+
+	private void initData() {
+		YzuClient.getInstance().getCommentLists(mb.getMid().trim(),1,10)
+				.subscribeOn(Schedulers.newThread())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
+					@Override
+					public void accept(BaseListTemplet<CommentBean> commentBeanBaseListTemplet) throws Exception {
+						commentList.clear();
+						commentList.addAll(commentBeanBaseListTemplet.getResults().getBody());
+						adapter.notifyDataSetChanged();
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+
+					}
+				});
 	}
 
 	@Override

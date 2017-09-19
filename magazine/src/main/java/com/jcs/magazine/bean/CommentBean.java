@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class CommentBean implements Serializable {
 	//帖子id
-	private String cid;
+	private String mid;
 	//发帖人id
 	private String uid;
 	//评论文字
@@ -18,17 +18,35 @@ public class CommentBean implements Serializable {
 	private String date;
 	//赞数
 	private String praise;
-	//评论数
-	private String comment;
+	//评论人昵称
+	private String nick;
+	//评论人头像地址
+	private String head;
 	//引用评论
 	private CommentBean quote;
 
-	public String getCid() {
-		return cid;
+	public String getHead() {
+		return head;
 	}
 
-	public void setCid(String cid) {
-		this.cid = cid;
+	public void setHead(String head) {
+		this.head = head;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 	public String getUid() {
@@ -63,13 +81,6 @@ public class CommentBean implements Serializable {
 		this.praise = praise;
 	}
 
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
 
 	public CommentBean getQuote() {
 		return quote;
@@ -82,12 +93,13 @@ public class CommentBean implements Serializable {
 	@Override
 	public String toString() {
 		return "CommentBean{" +
-				"cid='" + cid + '\'' +
+				"mid='" + mid + '\'' +
 				", uid='" + uid + '\'' +
 				", excerpt='" + excerpt + '\'' +
 				", date='" + date + '\'' +
 				", praise='" + praise + '\'' +
-				", comment='" + comment + '\'' +
+				", nick='" + nick + '\'' +
+				", head='" + head + '\'' +
 				", quote=" + quote +
 				'}';
 	}
