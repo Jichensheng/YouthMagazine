@@ -2,6 +2,7 @@ package com.jcs.magazine.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.util.DimentionUtils;
+import com.jcs.magazine.widget.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,7 @@ public class MomentActivity extends BaseActivity {
 
 		recyclerView.setAdapter(adapter);
 		initData();
-//		recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+		recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this, DimentionUtils.dip2px(this,1)));
 	}
 
 	private void initData() {

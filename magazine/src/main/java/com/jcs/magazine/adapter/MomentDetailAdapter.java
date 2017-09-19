@@ -80,10 +80,11 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		holder.tv_praise.setText(commentBean.getPraise());
 		CommentBean quote = commentBean.getQuote();
 		if (quote != null) {
+            holder.tv_quote.setVisibility(View.VISIBLE);
 			holder.tv_quote.setText(String.format("#%s#%s", quote.getNick(), quote.getExcerpt()));
-			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context,R.color.light_gray));
+			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context,R.color.light_gray_more));
 		}else {
-			holder.tv_quote.setText("");
+			holder.tv_quote.setVisibility(View.GONE);
 		}
 
 	}

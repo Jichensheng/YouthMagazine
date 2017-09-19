@@ -1,54 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_height="wrap_content"
               android:orientation="horizontal">
+
     <com.jcs.magazine.widget.CircleImageView
         android:id="@+id/civ_head"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"
         android:src="@drawable/hmm"
-    />
+        />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
         android:orientation="vertical"
-    >
+        android:paddingRight="10dp"
+        >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:paddingRight="5dp"
-        >
+            >
+
             <TextView
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Jcs"
                 android:textSize="14sp"
-            />
+                tools:text="Jcs"
+                />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-            />
+                />
+
             <TextView
                 android:id="@+id/tv_praise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/praise"
                 android:drawablePadding="5dp"
-                tools:text="666"
                 android:textColor="@color/light_gray"
                 android:textSize="11sp"
-            />
+                tools:text="666"
+                />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_public_time"
             android:layout_width="wrap_content"
@@ -56,16 +64,18 @@
             android:text="4月10日"
             android:textColor="@color/light_gray"
             android:textSize="11sp"
-        />
+            />
+
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            tools:text="共享单车沦陷城中村,狭长的巷子里,小黄车“车队”疾驰而过。进村口第一个路口左拐,三岔路口的中心是一间公厕,紧挨着垃圾站点。几米见方的地方"
             android:textColor="@color/text_main_black"
+            tools:text="共享单车沦陷城中村,狭长的巷子里,小黄车“车队”疾驰而过。进村口第一个路口左拐,三岔路口的中心是一间公厕,紧挨着垃圾站点。几米见方的地方"
 
-        />
+            />
+
         <TextView
             android:id="@+id/tv_quote"
             android:layout_width="match_parent"
@@ -73,10 +83,10 @@
             android:layout_marginTop="5dp"
             android:background="@color/light_gray_more"
             android:padding="5dp"
-            tools:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
             android:textColor="@color/text_main_black"
+            tools:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
 
-        />
+            />
     </LinearLayout>
 
 </LinearLayout>
