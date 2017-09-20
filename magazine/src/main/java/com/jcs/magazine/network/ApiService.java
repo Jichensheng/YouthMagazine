@@ -119,7 +119,7 @@ public interface ApiService {
 	@GET("magazine/everything/{page}/{count}")
 	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
 	/**
-	 *	获取Talk列表
+	 *	获取评论列表
 	 * @param page
 	 * @param count
 	 * @return
@@ -167,4 +167,12 @@ public interface ApiService {
 	@POST("magazine/moment/post")
 //	@POST("upload")
 	Observable<BaseMgz> makePost(@Body RequestBody Body);
+
+	/**
+	 * 发表评论
+	 * @param commentBean
+	 * @return
+	 */
+	@POST("magazine/comment/sendComment")
+	Observable<BaseMgz> sendComment(@Body CommentBean commentBean);
 }

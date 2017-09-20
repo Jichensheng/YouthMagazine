@@ -40,6 +40,7 @@
                 />
 
             <Space
+                android:id="@+id/s_space"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,7 +84,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/light_gray_more"
             android:padding="5dp"
-            android:textColor="@color/text_main_black"
+            android:textColor="@color/dark_gray"
             tools:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
 
             />

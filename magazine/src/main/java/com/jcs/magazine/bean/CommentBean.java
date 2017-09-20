@@ -8,6 +8,8 @@ import java.io.Serializable;
  * 2017/8/24 17:13
  */
 public class CommentBean implements Serializable {
+	//评论id
+	private String cid;
 	//帖子id
 	private String mid;
 	//发帖人id
@@ -24,6 +26,14 @@ public class CommentBean implements Serializable {
 	private String head;
 	//引用评论
 	private CommentBean quote;
+
+	public String getCid() {
+		return cid;
+	}
+
+	public void setCid(String cid) {
+		this.cid = cid;
+	}
 
 	public String getHead() {
 		return head;

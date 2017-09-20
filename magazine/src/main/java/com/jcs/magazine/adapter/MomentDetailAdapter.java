@@ -37,6 +37,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 	private List<CommentBean> commentBeen;//评论者
 	private boolean first;
 	private MomentBean mb;
+	OnLongPressItemListener longPressItemListener;
 
 	public MomentDetailAdapter(Context context, MomentBean mb, List<CommentBean> commentBeen) {
 		this.context = context;
@@ -65,7 +66,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		}
 	}
 
-	private void initCommentHolder(CommentHolder holder, int position) {
+	/**
+	 * 评论item
+	 * @param holder
+	 * @param position
+	 */
+	private void initCommentHolder(final CommentHolder holder, final int position) {
 		CommentBean commentBean = commentBeen.get(position);
 
 		holder.tv_nickname.setText(commentBean.getNick());
@@ -81,11 +87,19 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		CommentBean quote = commentBean.getQuote();
 		if (quote != null) {
             holder.tv_quote.setVisibility(View.VISIBLE);
-			holder.tv_quote.setText(String.format("#%s#%s", quote.getNick(), quote.getExcerpt()));
+			holder.tv_quote.setText(String.format("@%s %s", quote.getNick(), quote.getExcerpt()));
 			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context,R.color.light_gray_more));
 		}else {
 			holder.tv_quote.setVisibility(View.GONE);
 		}
+
+		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				longPressItemListener.onLongPress(holder.space,position);
+				return true;
+			}
+		});
 
 	}
 
@@ -168,9 +182,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 	class CommentHolder extends RecyclerView.ViewHolder {
 		CircleImageView civ_head;
 		TextView tv_nickname, tv_public_time, tv_comment, tv_quote, tv_praise;
+		View itemView,space;
 
 		public CommentHolder(View itemView) {
 			super(itemView);
+			this.itemView=itemView;
+			space=itemView.findViewById(R.id.s_space);
 			civ_head = (CircleImageView) itemView.findViewById(R.id.civ_head);
 			tv_nickname = (TextView) itemView.findViewById(R.id.tv_nickname);
 			tv_public_time = (TextView) itemView.findViewById(R.id.tv_public_time);
@@ -178,5 +195,11 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 			tv_quote = (TextView) itemView.findViewById(R.id.tv_quote);
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);
 		}
+	}
+	public interface OnLongPressItemListener{
+		void onLongPress(View itemView,int position);
+	}
+	public void setOnLongPressItemListener(OnLongPressItemListener longPressItemListener){
+		this.longPressItemListener = longPressItemListener;
 	}
 }
