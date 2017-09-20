@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.jcs.magazine.R;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class CommentPicAdapter extends PagerAdapter {
 		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		linearLayout.setGravity(Gravity.CENTER);
 
-		ImageView imv=new ImageView(mContext);
+        PhotoView imv=new PhotoView(mContext);
 		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		imv.setLayoutParams(llp);
 		imv.setScaleType(ImageView.ScaleType.FIT_XY);

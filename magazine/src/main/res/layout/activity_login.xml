@@ -75,6 +75,8 @@
                 app:lineColor_click="@color/white"
                 app:lineColor_unclick="@color/white"
                 app:linePosition="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:visibility="gone"
 
             />
@@ -129,6 +131,7 @@
             app:lineColor_click="@color/white"
             app:lineColor_unclick="@color/white"
             app:linePosition="1"
+            android:imeOptions="actionDone"
 
         />
         <com.jcs.magazine.widget.SuperEditText
@@ -142,6 +145,7 @@
             android:textSize="14sp"
             android:visibility="gone"
             app:cursor="@drawable/cursor"
+            android:imeOptions="actionDone"
             app:ic_delete="@drawable/delete_click"
             app:ic_left_click="@drawable/password_click"
             app:ic_left_unclick="@drawable/password_click"

@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,7 +41,7 @@ import okhttp3.MultipartBody;
  * author：Jics
  * 2017/9/12 16:11
  */
-public class LoginActicity extends BaseActivity implements View.OnClickListener{
+public class LoginActicity extends BaseActivity implements View.OnClickListener,TextView.OnEditorActionListener{
 	private final static int MODE_LOGIN=0x200;
 	private final static int MODE_REGIST_NORMAL=0x201;
 	private final static int MODE_REGIST_SMS=0x202;
@@ -83,6 +85,9 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
         btn_regist.setOnClickListener(this);
         tv_forget.setOnClickListener(this);
 		btn_get_sms.setOnClickListener(this);
+
+        set_sms.setOnEditorActionListener(this);
+        set_psw_re.setOnEditorActionListener(this);
 	}
 
 	@Override
@@ -278,7 +283,10 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 					set_phone.setVisibility(View.GONE);
 					set_sms.setVisibility(View.GONE);
 					btn_get_sms.setVisibility(View.GONE);
-					break;
+
+                    set_psw.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+                    break;
 				case MODE_REGIST_NORMAL:
 					tv_forget.setText("有账号去登录");
 					if (set_psw_re.getVisibility()!= View.VISIBLE) set_psw_re.setVisibility(View.VISIBLE);
@@ -291,6 +299,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 					set_phone.setVisibility(View.GONE);
 					set_sms.setVisibility(View.GONE);
 					btn_get_sms.setVisibility(View.GONE);
+                    set_psw.setImeOptions(EditorInfo.IME_ACTION_NEXT);
 					break;
 				case MODE_REGIST_SMS:
 					tv_forget.setText("有账号去登录");
@@ -319,7 +328,23 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener{
 		time.start();
 	}
 
-	class TimeCount extends CountDownTimer {
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        switch (v.getId()){
+            case  R.id.set_sms:
+                UiUtil.toast("sms");
+                break;
+            case R.id.set_psw_re:
+                UiUtil.toast("psw_re");
+                break;
+            case R.id.set_psw:
+                UiUtil.toast("psw");
+                break;
+        }
+        return true;
+    }
+
+    class TimeCount extends CountDownTimer {
 		public TimeCount(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
 		}
