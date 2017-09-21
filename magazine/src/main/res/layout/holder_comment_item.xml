@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@color/light_gray_more"
+            android:background="@drawable/corner_edit"
             android:padding="5dp"
             android:textColor="@color/dark_gray"
             tools:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
