@@ -19,8 +19,12 @@
     <color name="gray">#FFB4B4B4</color>
     <color name="subtitle_text_gray">#999999</color>
     <color name="menu_grey">#33485C</color>
+    <color name="black_transparent">#33000000</color>
     <color name="notification_bak">#47fafafa</color>
 
     <color name="lineColor_click">#ffffff</color>
     <color name="lineColor_unclick">#9b9b9b</color>
+
+    <color name="rb_female">#d32279</color>
+    <color name="rb_male">#1296db</color>
 </resources>

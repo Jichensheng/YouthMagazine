@@ -1,10 +1,10 @@
-package com.jcs.magazine.talk.adapter;
+package com.jcs.magazine.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
+import com.jcs.magazine.fragment.FollowFragment;
 
 import java.util.List;
 
@@ -13,16 +13,23 @@ import java.util.List;
  * author：Jics
  * 2017/9/5 14:36
  */
-public class LoveAdapter extends FragmentPagerAdapter {
-	private List<TabFragmentInterface> children;
-	public LoveAdapter(FragmentManager fm,List<TabFragmentInterface> children) {
+public class FollowTabAdapter extends FragmentPagerAdapter {
+	final String uid;
+	private List<FollowFragment> children;
+	public FollowTabAdapter(FragmentManager fm, List<FollowFragment> children,String uid) {
 		super(fm);
 		this.children =children;
+		this.uid = uid;
 	}
+
+
 
 	@Override
 	public Fragment getItem(int position) {
-		return children.get(position).getFragment();
+
+		FollowFragment fragment = children.get(position).getFragment();
+		fragment.setUid(uid);
+		return fragment;
 	}
 
 	@Override

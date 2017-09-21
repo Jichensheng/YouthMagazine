@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-   <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+   <android.support.v4.view.ViewPager
+       android:id="@+id/vp_comment_pic"
+       android:layout_width="wrap_content"
+       android:layout_centerInParent="true"
+       android:layout_height="wrap_content"/>
+   <com.jcs.magazine.widget.StrokeTextView
        android:id="@+id/tv_index"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:gravity="center"
-       android:layout_marginTop="?attr/actionBarSize"
        android:textSize="20sp"
-       android:textColor="@color/white"
+       app:outerColor="@color/black_transparent"
+       android:layout_marginTop="30dp"
+       app:innnerColor="@color/white"
+       app:outerWidth="2dp"
        android:layout_alignParentTop="true"/>
-
-   <android.support.v4.view.ViewPager
-       android:id="@+id/vp_comment_pic"
-       android:layout_width="match_parent"
-       android:layout_centerInParent="true"
-       android:layout_height="match_parent"/>
-
 </RelativeLayout>

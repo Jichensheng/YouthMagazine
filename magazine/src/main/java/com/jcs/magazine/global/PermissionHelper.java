@@ -8,7 +8,7 @@ import android.content.Intent;
 import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.MakePostActivity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
-import com.jcs.magazine.activity.mine.PartnerActivity;
+import com.jcs.magazine.activity.mine.FollowActivity;
 import com.jcs.magazine.activity.mine.PostActivity;
 import com.jcs.magazine.activity.mine.UserInfoActivity;
 
@@ -25,7 +25,7 @@ public class PermissionHelper {
 
 	static {
 		PERMISSIONMAP.put(CollectionActivity.class.getName(), LOGINUSER);
-		PERMISSIONMAP.put(PartnerActivity.class.getName(), LOGINUSER);
+		PERMISSIONMAP.put(FollowActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(PostActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(UserInfoActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(MakePostActivity.class.getName(), LOGINUSER);

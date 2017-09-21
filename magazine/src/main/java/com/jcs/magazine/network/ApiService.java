@@ -126,6 +126,14 @@ public interface ApiService {
 	 */
 	@GET("magazine/comment/{mid}/{page}/{count}")
 	Observable<BaseListTemplet<CommentBean>> getCommentLists(@Path("mid") String mid, @Path("page") int page, @Path("count") int count);
+	/**
+	 *	获取用户列表
+	 * @param page
+	 * @param count
+	 * @return
+	 */
+	@GET("magazine/follow/{uid}/{type}/{page}/{count}")
+	Observable<BaseListTemplet<UserBean>> getFollowLists(@Path("uid") String uid,@Path("type") int type, @Path("page") int page, @Path("count") int count);
 
 
 	/**

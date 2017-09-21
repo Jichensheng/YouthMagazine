@@ -42,7 +42,7 @@ public class PostActivity extends BaseActivity {
 
 	private void initData() {
 		momentBeanList=new ArrayList<>();
-		adapter = new MPostListAdapter(this, momentBeanList);
+		adapter = new MPostListAdapter(this, momentBeanList,true);
 		if (LoginUserHelper.getInstance().isLogined()) {
 			UserBean user=LoginUserHelper.getInstance().getUser();
 			YzuClient.getInstance().getUserPostLists(user.getUid(),1,10)

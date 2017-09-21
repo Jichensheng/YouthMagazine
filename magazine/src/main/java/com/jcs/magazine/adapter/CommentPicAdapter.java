@@ -2,11 +2,9 @@ package com.jcs.magazine.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -49,20 +47,20 @@ public class CommentPicAdapter extends PagerAdapter {
 	 */
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		LinearLayout linearLayout=new LinearLayout(mContext);
+		/*LinearLayout linearLayout=new LinearLayout(mContext);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		linearLayout.setGravity(Gravity.CENTER);
+		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		linearLayout.setGravity(Gravity.CENTER);*/
 
         PhotoView imv=new PhotoView(mContext);
-		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		ViewGroup.LayoutParams llp=new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		imv.setLayoutParams(llp);
 		imv.setScaleType(ImageView.ScaleType.FIT_XY);
 		imv.setAdjustViewBounds(true);
 //		Picasso.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
 		Glide.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
 //		ImageLoaderUtil.getImageLoader(mContext).displayImage(mUrls.get(position), imv, ImageLoaderUtil.getPhotoImageOption());
-		linearLayout.addView(imv);
+//		container.addView(imv);
 		imv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -71,8 +69,8 @@ public class CommentPicAdapter extends PagerAdapter {
 				}
 			}
 		});
-		container.addView(linearLayout);
-		return linearLayout;
+		container.addView(imv);
+		return imv;
 	}
 
 	@Override

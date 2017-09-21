@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal">
     <com.jcs.magazine.widget.CircleImageView
         android:id="@+id/civ_head"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_margin="10dp"
-        android:src="@drawable/hmm"
+        android:src="@drawable/default_avater"
     />
     <LinearLayout
         android:layout_width="0dp"
@@ -29,7 +29,7 @@
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jcs"
+                tools:text="Jcs"
                 android:textSize="14sp"
             />
             <Space
@@ -50,7 +50,7 @@
             android:id="@+id/tv_public_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4月10日"
+            tools:text="4月10日"
             android:textColor="@color/light_gray"
             android:textSize="11sp"
         />
@@ -59,7 +59,7 @@
             android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
+            tools:text="人生就像一场旅行，不必在乎目的地，在乎的是沿途的风景以及看风景的心情，让心灵去旅行"
             android:textColor="#484848"
 
         />
@@ -92,7 +92,7 @@
                 android:id="@+id/tv_praise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999+"
+                tools:text="999+"
                 android:textColor="@color/light_gray"
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/praise"
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999+"
+                tools:text="999+"
                 android:textColor="@color/light_gray"
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/comment"

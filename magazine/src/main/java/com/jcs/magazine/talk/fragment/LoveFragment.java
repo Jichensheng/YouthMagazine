@@ -15,7 +15,7 @@ import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.talk.adapter.LoveAdapter;
-import com.jcs.magazine.talk.interfaces.LoveInterface;
+import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.widget.banner.BannerView;
 import com.jcs.magazine.widget.banner.BannerViewFactory;
 
@@ -34,7 +34,7 @@ public class LoveFragment extends BaseFragment {
 
 	private TabLayout tlTitle;
 	private ViewPager vp;
-	private List<LoveInterface> children;
+	private List<TabFragmentInterface> children;
 	private BannerView bannerView;
 	private List<BannerItem> list;
 	private LoveAdapter adapter;

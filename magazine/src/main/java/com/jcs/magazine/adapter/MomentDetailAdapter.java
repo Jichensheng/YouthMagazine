@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.MomentBean;
@@ -68,6 +71,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 
 	/**
 	 * 评论item
+	 *
 	 * @param holder
 	 * @param position
 	 */
@@ -80,23 +84,28 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 //				.diskCacheStrategy(DiskCacheStrategy.NONE)
 				.error(R.drawable.default_avater)
 				.placeholder(R.drawable.default_avater)
-				.into(holder.civ_head);
+				.into(new SimpleTarget<GlideDrawable>() {
+					@Override
+					public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+						holder.civ_head.setImageDrawable(resource);
+					}
+				});
 		holder.tv_public_time.setText(commentBean.getDate());
 		holder.tv_comment.setText(commentBean.getExcerpt());
 		holder.tv_praise.setText(commentBean.getPraise());
 		CommentBean quote = commentBean.getQuote();
 		if (quote != null) {
-            holder.tv_quote.setVisibility(View.VISIBLE);
+			holder.tv_quote.setVisibility(View.VISIBLE);
 			holder.tv_quote.setText(String.format("@%s %s", quote.getNick(), quote.getExcerpt()));
-			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context,R.color.light_gray_more));
-		}else {
+			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context, R.color.light_gray_more));
+		} else {
 			holder.tv_quote.setVisibility(View.GONE);
 		}
 
 		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				longPressItemListener.onLongPress(holder.space,position);
+				longPressItemListener.onLongPress(holder.space, position);
 				return true;
 			}
 		});
@@ -104,9 +113,16 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 	}
 
 
-	private void initMomentHolder(MomentHolder holder) {
+	private void initMomentHolder(final MomentHolder holder) {
 		//			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentHolder) holder).civ);
-		Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(holder.civ);
+		Glide.with(context).load(mb.getHead())
+				.error(R.drawable.default_avater)
+				.into(new SimpleTarget<GlideDrawable>() {
+					@Override
+					public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+						holder.civ.setImageDrawable(resource);
+					}
+				});
 		//用户已登录且是自己发的帖子
 		if (LoginUserHelper.getInstance().isLogined()
 				&& LoginUserHelper.getInstance().getUser().getUid().equals(mb.getUid())) {
@@ -129,7 +145,7 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 		holder.tv_praise.setText("" + mb.getPraise());
 		if (praiser != null && !first) {
 			for (final UserBean userBean : praiser) {
-				ImageView imageView = new ImageView(context);
+				final ImageView imageView = new ImageView(context);
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DimentionUtils.dip2px(context, 35), DimentionUtils.dip2px(context, 35));
 				lp.setMargins(DimentionUtils.dip2px(context, 5), 0, 0, 0);
 //					Picasso.with(context).load(userBean.getHead()).transform(new CircleTransform()).error(R.drawable.default_avater).into(imageView);
@@ -137,7 +153,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 						.transform(new GlideCircleTransform(context))
 						.placeholder(R.drawable.default_avater)
 						.error(R.drawable.default_avater)
-						.into(imageView);
+						.into(new SimpleTarget<GlideDrawable>() {
+							@Override
+							public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+								imageView.setImageDrawable(resource);
+							}
+						});
 				holder.ll_head_container.addView(imageView, lp);
 				imageView.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -182,12 +203,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 	class CommentHolder extends RecyclerView.ViewHolder {
 		CircleImageView civ_head;
 		TextView tv_nickname, tv_public_time, tv_comment, tv_quote, tv_praise;
-		View itemView,space;
+		View itemView, space;
 
 		public CommentHolder(View itemView) {
 			super(itemView);
-			this.itemView=itemView;
-			space=itemView.findViewById(R.id.s_space);
+			this.itemView = itemView;
+			space = itemView.findViewById(R.id.s_space);
 			civ_head = (CircleImageView) itemView.findViewById(R.id.civ_head);
 			tv_nickname = (TextView) itemView.findViewById(R.id.tv_nickname);
 			tv_public_time = (TextView) itemView.findViewById(R.id.tv_public_time);
@@ -196,10 +217,12 @@ public class MomentDetailAdapter extends RecyclerView.Adapter {
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);
 		}
 	}
-	public interface OnLongPressItemListener{
-		void onLongPress(View itemView,int position);
+
+	public interface OnLongPressItemListener {
+		void onLongPress(View itemView, int position);
 	}
-	public void setOnLongPressItemListener(OnLongPressItemListener longPressItemListener){
+
+	public void setOnLongPressItemListener(OnLongPressItemListener longPressItemListener) {
 		this.longPressItemListener = longPressItemListener;
 	}
 }

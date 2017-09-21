@@ -9,20 +9,26 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
@@ -69,12 +75,13 @@ import static com.jcs.magazine.R.id.btn_exit;
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
 	private static final int REQUEST_CODE_CHOOSE = 0x223;
 	private CircleImageView civ_avater;
-	private SuperTextView stv_name, stv_nick, stv_phone, stv_college;
+	private SuperTextView stv_name, stv_nick, stv_phone, stv_college,stv_sex;
 	private TextView tv_save;
 	private boolean needSave;
 	private UserBean user;
 	private Map<Integer, Integer> changeState;
 	private String headPath="";
+	private String sex="男";
 
 	@Override
 	protected void onCreate(@Nullable Bundle paramBundle) {
@@ -95,6 +102,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 		civ_avater = (CircleImageView) findViewById(R.id.civ_avater);
 		stv_name = (SuperTextView) findViewById(R.id.stv_name);
 		stv_nick = (SuperTextView) findViewById(R.id.stv_nick);
+		stv_sex = (SuperTextView) findViewById(R.id.stv_sex);
 		stv_phone = (SuperTextView) findViewById(R.id.stv_phone);
 		stv_college = (SuperTextView) findViewById(R.id.stv_college);
 
@@ -103,13 +111,22 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 		tv_save.setOnClickListener(this);
 //		stv_name.setOnClickListener(this);
 		stv_nick.setOnClickListener(this);
+		stv_sex.setOnClickListener(this);
 		// TODO: 2017/9/14 修改绑定手机号等用户系统完善后再处理
 //		stv_phone.setOnClickListener(this);
 		stv_college.setOnClickListener(this);
 
 		user = LoginUserHelper.getInstance().getUser();
 		if (user != null) {
-			Glide.with(this).load(user.getHead()).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_avater).into(civ_avater);
+			Glide.with(this).load(user.getHead())
+					.error(R.drawable.default_avater)
+					.placeholder(R.drawable.default_avater)
+					.into(new SimpleTarget<GlideDrawable>() {
+						@Override
+						public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+							civ_avater.setImageDrawable(resource);
+						}
+					});
 			stv_name.setRightString(user.getName());
 			stv_nick.setRightString(user.getNick());
 			stv_phone.setRightString(user.getPhone());
@@ -162,6 +179,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				if (needSave) {
 					save();
 				}
+			case R.id.stv_sex:
+				String remoteSex;
+				if (user.getSex()!=null) {
+					remoteSex=user.getSex().equals("male")?"男":"女";
+				}else
+					remoteSex="男";
+				popupCheckBoxDialog(stv_sex,remoteSex);
 				break;
 		}
 	}
@@ -200,6 +224,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 					count = count == 1 ? 1 : count + 1;
 				}
 				changeState.put(view.getId(),count);
+				/**
+				 * 遍历所有可改变的属性的count值之和，如果大于零证明需要改变
+				 */
 				int temp=0;
 				for (Integer integer : changeState.values()) {
 					temp += integer;
@@ -214,7 +241,57 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			}
 		}, true, edittext, 0, view.getLeftString(), null, true);
 	}
+	private void popupCheckBoxDialog(final SuperTextView view, final String remote) {
 
+		final LinearLayout linearLayout= (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tools_check_box,null);
+		RadioGroup radioGroup= (RadioGroup) linearLayout.findViewById(R.id.rg_sex);
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+				RadioButton radioButton= (RadioButton) linearLayout.findViewById(checkedId);
+						UiUtil.toast(radioButton.getText().toString());
+				sex=radioButton.getText().toString();
+			}
+		});
+
+
+		new DialogHelper(this).show(new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				int count = 0;
+				if (changeState.containsKey(view.getId())) {
+					count = changeState.get(view.getId());
+				} else {
+					changeState.put(view.getId(), count);
+				}
+
+				//编辑框文字不为空且不等于原框文字
+				if (!sex.equals(view.getRightString())) {
+					view.setRightString(sex);
+				}
+				if (sex.toString().equals(remote)) {
+					count = count == 0 ? 0 : count - 1;
+				} else {
+					count = count == 1 ? 1 : count + 1;
+				}
+				changeState.put(view.getId(),count);
+				/**
+				 * 遍历所有可改变的属性的count值之和，如果大于零证明需要改变
+				 */
+				int temp=0;
+				for (Integer integer : changeState.values()) {
+					temp += integer;
+				}
+				if (temp <= 0&&headPath.length()==0) {
+					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.light_gray));
+					needSave = false;
+				} else {
+					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.btn_red));
+					needSave = true;
+				}
+			}
+		}, true, linearLayout, 0, view.getLeftString(), null, true);
+	}
 	private void save() {
 		//选中的头像
 		File file=headPath.length()!=0?new File(FileUtil.getProjectRootFile(),FileUtil.DEFAULT_PIC_HEAD_NAME):null;

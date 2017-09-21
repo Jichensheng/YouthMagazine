@@ -15,6 +15,7 @@ public class UserBean implements Serializable {
 	private String phone;//电话
 	private String sId;//学号
 	private String college;//学院
+	private String sex;//性别
 	private String psw;
 	private String token;
 
@@ -98,6 +99,14 @@ public class UserBean implements Serializable {
 		this.token = token;
 	}
 
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	@Override
 	public String toString() {
 		return "UserBean{" +
@@ -109,6 +118,8 @@ public class UserBean implements Serializable {
 				", phone='" + phone + '\'' +
 				", sId='" + sId + '\'' +
 				", college='" + college + '\'' +
+				", sex='" + sex + '\'' +
+				", psw='" + psw + '\'' +
 				", token='" + token + '\'' +
 				'}';
 	}

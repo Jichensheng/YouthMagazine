@@ -3,7 +3,6 @@ package com.jcs.magazine.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +54,7 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 
 			recyclerView.setAdapter(adapter);
 
-			recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
+//			recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext(),1));
 			//上拉下拉风格
 			recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
 			//设置箭头

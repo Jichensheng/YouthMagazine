@@ -27,7 +27,7 @@ import com.jcs.magazine.fragment.TalkFragment;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.talk.Constant;
 import com.jcs.magazine.talk.MediaPlayerService;
-import com.jcs.magazine.talk.interfaces.LoveInterface;
+import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
@@ -47,7 +47,7 @@ import static android.content.Context.BIND_AUTO_CREATE;
  * author：Jics
  * 2017/9/5 14:38
  */
-public class ChildTalkFragment extends Fragment implements LoveInterface, TalkListAdapter.OnClickTalkListener {
+public class ChildTalkFragment extends Fragment implements TabFragmentInterface, TalkListAdapter.OnClickTalkListener {
 	private static final String TAG = TalkFragment.class.getName();
 	public Messenger mServiceMessenger;//来自服务端的Messenger
 	private Messenger mClientMessenger;

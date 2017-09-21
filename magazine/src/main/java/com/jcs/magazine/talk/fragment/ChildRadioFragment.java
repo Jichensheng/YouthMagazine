@@ -20,7 +20,7 @@ import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.talk.adapter.RadioRvAdapter;
-import com.jcs.magazine.talk.interfaces.LoveInterface;
+import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
@@ -36,7 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  * author：Jics
  * 2017/9/5 14:38
  */
-public class ChildRadioFragment extends Fragment implements LoveInterface,RadioRvAdapter.OnArtItemClickListener {
+public class ChildRadioFragment extends Fragment implements TabFragmentInterface,RadioRvAdapter.OnArtItemClickListener {
 	private View rootView;
 	private String tabName;
 	private XRecyclerView recyclerView;

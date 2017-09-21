@@ -22,13 +22,14 @@ import java.util.List;
  */
 
 public class MPostListAdapter extends RecyclerView.Adapter {
+	private boolean isMyself;
 	private Context context;
 	private List<MomentBean> momentBeanList;
 
-	public MPostListAdapter(Context context, List<MomentBean> momentBeanList) {
+	public MPostListAdapter(Context context, List<MomentBean> momentBeanList,boolean isMyself) {
 		this.context = context;
 		this.momentBeanList = momentBeanList;
-
+		this.isMyself = isMyself;
 	}
 
 	@Override
@@ -40,6 +41,11 @@ public class MPostListAdapter extends RecyclerView.Adapter {
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if (holder instanceof MomentListHolder) {
+			if (isMyself) {
+				((MomentListHolder) holder).tv_btn_delet.setVisibility(View.VISIBLE);
+			}else {
+				((MomentListHolder) holder).tv_btn_delet.setVisibility(View.GONE);
+			}
 			final MomentBean mb = momentBeanList.get(position );
 			final List<String> urls = new ArrayList<>();
 			for (MomentBean.ImageList imageList : mb.getImages()) {
@@ -71,7 +77,7 @@ public class MPostListAdapter extends RecyclerView.Adapter {
 
 	class MomentListHolder extends RecyclerView.ViewHolder {
 		NineGridTestLayout nineGridTestLayout;
-		TextView tv_content, tv_public_time, tv_praise, tv_comment;
+		TextView tv_content, tv_public_time, tv_praise, tv_comment,tv_btn_delet;
 
 		public MomentListHolder(View itemView) {
 			super(itemView);
@@ -80,6 +86,7 @@ public class MPostListAdapter extends RecyclerView.Adapter {
 			tv_public_time = (TextView) itemView.findViewById(R.id.tv_public_time);
 			tv_praise = (TextView) itemView.findViewById(R.id.tv_praise);
 			tv_comment = (TextView) itemView.findViewById(R.id.tv_comment);
+			tv_btn_delet = (TextView) itemView.findViewById(R.id.tv_btn_delet);
 		}
 	}
 

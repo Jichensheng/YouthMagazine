@@ -1,6 +1,5 @@
 package com.jcs.magazine.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -12,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
-import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.adapter.LaboratoryAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.LaboratoryBean;
@@ -115,7 +113,7 @@ public class LaboratoryFragment extends BaseFragment {
 		shudong.setTitle("树洞");
 		shudong.setRes(R.drawable.shudong);
 		shudong.setDescription("告诉我你的小秘密");
-		shudong.setIntent(new Intent(getContext(), LoginActicity.class));
+		shudong.setIntent(null);
 		list.add(shudong);
 
 		LaboratoryBean yangli = new LaboratoryBean();

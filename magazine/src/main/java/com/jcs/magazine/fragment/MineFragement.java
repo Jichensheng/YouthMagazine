@@ -20,7 +20,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
 import com.jcs.magazine.activity.mine.ContactUsActivity;
-import com.jcs.magazine.activity.mine.PartnerActivity;
+import com.jcs.magazine.activity.mine.FollowActivity;
 import com.jcs.magazine.activity.mine.PostActivity;
 import com.jcs.magazine.activity.mine.UserInfoActivity;
 import com.jcs.magazine.base.BaseFragment;
@@ -165,7 +165,8 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 				break;
 			//伙伴
 			case R.id.iftv_partner:
-				intent = new Intent(getContext(), PartnerActivity.class);
+				intent = new Intent(getContext(), FollowActivity.class);
+
 				PermissionHelper.getHelper().startActivity(getContext(), intent);
 				break;
 			//清缓存
