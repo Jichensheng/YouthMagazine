@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
@@ -100,7 +103,12 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 //		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
 		Glide.with(getContext()).load(url).error(R.drawable.default_avater_blur).transform(new GlideBlurTransform(getContext())).into(blurImageView);
 //		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
-		Glide.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
+		Glide.with(getContext()).load(url).error(R.drawable.default_avater).placeholder(R.drawable.default_avater).into(new SimpleTarget<GlideDrawable>() {
+			@Override
+			public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+				civ_avater.setImageDrawable(resource);
+			}
+		});
 
 
 		//开关通知

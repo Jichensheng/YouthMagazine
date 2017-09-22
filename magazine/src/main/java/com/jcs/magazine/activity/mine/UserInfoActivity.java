@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -75,13 +76,12 @@ import static com.jcs.magazine.R.id.btn_exit;
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
 	private static final int REQUEST_CODE_CHOOSE = 0x223;
 	private CircleImageView civ_avater;
-	private SuperTextView stv_name, stv_nick, stv_phone, stv_college,stv_sex;
+	private SuperTextView stv_name, stv_nick, stv_phone, stv_college, stv_sex;
 	private TextView tv_save;
 	private boolean needSave;
 	private UserBean user;
 	private Map<Integer, Integer> changeState;
-	private String headPath="";
-	private String sex="男";
+	private String headPath = "";
 
 	@Override
 	protected void onCreate(@Nullable Bundle paramBundle) {
@@ -131,6 +131,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			stv_nick.setRightString(user.getNick());
 			stv_phone.setRightString(user.getPhone());
 			stv_college.setRightString(user.getCollege());
+			stv_sex.setRightString(user.getSex()!=null?user.getSex().equals("male")?"男":"女":"待完善");
 		}
 
 	}
@@ -179,17 +180,17 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				if (needSave) {
 					save();
 				}
+				break;
 			case R.id.stv_sex:
 				String remoteSex;
-				if (user.getSex()!=null) {
-					remoteSex=user.getSex().equals("male")?"男":"女";
-				}else
-					remoteSex="男";
-				popupCheckBoxDialog(stv_sex,remoteSex);
+				if (user.getSex() != null) {
+					remoteSex = user.getSex().equals("male") ? "男" : "女";
+				} else
+					remoteSex = "待完善";
+				popupCheckBoxDialog(stv_sex, remoteSex);
 				break;
 		}
 	}
-
 
 
 	private void popupDialog(final SuperTextView view, final String remote) {
@@ -223,15 +224,15 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				} else {
 					count = count == 1 ? 1 : count + 1;
 				}
-				changeState.put(view.getId(),count);
+				changeState.put(view.getId(), count);
 				/**
 				 * 遍历所有可改变的属性的count值之和，如果大于零证明需要改变
 				 */
-				int temp=0;
+				int temp = 0;
 				for (Integer integer : changeState.values()) {
 					temp += integer;
 				}
-				if (temp <= 0&&headPath.length()==0) {
+				if (temp <= 0 && headPath.length() == 0) {
 					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.light_gray));
 					needSave = false;
 				} else {
@@ -241,23 +242,32 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			}
 		}, true, edittext, 0, view.getLeftString(), null, true);
 	}
+
 	private void popupCheckBoxDialog(final SuperTextView view, final String remote) {
 
-		final LinearLayout linearLayout= (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tools_check_box,null);
-		RadioGroup radioGroup= (RadioGroup) linearLayout.findViewById(R.id.rg_sex);
+		final LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tools_check_box, null);
+		RadioButton rb_male= (RadioButton) linearLayout.findViewById(R.id.rb_male);
+		RadioButton rb_female= (RadioButton) linearLayout.findViewById(R.id.rb_female);
+
+		if (view.getRightString().equals("待完善")) {
+			rb_male.setChecked(false);
+			rb_female.setChecked(false);
+		}else if(view.getRightString().equals("男")){
+			rb_female.setChecked(false);
+			rb_male.setChecked(true);
+		}else {
+			rb_female.setChecked(true);
+			rb_male.setChecked(false);
+		}
+
+		final AlertDialog dialog=new DialogHelper(this).show(null, true, linearLayout, 0, null, null, false);
+
+		RadioGroup radioGroup = (RadioGroup) linearLayout.findViewById(R.id.rg_sex);
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-				RadioButton radioButton= (RadioButton) linearLayout.findViewById(checkedId);
-						UiUtil.toast(radioButton.getText().toString());
-				sex=radioButton.getText().toString();
-			}
-		});
-
-
-		new DialogHelper(this).show(new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
+				RadioButton radioButton = (RadioButton) linearLayout.findViewById(checkedId);
+				String sex = radioButton.getText().toString();
 				int count = 0;
 				if (changeState.containsKey(view.getId())) {
 					count = changeState.get(view.getId());
@@ -269,40 +279,46 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				if (!sex.equals(view.getRightString())) {
 					view.setRightString(sex);
 				}
+				//和远程对比
 				if (sex.toString().equals(remote)) {
 					count = count == 0 ? 0 : count - 1;
 				} else {
 					count = count == 1 ? 1 : count + 1;
 				}
-				changeState.put(view.getId(),count);
+				changeState.put(view.getId(), count);
 				/**
 				 * 遍历所有可改变的属性的count值之和，如果大于零证明需要改变
 				 */
-				int temp=0;
+				int temp = 0;
 				for (Integer integer : changeState.values()) {
 					temp += integer;
 				}
-				if (temp <= 0&&headPath.length()==0) {
+				if (temp <= 0 && headPath.length() == 0) {
 					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.light_gray));
 					needSave = false;
 				} else {
 					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.btn_red));
 					needSave = true;
 				}
+					dialog.dismiss();
 			}
-		}, true, linearLayout, 0, view.getLeftString(), null, true);
+		});
+
 	}
+
 	private void save() {
 		//选中的头像
-		File file=headPath.length()!=0?new File(FileUtil.getProjectRootFile(),FileUtil.DEFAULT_PIC_HEAD_NAME):null;
+		File file = headPath.length() != 0 ? new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_HEAD_NAME) : null;
 
-		MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder().setType(MultipartBody.FORM);
+		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-		if (!TextUtils.isEmpty(stv_nick.getRightString())) requestBodyBuilder.addFormDataPart("nick",stv_nick.getRightString());
-		if (!TextUtils.isEmpty(stv_college.getRightString())) requestBodyBuilder.addFormDataPart("college",stv_college.getRightString());
+		if (!TextUtils.isEmpty(stv_nick.getRightString()))
+			requestBodyBuilder.addFormDataPart("nick", stv_nick.getRightString());
+		if (!TextUtils.isEmpty(stv_college.getRightString()))
+			requestBodyBuilder.addFormDataPart("college", stv_college.getRightString());
 
-		if(file!=null&&file.exists()){
-			requestBodyBuilder.addFormDataPart("head","head.jpg", RequestBody.create(MediaType.parse("image/*"),file));
+		if (file != null && file.exists()) {
+			requestBodyBuilder.addFormDataPart("head", "head.jpg", RequestBody.create(MediaType.parse("image/*"), file));
 		}
 
 		YzuClient.getInstance()
@@ -340,9 +356,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 									.choose(MimeType.ofImageNoGif(), false)
 									.countable(true)
 									.capture(true)
-									.captureStrategy( new CaptureStrategy(true, "com.jcs.pic.fileprovider"))
+									.captureStrategy(new CaptureStrategy(true, "com.jcs.pic.fileprovider"))
 									.maxSelectable(1)
-									.gridExpectedSize( getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+									.gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
 									.restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 									.thumbnailScale(0.85f)
 									.imageEngine(new GlideEngine())
@@ -366,6 +382,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
 	/**
 	 * 选择之后的回调
+	 *
 	 * @param requestCode
 	 * @param resultCode
 	 * @param data
@@ -377,17 +394,17 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 			needSave = true;
 			tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.btn_red));
 			List<String> list = Matisse.obtainPathResult(data);
-			headPath= list.get(0);
+			headPath = list.get(0);
 //			Glide.with(this).load(headPath).error(R.drawable.default_avater).into(civ_avater);
 			Glide.with(this).load(headPath).asBitmap().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_avater)
-					.into(new SimpleTarget<Bitmap>(300,400) {
+					.into(new SimpleTarget<Bitmap>(300, 400) {
 						@Override
 						public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
 							civ_avater.setImageBitmap(resource);
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
-									BitmapUtil.saveBitmap(FileUtil.DEFAULT_PIC_HEAD_NAME,resource);
+									BitmapUtil.saveBitmap(FileUtil.DEFAULT_PIC_HEAD_NAME, resource);
 								}
 							}).start();
 						}

@@ -11,7 +11,7 @@ android {
         versionCode 6
         versionName "1.2.1"
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86_64", "x86"
+            abiFilters "armeabi", "armeabi-v7a", "arm64­v8a", "x86_64", "x86"
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

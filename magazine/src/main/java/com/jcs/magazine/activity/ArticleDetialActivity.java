@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -14,8 +16,8 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
-import com.jcs.magazine.mock.MockConfig;
 import com.jcs.magazine.util.DialogHelper;
+import com.jcs.magazine.util.HtmlUtil;
 
 import static com.jcs.magazine.R.id.webView;
 
@@ -36,6 +38,11 @@ public class ArticleDetialActivity extends BaseActivity {
 		String content = getIntent().getStringExtra("content");
 		String title = getIntent().getStringExtra("title");
 		String autore = getIntent().getStringExtra("author");
+		Toolbar toolbar= (Toolbar) findViewById(R.id.tb_toolbar);
+		setSupportActionBar(toolbar);
+//		TextView textView= (TextView) findViewById(R.id.tv_tb_title);
+//		textView.setText(title);
+
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_author = (TextView) findViewById(R.id.tv_author);
 		tv_title.setText(title);
@@ -80,8 +87,25 @@ public class ArticleDetialActivity extends BaseActivity {
 		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 		settings.setJavaScriptEnabled(true);
 //		mWebView.loadUrl("https://mp.weixin.qq.com/s?__biz=MzA4NTM3MTA2NQ==&mid=2651391185&idx=1&sn=ea61b912beff537048762bb5a5be821a");
-//		mWebView.loadDataWithBaseURL("about:blank", HtmlUtil.fmt(content), "text/html", "utf-8", null);
-		mWebView.loadDataWithBaseURL("about:blank", MockConfig.uedit, "text/html", "utf-8", null);
+		mWebView.loadDataWithBaseURL("about:blank", HtmlUtil.fmt(content), "text/html", "utf-8", null);
+//		mWebView.loadDataWithBaseURL("about:blank", MockConfig.uedit, "text/html", "utf-8", null);
+		initComment();
+	}
 
+	/**
+	 * 评论
+	 */
+	private void initComment() {
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case android.R.id.home:
+				finish();
+				break;
+		}
+		return true;
 	}
 }
