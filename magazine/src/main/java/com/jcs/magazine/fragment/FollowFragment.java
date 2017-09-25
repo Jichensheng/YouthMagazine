@@ -1,5 +1,6 @@
 package com.jcs.magazine.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
+import com.jcs.magazine.activity.OtherUserActivity;
 import com.jcs.magazine.adapter.FollowListAdatper;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.UserBean;
@@ -149,7 +151,7 @@ public class FollowFragment extends Fragment implements FollowInterface, FollowL
 
 	@Override
 	public void onItemClick(int position) {
-
+		getContext().startActivity(new Intent(getContext(), OtherUserActivity.class));
 	}
 
 	@Override

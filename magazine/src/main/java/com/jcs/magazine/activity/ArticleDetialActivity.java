@@ -88,7 +88,6 @@ public class ArticleDetialActivity extends BaseActivity {
 		settings.setJavaScriptEnabled(true);
 //		mWebView.loadUrl("https://mp.weixin.qq.com/s?__biz=MzA4NTM3MTA2NQ==&mid=2651391185&idx=1&sn=ea61b912beff537048762bb5a5be821a");
 		mWebView.loadDataWithBaseURL("about:blank", HtmlUtil.fmt(content), "text/html", "utf-8", null);
-//		mWebView.loadDataWithBaseURL("about:blank", MockConfig.uedit, "text/html", "utf-8", null);
 		initComment();
 	}
 

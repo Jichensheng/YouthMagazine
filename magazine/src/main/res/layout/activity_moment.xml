@@ -1,39 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:navigationIcon="?attr/homeAsUpIndicator">
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
 
     </android.support.v7.widget.Toolbar>
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
+        android:layout_height="1dp"
         android:background="@color/light_gray_more"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_moment_detial"
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-    />
+        android:layout_weight="1">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:elevation="0dp">
+            <include
+                layout="@layout/holder_moment_item"
+            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray_more"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="评论 "
+            />
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_moment_detial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+    </android.support.design.widget.CoordinatorLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
+        android:layout_height="1dp"
         android:background="@color/light_gray_more"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
         <EditText
             android:id="@+id/et_make_comment"
             android:layout_width="0dp"
@@ -44,13 +77,13 @@
             android:drawableLeft="@drawable/mp"
             android:drawablePadding="10dp"
             android:hint="写评论"
-            android:textSize="13sp"
+            android:imeOptions="actionSend"
+            android:inputType="text"
             android:maxLines="3"
             android:padding="5dp"
-            android:inputType="text"
-            android:imeOptions="actionSend"
             android:textColor="@color/dark_gray"
-            android:textColorHint="@color/light_gray"/>
+            android:textColorHint="@color/light_gray"
+            android:textSize="13sp"/>
 
         <ImageView
             android:id="@+id/iv_emoticon"
@@ -60,13 +93,6 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/emoticon"
         />
-   <!--     <TextView
-        android:id="@+id/tv_send"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:gravity="center"
-        android:text="发送"
-    />-->
+
     </LinearLayout>
 </LinearLayout>

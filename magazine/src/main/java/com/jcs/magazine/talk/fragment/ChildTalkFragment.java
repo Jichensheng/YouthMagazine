@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.TalkListAdapter;
@@ -87,7 +88,10 @@ public class ChildTalkFragment extends Fragment implements TabFragmentInterface,
 		adapter = new TalkListAdapter(getContext(), talkList);
 		adapter.setOnClickTalkListener(this);
 		recyclerView.setAdapter(adapter);
-
+		//上拉下拉风格
+		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
+		//设置箭头
+		recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
 		recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
 //		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
 		recyclerView.setLoadingListener(initListener());

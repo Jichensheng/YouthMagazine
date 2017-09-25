@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.ArticleDetialActivity;
@@ -82,12 +83,10 @@ public class ChildEverythingFragment extends Fragment implements TabFragmentInte
 
 		recyclerView = (XRecyclerView) parent.findViewById(R.id.rv_content);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 		//上拉下拉风格
-//		recyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-//		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallScaleMultiple);
+		recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZagDeflect);
 		//设置箭头
-//		recyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
+		recyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
 
 		artRvAdapter = new RadioRvAdapter(getContext(), list);
 		artRvAdapter.setOnArtItemClickListener(this);

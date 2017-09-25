@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
              android:layout_marginLeft="20dp"
              android:layout_marginRight="20dp"
              android:background="@drawable/sl_bottom">
@@ -33,7 +33,7 @@
                     android:id="@+id/tv_chief_editor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="主  编：季晨生"
+                    tools:text="主  编：季晨生"
                     android:textColor="#484848"
                     android:textSize="8sp"
                 />
@@ -42,7 +42,7 @@
                     android:id="@+id/tv_sub_editor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="副主编：Jcs  Jichensheng"
+                    tools:text="副主编：Jcs  Jichensheng"
                     android:textColor="#484848"
                     android:textSize="8sp"
                 />
@@ -95,6 +95,7 @@
             android:id="@+id/imv_yzu_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:transitionName="cover"

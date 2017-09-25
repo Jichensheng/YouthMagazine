@@ -91,8 +91,8 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 				.into(imageView);*/
 		Glide.with(this)
 				.load(getIntent().getStringExtra("img"))
-//				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
-//				.centerCrop()
+				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+				.centerCrop()
 				.placeholder(R.drawable.l_content)
 				.error(R.drawable.l_content)
 				.into(imageView);

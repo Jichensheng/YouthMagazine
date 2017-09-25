@@ -1,4 +1,3 @@
-
 package com.jcs.magazine.activity;
 
 import android.content.ClipData;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -21,30 +19,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
+import com.jcs.magazine.adapter.ArticalDetialAdapter;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.CommentBean;
-import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.UiUtil;
-import com.jcs.magazine.util.glide.GlideCircleTransform;
-import com.jcs.magazine.widget.CircleImageView;
-import com.jcs.magazine.widget.SimpleDividerItemDecoration;
-import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,122 +44,84 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 说说详情页
  * author：Jics
- * 2017/4/11 14:31
+ * 2017/9/25 14:59
  */
-public class MomentActivity extends BaseActivity implements TextView.OnEditorActionListener,
-		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener {
-	private RecyclerView recyclerView;
-	private MomentBean mb;
-	private Toolbar toolbar;
-	private MomentDetailAdapter adapter;
+public class ArticleDetialActivityRe extends BaseActivity implements TextView.OnEditorActionListener,
+		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener,ArticalDetialAdapter.OnWebViewLoadedListener {
+	private ArticalDetialAdapter adapter;
 	private List<CommentBean> commentList;
+
 	private EditText et_make_comment;
-	private String atNick = "";
 	private CommentBean atCommentBean = null;
+	private String atNick = "";
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_moment);
-		initView();
-	}
-
-	public void initView() {
-		commentList = new ArrayList<>();
-
-		toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
-		toolbar.setTitle(getIntent().getStringExtra("nickname"));
+	protected void onCreate(@Nullable Bundle paramBundle) {
+		super.onCreate(paramBundle);
+		setContentView(R.layout.activity_article_detial_re);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		mb = (MomentBean) getIntent().getSerializableExtra("mb");
-
-		recyclerView = (RecyclerView) findViewById(R.id.rv_moment_detial);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		adapter = new MomentDetailAdapter(this, commentList);
-		adapter.setOnLongPressItemListener(this);
-
-		recyclerView.setAdapter(adapter);
-		initData();
-		recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this, DimentionUtils.dip2px(this, 1)));
+		commentList = new ArrayList<>();
 		et_make_comment = (EditText) findViewById(R.id.et_make_comment);
 		et_make_comment.setOnEditorActionListener(this);
-		initDetail();
-	}
+		String content = getIntent().getStringExtra("content");
+		String title = getIntent().getStringExtra("title");
+		String autore = getIntent().getStringExtra("author");
 
-	/**
-	 * 上部分
-	 */
-	private void initDetail() {
-		LinearLayout ll_head_container;
-		NineGridTestLayout nineGridTestLayout;
-		final CircleImageView civ;
-		TextView nick, tv_content, tv_public_time, tv_praise, tv_btn;
-
-		ll_head_container = (LinearLayout) findViewById(R.id.ll_head_container);
-		nineGridTestLayout = (NineGridTestLayout) findViewById(R.id.layout_nine_grid);
-		tv_content = (TextView) findViewById(R.id.tv_content);
-		civ = (CircleImageView) findViewById(R.id.civ_head);
-		nick = (TextView) findViewById(R.id.tv_nickname);
-		tv_btn = (TextView) findViewById(R.id.tv_btn);
-		tv_public_time = (TextView) findViewById(R.id.tv_public_time);
-		tv_praise = (TextView) findViewById(R.id.tv_praise);
-
-		List<UserBean> praiser = mb.getPraiser();
-		Glide.with(this).load(mb.getHead())
-				.error(R.drawable.default_avater)
-				.into(new SimpleTarget<GlideDrawable>() {
+		final XRecyclerView recyclerView = (XRecyclerView) findViewById(R.id.xrv_artical);
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+			@Override
+			public void onRefresh() {
+				recyclerView.setPullRefreshEnabled(false);
+				new Thread(new Runnable() {
 					@Override
-					public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-						civ.setImageDrawable(resource);
+					public void run() {
+						try {
+							Thread.sleep(1000);
+							 runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									recyclerView.refreshComplete();
+									recyclerView.setPullRefreshEnabled(true);
+								}
+							});
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
-				});
-		//用户已登录且是自己发的帖子
-		if (LoginUserHelper.getInstance().isLogined()
-				&& LoginUserHelper.getInstance().getUser().getUid().equals(mb.getUid())) {
-			tv_btn.setText("删除");
-			// TODO: 2017/9/14 删除逻辑
-		} else {
-			tv_btn.setText("+关注");
-			// TODO: 2017/9/14 关注逻辑
-		}
-
-		//urls是九宫格图片
-		final List<String> urls = new ArrayList<>();
-		for (MomentBean.ImageList imageList : mb.getImages()) {
-			urls.add(imageList.getUrl());
-		}
-		nineGridTestLayout.setUrlList(urls);
-		nick.setText(mb.getNick());
-		tv_public_time.setText(mb.getDate());
-		tv_content.setText(mb.getExcerpt());
-		tv_praise.setText("" + mb.getPraise());
-		if (praiser != null) {
-			for (final UserBean userBean : praiser) {
-				final ImageView imageView = new ImageView(this);
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DimentionUtils.dip2px(this, 35), DimentionUtils.dip2px(this, 35));
-				lp.setMargins(DimentionUtils.dip2px(this, 5), 0, 0, 0);
-				Glide.with(this).load(userBean.getHead())
-						.transform(new GlideCircleTransform(this))
-						.placeholder(R.drawable.default_avater)
-						.error(R.drawable.default_avater)
-						.into(new SimpleTarget<GlideDrawable>() {
-							@Override
-							public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-								imageView.setImageDrawable(resource);
-							}
-						});
-				ll_head_container.addView(imageView, lp);
-				imageView.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						UiUtil.toast(userBean.toString());
-					}
-				});
+				}).start();
 			}
-		}
+
+			@Override
+			public void onLoadMore() {
+				recyclerView.setPullRefreshEnabled(false);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(1000);
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									recyclerView.loadMoreComplete();
+									recyclerView.setPullRefreshEnabled(true);
+								}
+							});
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+		});
+		adapter = new ArticalDetialAdapter(commentList, this, content, title, autore);
+		adapter.setOnLongPressItemListener(this);
+		adapter.setOnWebVIewLoadedListener(this);
+		recyclerView.setAdapter(adapter);
 	}
+
 
 	@Override
 	protected void onResume() {
@@ -184,7 +136,8 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 	}
 
 	private void initData() {
-		YzuClient.getInstance().getCommentLists(mb.getMid().trim(), 1, 10)
+		// TODO: 2017/9/25 文章id
+		YzuClient.getInstance().getCommentLists("1".trim(), 1, 10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
@@ -267,7 +220,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		 */
 		UserBean user = LoginUserHelper.getInstance().getUser();
 		CommentBean commentBean = new CommentBean();
-		commentBean.setMid(mb.getMid());
+		commentBean.setMid("1");
 		commentBean.setUid(user.getUid());
 		commentBean.setExcerpt(comment);
 		commentBean.setDate(String.valueOf(System.currentTimeMillis()));
@@ -296,7 +249,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		switch (v.getId()) {
 			case R.id.et_make_comment:
 				if (!LoginUserHelper.getInstance().isLogined()) {
-					Intent intent = new Intent(MomentActivity.this, LoginActicity.class);
+					Intent intent = new Intent(this, LoginActicity.class);
 					startActivity(intent);
 				}
 				break;
@@ -355,7 +308,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 							et_make_comment.setText(user);
 							et_make_comment.setSelection(user.length());
 						} else {
-							Intent intent = new Intent(MomentActivity.this, LoginActicity.class);
+							Intent intent = new Intent(ArticleDetialActivityRe.this, LoginActicity.class);
 							startActivity(intent);
 						}
 
@@ -376,5 +329,10 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 			}
 		});
 		mListPop.show();
+	}
+
+	@Override
+	public void onWebLoaded() {
+		initData();
 	}
 }

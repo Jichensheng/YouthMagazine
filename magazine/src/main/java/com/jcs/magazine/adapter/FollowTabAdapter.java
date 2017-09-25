@@ -28,6 +28,7 @@ public class FollowTabAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 
 		FollowFragment fragment = children.get(position).getFragment();
+		//设置uid来查看是谁的关注
 		fragment.setUid(uid);
 		return fragment;
 	}

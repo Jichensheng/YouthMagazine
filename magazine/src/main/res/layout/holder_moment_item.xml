@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              app:layout_scrollFlags="scroll|enterAlways"
               android:orientation="vertical">
 
     <LinearLayout
@@ -112,27 +115,6 @@
             android:orientation="horizontal"
             android:padding="10dp"
         >
-            <!--<com.jcs.magazine.widget.CircleImageView
-                android:id="@+id/civ_head1"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/hmm"
-            />
-            <com.jcs.magazine.widget.CircleImageView
-                android:id="@+id/civ_head2"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/hmm"
-            />
-            <com.jcs.magazine.widget.CircleImageView
-                android:id="@+id/civ_head3"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/hmm"
-            />-->
         </LinearLayout>
         <Space
             android:layout_width="0dp"
@@ -153,15 +135,5 @@
             android:textSize="11sp"
         />
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray_more"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:text="评论 "
-    />
 
 </LinearLayout>

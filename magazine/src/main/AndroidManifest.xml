@@ -70,6 +70,10 @@
             android:name=".activity.mine.FollowActivity"
             android:screenOrientation="portrait"
         />
+        <activity
+            android:name=".activity.ArticleDetialActivityRe"
+            android:screenOrientation="portrait"
+        />
 
 
         <!--umeng share-->
