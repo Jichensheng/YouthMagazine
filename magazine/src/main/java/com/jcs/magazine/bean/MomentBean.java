@@ -22,7 +22,7 @@ public class MomentBean implements Serializable {
 	//帖子文字
 	private String excerpt;
 	//帖子图片
-	private List<ImageList> images;
+	private List<String> images;
 	//发帖时间
 	private String date;
 	//赞数
@@ -78,11 +78,11 @@ public class MomentBean implements Serializable {
 		this.excerpt = excerpt;
 	}
 
-	public List<ImageList> getImages() {
+	public List<String> getImages() {
 		return images;
 	}
 
-	public void setImages(List<ImageList> images) {
+	public void setImages(List<String> images) {
 		this.images = images;
 	}
 
@@ -126,15 +126,4 @@ public class MomentBean implements Serializable {
 				'}';
 	}
 
-	public static class ImageList implements Serializable  {
-		private String url;
-
-		public String getUrl() {
-			return url;
-		}
-
-		public void setUrl(String url) {
-			this.url = url;
-		}
-	}
 }

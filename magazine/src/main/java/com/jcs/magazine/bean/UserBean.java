@@ -1,5 +1,7 @@
 package com.jcs.magazine.bean;
 
+import com.jcs.magazine.network.YzuClient;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +12,7 @@ public class UserBean implements Serializable {
 	private String uid;//用户ID
 	private String name;//姓名
 	private String nick;//昵称
-	private String regData;//注册时间
+	private String regDate;//注册时间
 	private String head;//头像地址永远不变
 	private String phone;//电话
 	private String sId;//学号
@@ -51,15 +53,18 @@ public class UserBean implements Serializable {
 		this.nick = nick;
 	}
 
-	public String getRegData() {
-		return regData;
+	public String getRegDate() {
+		return regDate;
 	}
 
-	public void setRegData(String regData) {
-		this.regData = regData;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 	public String getHead() {
+		return YzuClient.RESOURCE_HOST+head;
+	}
+	public String getHeadName(){
 		return head;
 	}
 
@@ -113,7 +118,7 @@ public class UserBean implements Serializable {
 				"uid='" + uid + '\'' +
 				", name='" + name + '\'' +
 				", nick='" + nick + '\'' +
-				", regData='" + regData + '\'' +
+				", regDate='" + regDate + '\'' +
 				", head='" + head + '\'' +
 				", phone='" + phone + '\'' +
 				", sId='" + sId + '\'' +

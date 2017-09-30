@@ -29,14 +29,14 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
+import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.BitmapUtil;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.DimentionUtils;
@@ -75,6 +75,7 @@ import static com.jcs.magazine.R.id.btn_exit;
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
 	private static final int REQUEST_CODE_CHOOSE = 0x223;
+	private static final String EMPTY_INFO="待完善";
 	private CircleImageView civ_avater;
 	private SuperTextView stv_name, stv_nick, stv_phone, stv_college, stv_sex;
 	private TextView tv_save;
@@ -120,21 +121,17 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 		if (user != null) {
 			Glide.with(this).load(user.getHead())
 					.error(R.drawable.default_avater)
-					.placeholder(R.drawable.default_avater)
-					.into(new SimpleTarget<GlideDrawable>() {
-						@Override
-						public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-							civ_avater.setImageDrawable(resource);
-						}
-					});
+					.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+					.into(civ_avater);
 			stv_name.setRightString(user.getName());
 			stv_nick.setRightString(user.getNick());
 			stv_phone.setRightString(user.getPhone());
 			stv_college.setRightString(user.getCollege());
-			stv_sex.setRightString(user.getSex()!=null?user.getSex().equals("male")?"男":"女":"待完善");
+			stv_sex.setRightString(user.getSex() != null ? user.getSex().equals("male") ? "男" : "女" : "待完善");
 		}
 
 	}
+
 
 	@Override
 	protected void onDestroy() {
@@ -154,11 +151,17 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case btn_exit:
-				SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
-				sp.edit().putBoolean("user_info_isloged", false).apply();
-				LoginUserHelper.getInstance().setLoginUser(null);
-				EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
-				finish();
+				new DialogHelper(this).show(new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+						sp.edit().putBoolean("user_info_isloged", false).apply();
+						LoginUserHelper.getInstance().setLoginUser(null);
+						EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
+						finish();
+					}
+				},true,0,0,"退出","确认退出？",true);
+
 				break;
 			case R.id.civ_avater:
 				picPicker();
@@ -186,7 +189,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 				if (user.getSex() != null) {
 					remoteSex = user.getSex().equals("male") ? "男" : "女";
 				} else
-					remoteSex = "待完善";
+					remoteSex = EMPTY_INFO;
 				popupCheckBoxDialog(stv_sex, remoteSex);
 				break;
 		}
@@ -246,21 +249,21 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 	private void popupCheckBoxDialog(final SuperTextView view, final String remote) {
 
 		final LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tools_check_box, null);
-		RadioButton rb_male= (RadioButton) linearLayout.findViewById(R.id.rb_male);
-		RadioButton rb_female= (RadioButton) linearLayout.findViewById(R.id.rb_female);
+		RadioButton rb_male = (RadioButton) linearLayout.findViewById(R.id.rb_male);
+		RadioButton rb_female = (RadioButton) linearLayout.findViewById(R.id.rb_female);
 
-		if (view.getRightString().equals("待完善")) {
+		if (view.getRightString().equals(EMPTY_INFO)) {
 			rb_male.setChecked(false);
 			rb_female.setChecked(false);
-		}else if(view.getRightString().equals("男")){
+		} else if (view.getRightString().equals("男")) {
 			rb_female.setChecked(false);
 			rb_male.setChecked(true);
-		}else {
+		} else {
 			rb_female.setChecked(true);
 			rb_male.setChecked(false);
 		}
 
-		final AlertDialog dialog=new DialogHelper(this).show(null, true, linearLayout, 0, null, null, false);
+		final AlertDialog dialog = new DialogHelper(this).show(null, true, linearLayout, 0, null, null, false);
 
 		RadioGroup radioGroup = (RadioGroup) linearLayout.findViewById(R.id.rg_sex);
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -300,44 +303,58 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 					tv_save.setTextColor(ContextCompat.getColor(UserInfoActivity.this, R.color.btn_red));
 					needSave = true;
 				}
-					dialog.dismiss();
+				dialog.dismiss();
 			}
 		});
 
 	}
 
 	private void save() {
-		//选中的头像
-		File file = headPath.length() != 0 ? new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_HEAD_NAME) : null;
+		if (user.getUid() != null) {
+			//选中的头像
+			File file = headPath.length() != 0 ? new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_HEAD_NAME) : null;
 
-		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+			MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-		if (!TextUtils.isEmpty(stv_nick.getRightString()))
-			requestBodyBuilder.addFormDataPart("nick", stv_nick.getRightString());
-		if (!TextUtils.isEmpty(stv_college.getRightString()))
-			requestBodyBuilder.addFormDataPart("college", stv_college.getRightString());
+			requestBodyBuilder.addFormDataPart("uid",user.getUid());
 
-		if (file != null && file.exists()) {
-			requestBodyBuilder.addFormDataPart("head", "head.jpg", RequestBody.create(MediaType.parse("image/*"), file));
+			if (!TextUtils.isEmpty(stv_nick.getRightString()))
+				requestBodyBuilder.addFormDataPart("nick", stv_nick.getRightString());
+			if (!TextUtils.isEmpty(stv_college.getRightString()))
+				requestBodyBuilder.addFormDataPart("college", stv_college.getRightString());
+			if (!TextUtils.isEmpty(stv_sex.getRightString())) {
+				String sex = stv_sex.getRightString();
+				sex=sex.toString().equals("男")?"male":"female";
+				requestBodyBuilder.addFormDataPart("sex", sex);
+			}
+			if (!TextUtils.isEmpty(stv_phone.getRightString()))
+				requestBodyBuilder.addFormDataPart("phone", stv_phone.getRightString());
+			if (!TextUtils.isEmpty(stv_name.getRightString()))
+				requestBodyBuilder.addFormDataPart("name", stv_name.getRightString());
+
+			if (file != null && file.exists()) {
+				requestBodyBuilder.addFormDataPart("head", "head.jpg", RequestBody.create(MediaType.parse("image/*"), file));
+			}
+// TODO: 2017/9/28 更新未整合
+		YzuClientDemo.getInstance()
+					.updataUserInfo(requestBodyBuilder.build())
+					.subscribeOn(Schedulers.newThread())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(new Consumer<BaseMgz<UserBean>>() {
+						@Override
+						public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+							LoginUserHelper.getInstance().setLoginUser(userBeanBaseMgz.getResults());
+							EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
+							finish();
+						}
+					}, new Consumer<Throwable>() {
+						@Override
+						public void accept(Throwable throwable) throws Exception {
+
+						}
+					});
 		}
 
-		YzuClient.getInstance()
-				.updataUserInfo(requestBodyBuilder.build())
-				.subscribeOn(Schedulers.newThread())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Consumer<UserBean>() {
-					@Override
-					public void accept(UserBean userBean) throws Exception {
-						LoginUserHelper.getInstance().setLoginUser(userBean);
-						EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
-						finish();
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-
-					}
-				});
 	}
 
 	private void picPicker() {

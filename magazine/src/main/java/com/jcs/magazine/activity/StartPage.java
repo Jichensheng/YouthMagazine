@@ -24,6 +24,7 @@ import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.NetworkUtil;
 import com.jcs.magazine.util.UiUtil;
@@ -69,16 +70,21 @@ public class StartPage extends BaseActivity {
                 sp.edit().putBoolean("user_info_isloged",false).apply();
                 UiUtil.toast("过时了");
             }else {
-                YzuClient.getInstance()
-                        .login(sp.getString("user_info_nicname",""),sp.getString("user_info_psw","aaa"))
+                YzuClientDemo.getInstance()
+                        .loginPost(sp.getString("user_info_nicname",""),sp.getString("user_info_psw",""))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<BaseMgz<UserBean>>(){
+                        .subscribe(new Consumer<BaseMgz<UserBean>>() {
                             @Override
                             public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
                                 UserBean user = userBeanBaseMgz.getResults();
                                 //更新全局变量
                                 LoginUserHelper.getInstance().setLoginUser(user);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                animator.start();
                             }
                         });
             }

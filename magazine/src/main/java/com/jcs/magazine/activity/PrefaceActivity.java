@@ -25,7 +25,6 @@ import com.jcs.magazine.adapter.PrefaceRvAdapter;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.share.CustomShareListener;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.FileUtil;
@@ -91,10 +90,11 @@ public class PrefaceActivity extends BaseActivity implements PrefaceRvAdapter.On
 				.into(imageView);*/
 		Glide.with(this)
 				.load(getIntent().getStringExtra("img"))
-				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
-				.centerCrop()
 				.placeholder(R.drawable.l_content)
 				.error(R.drawable.l_content)
+				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//				.override(BuildConfig.COVER_WIDTH, BuildConfig.COVER_HEIGHT)
+//				.centerCrop()
 				.into(imageView);
 
 		imageView.setOnClickListener(new View.OnClickListener() {

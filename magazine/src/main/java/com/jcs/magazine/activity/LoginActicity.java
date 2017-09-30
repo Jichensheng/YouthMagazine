@@ -23,7 +23,7 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.MessageEvent;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.widget.SuperEditText;
@@ -41,21 +41,21 @@ import okhttp3.MultipartBody;
  * author：Jics
  * 2017/9/12 16:11
  */
-public class LoginActicity extends BaseActivity implements View.OnClickListener,TextView.OnEditorActionListener{
-	private final static int MODE_LOGIN=0x200;
-	private final static int MODE_REGIST_NORMAL=0x201;
-	private final static int MODE_REGIST_SMS=0x202;
-	private final static int CUTDOWN_TIME=60*1000;
-	private final static String REGIST_TYPE_NICK="nick";
-	private final static String REGIST_TYPE_PHONE="phone";
-	final private String TAG="LoginActicity";
-	private SuperEditText set_nick,set_psw,set_psw_re,set_sms,set_phone;
-	private Button btn_login,btn_regist,btn_get_sms;
+public class LoginActicity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
+	private final static int MODE_LOGIN = 0x200;
+	private final static int MODE_REGIST_NORMAL = 0x201;
+	private final static int MODE_REGIST_SMS = 0x202;
+	private final static int CUTDOWN_TIME = 60 * 1000;
+	private final static String REGIST_TYPE_NICK = "nick";
+	private final static String REGIST_TYPE_PHONE = "phone";
+	final private String TAG = "LoginActicity";
+	private SuperEditText set_nick, set_psw, set_psw_re, set_sms, set_phone;
+	private Button btn_login, btn_regist, btn_get_sms;
 	private TextView tv_forget;
 	private TimeCount time;
 	private boolean isCountDown;
-	private long  currMills;
-	private int currentMode=MODE_LOGIN;
+	private long currMills;
+	private int currentMode = MODE_LOGIN;
 
 	@Override
 	protected void onCreate(@Nullable Bundle paramBundle) {
@@ -71,23 +71,23 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 	private void initView() {
 
 		time = new TimeCount(CUTDOWN_TIME, 1000);
-		set_nick= (SuperEditText) findViewById(R.id.set_nick);
-		set_psw= (SuperEditText) findViewById(R.id.set_psw);
-		set_psw_re= (SuperEditText) findViewById(R.id.set_psw_re);
-		set_sms= (SuperEditText) findViewById(R.id.set_sms);
-		set_phone= (SuperEditText) findViewById(R.id.set_phone);
-		btn_login= (Button) findViewById(R.id.btn_withe);
-		btn_regist= (Button) findViewById(R.id.btn_trans);
-		btn_get_sms= (Button) findViewById(R.id.btn_get_sms);
-		tv_forget= (TextView) findViewById(R.id.tv_forget);
+		set_nick = (SuperEditText) findViewById(R.id.set_nick);
+		set_psw = (SuperEditText) findViewById(R.id.set_psw);
+		set_psw_re = (SuperEditText) findViewById(R.id.set_psw_re);
+		set_sms = (SuperEditText) findViewById(R.id.set_sms);
+		set_phone = (SuperEditText) findViewById(R.id.set_phone);
+		btn_login = (Button) findViewById(R.id.btn_withe);
+		btn_regist = (Button) findViewById(R.id.btn_trans);
+		btn_get_sms = (Button) findViewById(R.id.btn_get_sms);
+		tv_forget = (TextView) findViewById(R.id.tv_forget);
 
-        btn_login.setOnClickListener(this);
-        btn_regist.setOnClickListener(this);
-        tv_forget.setOnClickListener(this);
+		btn_login.setOnClickListener(this);
+		btn_regist.setOnClickListener(this);
+		tv_forget.setOnClickListener(this);
 		btn_get_sms.setOnClickListener(this);
 
-        set_sms.setOnEditorActionListener(this);
-        set_psw_re.setOnEditorActionListener(this);
+		set_sms.setOnEditorActionListener(this);
+		set_psw_re.setOnEditorActionListener(this);
 	}
 
 	@Override
@@ -114,9 +114,10 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 	private void whiteButton() {
 		switch (currentMode) {
 			case MODE_LOGIN:
-				if (!TextUtils.isEmpty(set_nick.getText())&&!TextUtils.isEmpty(set_psw.getText())) {
-					YzuClient.getInstance()
-							.login(set_nick.getText().toString(),set_psw.getText().toString())
+				if (!TextUtils.isEmpty(set_nick.getText()) && !TextUtils.isEmpty(set_psw.getText())) {
+					// TODO: 2017/9/28 登录未整合
+					YzuClientDemo.getInstance()
+							.loginPost(set_nick.getText().toString().trim(), set_psw.getText().toString().trim())
 							.subscribeOn(Schedulers.newThread())
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe(new Consumer<BaseMgz<UserBean>>() {
@@ -131,13 +132,13 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 									/**
 									 * 登录成功更新本地数据
 									 */
-									SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
-									SharedPreferences.Editor editor=sp.edit();
-									editor.putBoolean("user_info_isloged",true);
-									editor.putString("user_info_nicname",user.getNick());
-									editor.putString("user_info_psw",user.getPsw());
+									SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+									SharedPreferences.Editor editor = sp.edit();
+									editor.putBoolean("user_info_isloged", true);
+									editor.putString("user_info_nicname", user.getNick());
+									editor.putString("user_info_psw", user.getPsw());
 									editor.putLong("user_info_time", System.currentTimeMillis());
-									editor.putString("user_info_token",user.getToken());
+									editor.putString("user_info_token", user.getToken());
 									editor.apply();
 									EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
 
@@ -145,7 +146,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 									if (getIntent().getExtras() != null && getIntent().getExtras().getString("className") != null) {
 										String className = getIntent().getExtras().getString("className");
 										getIntent().removeExtra("className");
-										if (className != null ) {
+										if (className != null) {
 											try {
 												ComponentName componentName = new ComponentName(LoginActicity.this, Class.forName(className));
 												startActivity(getIntent().setComponent(componentName));
@@ -154,7 +155,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 												e.printStackTrace();
 											}
 										}
-									}else{//没有计划跳转的页面就finish掉
+									} else {//没有计划跳转的页面就finish掉
 										finish();
 									}
 
@@ -165,7 +166,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 									snack("网络出故障了");
 								}
 							});
-				}else{
+				} else {
 					snack("输入信息不完整");
 				}
 				break;
@@ -175,13 +176,13 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 			case MODE_REGIST_SMS://短信注册功能
 //				UiUtil.toast("验证码提交服务\n"+set_phone.getText()+"\n"+set_sms.getText());
 				boolean smsCurrect = true;
-				if (!TextUtils.isEmpty(set_phone.getText())&&!TextUtils.isEmpty(set_sms.getText())&& smsCurrect) {
-						MultipartBody.Builder builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
-						builder.addFormDataPart("type",REGIST_TYPE_NICK);
-						builder.addFormDataPart("phone",set_phone.getText().toString());
-						registUser(builder.build());
-				}else{
-					if (!smsCurrect){
+				if (!TextUtils.isEmpty(set_phone.getText()) && !TextUtils.isEmpty(set_sms.getText()) && smsCurrect) {
+					MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+					builder.addFormDataPart("type", REGIST_TYPE_NICK);
+					builder.addFormDataPart("phone", set_phone.getText().toString());
+					registUser(builder.build());
+				} else {
+					if (!smsCurrect) {
 						snack("验证码错误");
 					}
 					snack("输入信息不完整");
@@ -196,23 +197,23 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 	 * 透明按钮逻辑(下边的按钮)
 	 */
 	private void transButton() {
-		switch(currentMode){
+		switch (currentMode) {
 			case MODE_LOGIN:
 				refreshLayout(MODE_REGIST_NORMAL);
 				break;
 			case MODE_REGIST_NORMAL://当前已经是注册模式的话就提交数据
 //				UiUtil.toast("账号注册提交服务\n"+set_nick.getText()+"\n"+set_psw.getText()+"\n"+set_psw_re.getText());
-				if (!TextUtils.isEmpty(set_nick.getText())&&!TextUtils.isEmpty(set_psw.getText())&&!TextUtils.isEmpty(set_psw_re.getText())) {
+				if (!TextUtils.isEmpty(set_nick.getText()) && !TextUtils.isEmpty(set_psw.getText()) && !TextUtils.isEmpty(set_psw_re.getText())) {
 					if (!set_psw.getText().toString().equals(set_psw_re.getText().toString())) {
 						snack("两次密码不一样");
-					}else {
-						MultipartBody.Builder builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
-						builder.addFormDataPart("type",REGIST_TYPE_PHONE);
-						builder.addFormDataPart("nick",set_nick.getText().toString());
-						builder.addFormDataPart("psw",set_psw.getText().toString());
+					} else {
+						MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//						builder.addFormDataPart("type",REGIST_TYPE_PHONE);
+						builder.addFormDataPart("nick", set_nick.getText().toString());
+						builder.addFormDataPart("psw", set_psw.getText().toString());
 						registUser(builder.build());
 					}
-				}else{
+				} else {
 					snack("输入信息不完整");
 				}
 
@@ -224,23 +225,26 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 	}
 
 	private void registUser(MultipartBody requestbody) {
-		YzuClient.getInstance().registUserInfo(requestbody)
+		YzuClientDemo.getInstance()
+				.registUserInfo(requestbody)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Consumer<UserBean>() {
+				.subscribe(new Consumer<BaseMgz<UserBean>>() {
 					@Override
-					public void accept(UserBean userBean) throws Exception {
+					public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+
+						UserBean userBean = userBeanBaseMgz.getResults();
 						LoginUserHelper.getInstance().setLoginUser(userBean);
 						/**
 						 * 注册成功更新本地数据
 						 */
-						SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor=sp.edit();
-						editor.putBoolean("user_info_isloged",true);
-						editor.putString("user_info_nicname",userBean.getNick());
-						editor.putString("user_info_psw",userBean.getPsw());
+						SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+						SharedPreferences.Editor editor = sp.edit();
+						editor.putBoolean("user_info_isloged", true);
+						editor.putString("user_info_nicname", userBean.getNick());
+						editor.putString("user_info_psw", userBean.getPsw());
 						editor.putLong("user_info_time", System.currentTimeMillis());
-						editor.putString("user_info_token",userBean.getToken());
+						editor.putString("user_info_token", userBean.getToken());
 						editor.apply();
 
 						EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
@@ -260,20 +264,22 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 	 */
 	private void forget() {
 		//现在是登录状态的话是找密码功能
-		if (currentMode==MODE_LOGIN) {
+		if (currentMode == MODE_LOGIN) {
 
-		}else {//注册状态的话就转换成登录页
+		} else {//注册状态的话就转换成登录页
 			refreshLayout(MODE_LOGIN);
 		}
 
 	}
-	private void refreshLayout(int mode){
-		if (currentMode!=mode) {
-			currentMode=mode;
-			switch(mode){
+
+	private void refreshLayout(int mode) {
+		if (currentMode != mode) {
+			currentMode = mode;
+			switch (mode) {
 				case MODE_LOGIN:
 					tv_forget.setText("忘记密码？");
-					if (set_psw_re.getVisibility()!= View.GONE) set_psw_re.setVisibility(View.GONE);
+					if (set_psw_re.getVisibility() != View.GONE)
+						set_psw_re.setVisibility(View.GONE);
 					btn_regist.setText("注　册");
 					btn_login.setText("登　录");
 
@@ -284,12 +290,13 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 					set_sms.setVisibility(View.GONE);
 					btn_get_sms.setVisibility(View.GONE);
 
-                    set_psw.setImeOptions(EditorInfo.IME_ACTION_DONE);
+					set_psw.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-                    break;
+					break;
 				case MODE_REGIST_NORMAL:
 					tv_forget.setText("有账号去登录");
-					if (set_psw_re.getVisibility()!= View.VISIBLE) set_psw_re.setVisibility(View.VISIBLE);
+					if (set_psw_re.getVisibility() != View.VISIBLE)
+						set_psw_re.setVisibility(View.VISIBLE);
 					btn_regist.setText("完成注册");
 					btn_login.setText("短信注册");
 
@@ -299,11 +306,12 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 					set_phone.setVisibility(View.GONE);
 					set_sms.setVisibility(View.GONE);
 					btn_get_sms.setVisibility(View.GONE);
-                    set_psw.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+					set_psw.setImeOptions(EditorInfo.IME_ACTION_NEXT);
 					break;
 				case MODE_REGIST_SMS:
 					tv_forget.setText("有账号去登录");
-					if (set_psw_re.getVisibility()!= View.VISIBLE) set_psw_re.setVisibility(View.VISIBLE);
+					if (set_psw_re.getVisibility() != View.VISIBLE)
+						set_psw_re.setVisibility(View.VISIBLE);
 					btn_regist.setText("账号注册");
 					btn_login.setText("完成注册");
 
@@ -328,23 +336,23 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 		time.start();
 	}
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        switch (v.getId()){
-            case  R.id.set_sms:
-                UiUtil.toast("sms");
-                break;
-            case R.id.set_psw_re:
-                UiUtil.toast("psw_re");
-                break;
-            case R.id.set_psw:
-                UiUtil.toast("psw");
-                break;
-        }
-        return true;
-    }
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		switch (v.getId()) {
+			case R.id.set_sms:
+				UiUtil.toast("sms");
+				break;
+			case R.id.set_psw_re:
+				UiUtil.toast("psw_re");
+				break;
+			case R.id.set_psw:
+				UiUtil.toast("psw");
+				break;
+		}
+		return true;
+	}
 
-    class TimeCount extends CountDownTimer {
+	class TimeCount extends CountDownTimer {
 		public TimeCount(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
 		}
@@ -381,6 +389,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 		}
 		super.onStop();
 	}
+
 	@Override
 	protected void onResume() {
 		SharedPreferences sharedPreferences1 = getPreferences(Activity.MODE_PRIVATE);
@@ -401,6 +410,7 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 		}
 		super.onResume();
 	}
+
 	private void snack(String s) {
 		TSnackbar.make(findViewById(android.R.id.content).getRootView(),
 				s, TSnackbar.LENGTH_SHORT, TSnackbar.APPEAR_FROM_TOP_TO_DOWN)

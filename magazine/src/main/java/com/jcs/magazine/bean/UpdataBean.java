@@ -12,7 +12,6 @@ public class UpdataBean  implements Serializable {
 	 * versionNo : 9
 	 * versionName : 1.0.4
 	 * loadAddress : /upload/20160718192032_eSuzhou_V9_1.0.4_20160718.apk
-	 * content : 二维码识别率、优雅的崩溃以
 	 */
 
 	private int versionNo;

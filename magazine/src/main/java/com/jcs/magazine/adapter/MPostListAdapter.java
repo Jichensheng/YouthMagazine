@@ -13,7 +13,6 @@ import com.jcs.magazine.activity.MomentActivity;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,10 +46,8 @@ public class MPostListAdapter extends RecyclerView.Adapter {
 				((MomentListHolder) holder).tv_btn_delet.setVisibility(View.GONE);
 			}
 			final MomentBean mb = momentBeanList.get(position );
-			final List<String> urls = new ArrayList<>();
-			for (MomentBean.ImageList imageList : mb.getImages()) {
-				urls.add(imageList.getUrl());
-			}
+			final List<String> urls = mb.getImages();
+
 			((MomentListHolder) holder).nineGridTestLayout.setUrlList(urls);
 			((MomentListHolder) holder).tv_public_time.setText(mb.getDate());
 			((MomentListHolder) holder).tv_content.setText(mb.getExcerpt());

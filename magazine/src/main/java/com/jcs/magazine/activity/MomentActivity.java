@@ -136,10 +136,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		}
 
 		//urls是九宫格图片
-		final List<String> urls = new ArrayList<>();
-		for (MomentBean.ImageList imageList : mb.getImages()) {
-			urls.add(imageList.getUrl());
-		}
+		final List<String> urls = mb.getImages();
 		nineGridTestLayout.setUrlList(urls);
 		nick.setText(mb.getNick());
 		tv_public_time.setText(mb.getDate());

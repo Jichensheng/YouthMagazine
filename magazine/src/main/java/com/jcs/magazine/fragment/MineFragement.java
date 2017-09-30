@@ -98,11 +98,18 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
             tv_login.setVisibility(View.VISIBLE);
         }
 //		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).transform(new BlurTransform()).into(blurImageView);
-		Glide.with(getContext()).load(url).error(R.drawable.default_avater_blur).transform(new GlideBlurTransform(getContext())).into(blurImageView);
-//		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
-		Glide.with(getContext()).load(url).error(R.drawable.default_avater)
+		Glide.with(getContext()).load(url)
+				.error(R.drawable.default_avater_blur)
+				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
 				.skipMemoryCache(true)
-				.diskCacheStrategy(DiskCacheStrategy.NONE)
+				.transform(new GlideBlurTransform(getContext()))
+				.into(blurImageView);
+//		Picasso.with(getContext()).load(url).error(R.drawable.default_avater).into(civ_avater);
+		Glide.with(getContext()).load(url)
+				.error(R.drawable.default_avater)
+				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+				.skipMemoryCache(true)
+//				.diskCacheStrategy(DiskCacheStrategy.NONE)
 				.into(civ_avater);
 
 

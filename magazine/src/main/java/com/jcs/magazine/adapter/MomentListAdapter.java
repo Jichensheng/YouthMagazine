@@ -18,7 +18,6 @@ import com.jcs.magazine.widget.banner.BannerView;
 import com.jcs.magazine.widget.banner.BannerViewFactory;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,10 +60,7 @@ public class MomentListAdapter extends RecyclerView.Adapter {
 
 //			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
 			Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
-			final List<String> urls = new ArrayList<>();
-			for (MomentBean.ImageList imageList : mb.getImages()) {
-				urls.add(imageList.getUrl());
-			}
+			final List<String> urls = mb.getImages();
 			((MomentListHolder) holder).nineGridTestLayout.setUrlList(urls);
 			((MomentListHolder) holder).nick.setText(mb.getNick());
 			((MomentListHolder) holder).tv_public_time.setText(mb.getDate());

@@ -30,8 +30,9 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MakePostGridAdapter;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseMgz;
+import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.network.upload.DefaultProgressListener;
 import com.jcs.magazine.network.upload.UploadFileRequestBody;
 import com.jcs.magazine.util.BitmapUtil;
@@ -184,17 +185,21 @@ public class MakePostActivity extends BaseActivity implements MakePostGridAdapte
 	 */
 	private void sendPost() {
 
-		if (!TextUtils.isEmpty(et_post.getText()) && !isUploading) {
+		UserBean user = LoginUserHelper.getInstance().getUser();
+		if (user!=null&&!TextUtils.isEmpty(et_post.getText()) && !isUploading) {
 			isUploading = true;
 			MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 			requestBodyBuilder.addFormDataPart("excerpt", et_post.getText().toString());
-			requestBodyBuilder.addFormDataPart("uid", LoginUserHelper.getInstance().getUser().getUid());
+			requestBodyBuilder.addFormDataPart("uid", user.getUid());
+			requestBodyBuilder.addFormDataPart("head", user.getHeadName());
+			requestBodyBuilder.addFormDataPart("nick", user.getNick());
 			for (int i = 0; i < uploadPic.size(); i++) {
 				UploadFileRequestBody fileRequestBody = new UploadFileRequestBody(uploadPic.get(i), new DefaultProgressListener(mHandler, i));
 				requestBodyBuilder.addFormDataPart("pic", uploadPic.get(i).getName(), fileRequestBody);
 			}
 			// TODO: 2017/9/19
-			YzuClient.getInstance().makePost(requestBodyBuilder.build())
+			YzuClientDemo.getInstance()
+					.makePost(requestBodyBuilder.build())
 					.subscribeOn(Schedulers.newThread())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(new Consumer<BaseMgz>() {

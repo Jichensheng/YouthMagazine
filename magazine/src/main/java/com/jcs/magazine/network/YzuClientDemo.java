@@ -27,17 +27,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 2017/7/31 13:30
  *
  */
-public class YzuClient {
+public class YzuClientDemo {
 //	public static final String HOST="http://s1m7444195.iask.in/magazine/";
 //	public static final String HOST="http://192.168.0.108:3000/";
 //	public static final String HOST="http://192.168.191.1:3000/";
 	//京东
-	public static final String HOST="http://www.yangdaqingnian.top:3000/";
+	public static final String HOST="http://172.31.59.74:8080/";
 	public static final String RESOURCE_HOST="http://172.31.59.74:8080/upload/head/";
 //	public static final String HOST="http://116.196.93.255:3000/";
 	private static ApiService yzuServer;
 	private static Retrofit retrofit;
-	private YzuClient(){
+	private YzuClientDemo(){
 
 	}
 	static {
@@ -59,7 +59,7 @@ public class YzuClient {
 		OkHttpClient client = genericClient();
 
 		retrofit=new Retrofit.Builder()
-				.client(client)
+//				.client(client)
 				.baseUrl(HOST)
 				.addConverterFactory(GsonConverterFactory.create(gson))
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -67,7 +67,7 @@ public class YzuClient {
 	}
 
 	public static ApiService getInstance(){
-		synchronized (YzuClient.class){
+		synchronized (YzuClientDemo.class){
 			if (yzuServer == null) {
 				yzuServer=retrofit.create(ApiService.class);
 			}

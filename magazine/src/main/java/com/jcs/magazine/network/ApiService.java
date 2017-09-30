@@ -141,16 +141,22 @@ public interface ApiService {
 	 * @param id 根据用户id获取信息
 	 * @return
 	 */
-	@GET("magazine/user/{uid}")
+	@GET("magazine/user/id/{uid}")
 	Observable<BaseMgz<UserBean>> getUser(@Path("uid") String id);
 
 	//Todo 测试临时用 get
 	@GET("magazine/user/login/{nick}/{psw}")
 	Observable<BaseMgz<UserBean>> login(@Path("nick") String nick,@Path("psw") String psw);
 
+	/**
+	 * Content-Type: application/x-www-form-urlencoded
+	 * @param nick
+	 * @param psw
+	 * @return
+	 */
 	@FormUrlEncoded
 	@POST("magazine/user/login")
-	Observable<BaseMgz<UserBean>> loginPost(@Field("nick") int page, @Field("psw") int size );
+	Observable<BaseMgz<UserBean>> loginPost(@Field("nick") String nick, @Field("psw") String psw );
 
 	/**
 	 * 更新用户信息 RequestBody形式
@@ -158,15 +164,15 @@ public interface ApiService {
 	 * @return
 	 */
 	@POST("magazine/user/updataUserInfo")
-	Observable<UserBean> updataUserInfo(@Body RequestBody Body);
+	Observable<BaseMgz<UserBean>> updataUserInfo(@Body RequestBody Body);
 
 	/**
 	 * 用户注册 RequestBody形式
 	 * @param Body
 	 * @return
 	 */
-	@POST("magazine/user/updataUserInfo")
-	Observable<UserBean> registUserInfo(@Body RequestBody Body);
+	@POST("magazine/user/regist")
+	Observable<BaseMgz<UserBean>> registUserInfo(@Body RequestBody Body);
 	/**
 	 * 发表说说 RequestBody形式
 	 * @param Body
