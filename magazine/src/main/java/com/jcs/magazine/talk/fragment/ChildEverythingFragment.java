@@ -165,8 +165,8 @@ public class ChildEverythingFragment extends Fragment implements TabFragmentInte
 	public void onItemClick(View view, final int position) {
 		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
-		int articleID = list.get(position).getArticleId();
-		YzuClient.getInstance().getArticle("5311")
+		int articleID = list.get(position).getId();
+		YzuClient.getInstance().getArticle(5311)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {

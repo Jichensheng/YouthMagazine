@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcs.magazine.R;
+import com.jcs.magazine.network.YzuClientDemo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,7 @@ public abstract class NineGridLayout extends ViewGroup {
         }
 
         if (size == 1) {
-            String url = mUrlList.get(0);
+            String url = YzuClientDemo.RESOURCE_MOMENT_HOST+mUrlList.get(0);
             RatioImageView imageView = createImageView(0, url);
 
             //避免在ListView中一张图未加载成功时，布局高度受其他item影响
@@ -148,7 +149,7 @@ public abstract class NineGridLayout extends ViewGroup {
         layoutParams();
 
         for (int i = 0; i < size; i++) {
-            String url = mUrlList.get(i);
+            String url = YzuClientDemo.RESOURCE_MOMENT_HOST+mUrlList.get(i);
             RatioImageView imageView;
             if (!mIsShowAll) {
                 if (i < MAX_COUNT - 1) {

@@ -22,7 +22,7 @@ import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.BitmapUtil;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.DimentionUtils;
@@ -68,8 +68,8 @@ public class MagazineFragment extends BaseFragment {
 						}
 					}).start();
 					//目录id
-					int contentsId = coverBeens.get(position).getId();
-					YzuClient.getInstance().getContents(contentsId)
+					int contentsId = coverBeens.get(position).getVol();
+					YzuClientDemo.getInstance().getContents(contentsId)
 							.subscribeOn(Schedulers.newThread())
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe(new Consumer<BaseListTemplet<ContentsBean>>() {
@@ -78,7 +78,7 @@ public class MagazineFragment extends BaseFragment {
 									loading.dismiss();
 									isFirstClick = true;
 									Intent intent = new Intent(getActivity(), PrefaceActivity.class);
-									intent.putExtra("img", coverBeens.get(position).getImage());
+									intent.putExtra("img", YzuClientDemo.RESOURCE_COVER_HOST +coverBeens.get(position).getImage());
 									Bundle bundle = new Bundle();
 									bundle.putSerializable("contents", contentsBeanListBeanTemplet);
 									intent.putExtras(bundle);

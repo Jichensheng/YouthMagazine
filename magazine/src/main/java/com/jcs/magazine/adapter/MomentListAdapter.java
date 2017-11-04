@@ -12,7 +12,8 @@ import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
 import com.jcs.magazine.bean.BannerItem;
-import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.MomentBeanRefactor;
+import com.jcs.magazine.util.RelativeDateFormat;
 import com.jcs.magazine.widget.CircleImageView;
 import com.jcs.magazine.widget.banner.BannerView;
 import com.jcs.magazine.widget.banner.BannerViewFactory;
@@ -29,10 +30,10 @@ public class MomentListAdapter extends RecyclerView.Adapter {
 	private static final int TYPE_BANNER = 1;
 	private static final int TYPE_List = 2;
 	private Context context;
-	private List<MomentBean> momentBeanList;
+	private List<MomentBeanRefactor> momentBeanList;
 	private List<BannerItem> bannerItemList;
 
-	public MomentListAdapter(Context context, List<MomentBean> momentBeanList, List<BannerItem> bannerItemList) {
+	public MomentListAdapter(Context context, List<MomentBeanRefactor> momentBeanList, List<BannerItem> bannerItemList) {
 		this.context = context;
 		this.momentBeanList = momentBeanList;
 		this.bannerItemList = bannerItemList;
@@ -56,14 +57,14 @@ public class MomentListAdapter extends RecyclerView.Adapter {
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if (holder instanceof MomentListHolder) {
-			final MomentBean mb = momentBeanList.get(position - 1);
+			final MomentBeanRefactor mb = momentBeanList.get(position - 1);
 
 //			Picasso.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
-			Glide.with(context).load(mb.getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
+			Glide.with(context).load(mb.getPostman().getHead()).error(R.drawable.default_avater).into(((MomentListHolder) holder).civ);
 			final List<String> urls = mb.getImages();
 			((MomentListHolder) holder).nineGridTestLayout.setUrlList(urls);
-			((MomentListHolder) holder).nick.setText(mb.getNick());
-			((MomentListHolder) holder).tv_public_time.setText(mb.getDate());
+			((MomentListHolder) holder).nick.setText(mb.getPostman().getNick());
+			((MomentListHolder) holder).tv_public_time.setText(RelativeDateFormat.formatString(mb.getDate()));
 			((MomentListHolder) holder).tv_content.setText(mb.getExcerpt());
 			((MomentListHolder) holder).tv_comment.setText("" + mb.getComment());
 			((MomentListHolder) holder).tv_praise.setText("" + mb.getPraise());

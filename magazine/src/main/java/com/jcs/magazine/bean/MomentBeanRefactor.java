@@ -1,7 +1,5 @@
 package com.jcs.magazine.bean;
 
-import com.jcs.magazine.network.YzuClientDemo;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,15 +8,11 @@ import java.util.List;
  * author：Jics
  * 2017/8/24 16:41
  */
-public class MomentBean implements Serializable {
+public class MomentBeanRefactor implements Serializable {
 	//帖子id,用于查询此贴的评论列表
 	private String mid;
 	//发帖人id
-	private String uid;
-	//昵称
-	private String nick;
-	//头像地址
-	private String head;
+	private UserBean postman;
 	//最新的三个赞的用户id
 	private List<UserBean> praiser;
 	//帖子文字
@@ -40,28 +34,12 @@ public class MomentBean implements Serializable {
 		this.mid = mid;
 	}
 
-	public String getUid() {
-		return uid;
+	public UserBean getPostman() {
+		return postman;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-	public String getNick() {
-		return nick;
-	}
-
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
-
-	public String getHead() {
-		return YzuClientDemo.RESOURCE_HEAD_HOST+head;
-	}
-
-	public void setHead(String head) {
-		this.head = head;
+	public void setPostman(UserBean postman) {
+		this.postman = postman;
 	}
 
 	public List<UserBean> getPraiser() {
@@ -114,11 +92,9 @@ public class MomentBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MomentBean{" +
+		return "MomentBeanRefactor{" +
 				"mid='" + mid + '\'' +
-				", uid='" + uid + '\'' +
-				", nick='" + nick + '\'' +
-				", head='" + head + '\'' +
+				", postman=" + postman +
 				", praiser=" + praiser +
 				", excerpt='" + excerpt + '\'' +
 				", images=" + images +
@@ -127,5 +103,4 @@ public class MomentBean implements Serializable {
 				", comment=" + comment +
 				'}';
 	}
-
 }

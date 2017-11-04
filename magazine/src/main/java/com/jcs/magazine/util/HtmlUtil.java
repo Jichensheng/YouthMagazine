@@ -1,5 +1,7 @@
 package com.jcs.magazine.util;
 
+import com.jcs.magazine.network.YzuClientDemo;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,8 @@ public class HtmlUtil {
         Matcher matcher = pattern.matcher(str);
         str = matcher.replaceAll("");
 
+        Pattern imgPattern=Pattern.compile("src=\"");
+        str=imgPattern.matcher(str).replaceAll("src=\""+YzuClientDemo.HOST);
         return "<html>" +
                 "<head>" +
                 "<meta charset=\"utf-8\">" +

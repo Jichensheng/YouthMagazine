@@ -31,9 +31,10 @@ public class YzuClientDemo {
 //	public static final String HOST="http://s1m7444195.iask.in/magazine/";
 //	public static final String HOST="http://192.168.0.108:3000/";
 //	public static final String HOST="http://192.168.191.1:3000/";
-	//京东
-	public static final String HOST="http://172.31.59.74:8080/";
-	public static final String RESOURCE_HOST="http://172.31.59.74:8080/upload/head/";
+	public static final String HOST="http://192.168.191.1:8090/";
+	public static final String RESOURCE_HEAD_HOST ="http://192.168.191.1:8090/upload/head/";
+	public static final String RESOURCE_COVER_HOST="http://192.168.191.1:8090/upload/cover/";
+	public static final String RESOURCE_MOMENT_HOST="http://192.168.191.1:8090/upload/moment/";
 //	public static final String HOST="http://116.196.93.255:3000/";
 	private static ApiService yzuServer;
 	private static Retrofit retrofit;

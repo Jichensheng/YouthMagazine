@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.jcs.magazine.R;
+import com.jcs.magazine.network.YzuClientDemo;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class CommentPicAdapter extends PagerAdapter {
 		imv.setScaleType(ImageView.ScaleType.FIT_XY);
 		imv.setAdjustViewBounds(true);
 //		Picasso.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
-		Glide.with(mContext).load(mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
+		Glide.with(mContext).load(YzuClientDemo.RESOURCE_MOMENT_HOST+mUrls.get(position)).placeholder(R.drawable.banner_default).into(imv);
 //		ImageLoaderUtil.getImageLoader(mContext).displayImage(mUrls.get(position), imv, ImageLoaderUtil.getPhotoImageOption());
 //		container.addView(imv);
 		imv.setOnClickListener(new View.OnClickListener() {

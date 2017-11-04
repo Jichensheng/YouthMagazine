@@ -23,7 +23,6 @@ import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.NetworkUtil;
@@ -102,7 +101,7 @@ public class StartPage extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                YzuClient.getInstance()
+                YzuClientDemo.getInstance()
                         .getMagazineCover(1, 3)//第一页，每页3条
                         .subscribeOn(Schedulers.newThread())//网络请求开新线程
                         .observeOn(AndroidSchedulers.mainThread())//网络响应在UI线程

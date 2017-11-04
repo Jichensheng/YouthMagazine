@@ -8,6 +8,7 @@ import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.bean.UserBean;
 
@@ -50,7 +51,7 @@ public interface ApiService {
 	 * @return
 	 */
 	@GET("magazine/article/{articleId}")
-	Observable<BaseMgz<ArticleBean>> getArticle(@Path("articleId") String id);
+	Observable<BaseMgz<ArticleBean>> getArticle(@Path("articleId") int id);
 
 
 	/**
@@ -67,8 +68,8 @@ public interface ApiService {
 	 * @param count
 	 * @return
 	 */
-	@GET("magazine/moment/{page}/{count}")
-	Observable<BaseListTemplet<MomentBean>> getMomentLists(@Path("page") int page, @Path("count") int count);
+	@GET("magazine/moment/re/{page}/{count}")
+	Observable<BaseListTemplet<MomentBeanRefactor>> getMomentLists(@Path("page") int page, @Path("count") int count);
 
 	/**
 	 *	获取某用户的发帖列表
@@ -103,7 +104,7 @@ public interface ApiService {
 	Observable<BaseListTemplet<TalkBean>> getTalkLists(@Path("page") int page, @Path("count") int count);
 
 	/**
-	 *	获取Talk列表
+	 *	获取电台列表带歌曲的
 	 * @param page
 	 * @param count
 	 * @return
@@ -111,7 +112,7 @@ public interface ApiService {
 	@GET("magazine/radio/{page}/{count}")
 	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getRadioLists(@Path("page") int page, @Path("count") int count);
 	/**
-	 *	获取Talk列表
+	 *	获取talk列表
 	 * @param page
 	 * @param count
 	 * @return

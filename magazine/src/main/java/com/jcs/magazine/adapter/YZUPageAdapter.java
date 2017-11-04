@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.MgzCoverBean;
+import com.jcs.magazine.network.YzuClientDemo;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class YZUPageAdapter extends PagerAdapter {
                 .centerCrop()
                 .into(imv);*/
 		Glide.with(context)
-                .load(coverBeens.get(position).getImage())
+                .load(YzuClientDemo.RESOURCE_COVER_HOST +coverBeens.get(position).getImage())
                 .placeholder(R.drawable.l_content)
                 .error(R.drawable.l_content)
 //                .dontAnimate()

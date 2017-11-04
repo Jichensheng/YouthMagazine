@@ -18,7 +18,7 @@ import com.jcs.magazine.adapter.ArtRvAdapter;
 import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
@@ -127,8 +127,8 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 	public void onItemClick(View view, final int position) {
 		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
-		int articleID = list.get(position).getArticleId();
-		YzuClient.getInstance().getArticle("5311")
+		int articleID = list.get(position).getId();
+		YzuClientDemo.getInstance().getArticle(articleID)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {

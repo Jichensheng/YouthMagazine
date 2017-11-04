@@ -16,9 +16,10 @@ import com.jcs.magazine.adapter.MomentListAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
-import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.global.PermissionHelper;
 import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -35,7 +36,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MomentFragment extends BaseFragment implements View.OnClickListener {
 	private MomentListAdapter adapter;
-	private List<MomentBean> momentBeanList;
+	private List<MomentBeanRefactor> momentBeanList;
 	private List<BannerItem> bannerItemList;
 
 	private View rootView;
@@ -124,14 +125,14 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 	}
 
 	private void getListData(){
-		YzuClient.getInstance()
+		YzuClientDemo.getInstance()
 				.getMomentLists(1,10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Consumer<BaseListTemplet<MomentBean>>() {
+				.subscribe(new Consumer<BaseListTemplet<MomentBeanRefactor>>() {
 					@Override
-					public void accept(BaseListTemplet<MomentBean> momentBeanBaseListTemplet) throws Exception {
-						for (MomentBean momentBean : momentBeanBaseListTemplet.getResults().getBody()) {
+					public void accept(BaseListTemplet<MomentBeanRefactor> momentBeanBaseListTemplet) throws Exception {
+						for (MomentBeanRefactor momentBean : momentBeanBaseListTemplet.getResults().getBody()) {
 							momentBeanList.add(momentBean);
 							adapter.notifyDataSetChanged();
 						}

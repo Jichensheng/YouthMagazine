@@ -1,6 +1,6 @@
 package com.jcs.magazine.bean;
 
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 
 import java.io.Serializable;
 
@@ -62,7 +62,7 @@ public class UserBean implements Serializable {
 	}
 
 	public String getHead() {
-		return YzuClient.RESOURCE_HOST+head;
+		return YzuClientDemo.RESOURCE_HEAD_HOST+head;
 	}
 	public String getHeadName(){
 		return head;

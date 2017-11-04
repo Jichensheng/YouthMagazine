@@ -35,11 +35,12 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.CommentBean;
-import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.util.DimentionUtils;
+import com.jcs.magazine.util.RelativeDateFormat;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.magazine.util.glide.GlideCircleTransform;
 import com.jcs.magazine.widget.CircleImageView;
@@ -61,7 +62,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MomentActivity extends BaseActivity implements TextView.OnEditorActionListener,
 		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener {
 	private RecyclerView recyclerView;
-	private MomentBean mb;
+	private MomentBeanRefactor mb;
 	private Toolbar toolbar;
 	private MomentDetailAdapter adapter;
 	private List<CommentBean> commentList;
@@ -83,7 +84,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		toolbar.setTitle(getIntent().getStringExtra("nickname"));
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		mb = (MomentBean) getIntent().getSerializableExtra("mb");
+		mb = (MomentBeanRefactor) getIntent().getSerializableExtra("mb");
 
 		recyclerView = (RecyclerView) findViewById(R.id.rv_moment_detial);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -117,7 +118,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		tv_praise = (TextView) findViewById(R.id.tv_praise);
 
 		List<UserBean> praiser = mb.getPraiser();
-		Glide.with(this).load(mb.getHead())
+		Glide.with(this).load(mb.getPostman().getHead())
 				.error(R.drawable.default_avater)
 				.into(new SimpleTarget<GlideDrawable>() {
 					@Override
@@ -127,7 +128,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 				});
 		//用户已登录且是自己发的帖子
 		if (LoginUserHelper.getInstance().isLogined()
-				&& LoginUserHelper.getInstance().getUser().getUid().equals(mb.getUid())) {
+				&& LoginUserHelper.getInstance().getUser().getUid().equals(mb.getPostman().getUid())) {
 			tv_btn.setText("删除");
 			// TODO: 2017/9/14 删除逻辑
 		} else {
@@ -138,8 +139,8 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		//urls是九宫格图片
 		final List<String> urls = mb.getImages();
 		nineGridTestLayout.setUrlList(urls);
-		nick.setText(mb.getNick());
-		tv_public_time.setText(mb.getDate());
+		nick.setText(mb.getPostman().getNick());
+		tv_public_time.setText(RelativeDateFormat.formatString(mb.getDate()));
 		tv_content.setText(mb.getExcerpt());
 		tv_praise.setText("" + mb.getPraise());
 		if (praiser != null) {
@@ -269,7 +270,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		commentBean.setExcerpt(comment);
 		commentBean.setDate(String.valueOf(System.currentTimeMillis()));
 		commentBean.setNick(user.getNick());
-		commentBean.setHead(user.getHead());
+		commentBean.setHead(user.getHeadName());
 		commentBean.setQuote(quote);
 
 		YzuClient.getInstance().sendComment(commentBean)
