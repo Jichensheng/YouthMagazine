@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
 import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.network.YzuClientDemo;
 
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class ArtRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 					.into(((StoryHolder) holder).imv_cover);*/
 			Glide.with(context)
 //					.load(items.get(position).getImage())
-					.load(YzuClientDemo.RESOURCE_COVER_HOST+items.get(position).getImage())
+					.load(items.get(position).getImage())
 					.placeholder(R.mipmap.cover)
 					.error(R.mipmap.cover)
 					.centerCrop()

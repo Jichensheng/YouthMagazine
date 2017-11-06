@@ -23,7 +23,7 @@ import com.jcs.magazine.adapter.TalkListAdapter;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.TalkBean;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.Constant;
 import com.jcs.magazine.talk.MediaPlayerService;
 import com.jcs.magazine.util.UiUtil;
@@ -235,7 +235,7 @@ public class TalkFragment extends BaseFragment implements TalkListAdapter.OnClic
 
     private void initData(){
         talkList=new ArrayList<>();
-        YzuClient.getInstance()
+        YzuClientDemo.getInstance()
                 .getTalkLists(1,10)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

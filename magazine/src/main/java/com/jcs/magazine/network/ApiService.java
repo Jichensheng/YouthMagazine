@@ -10,6 +10,7 @@ import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.bean.TalkBean;
+import com.jcs.magazine.bean.TalkContentsBean;
 import com.jcs.magazine.bean.UserBean;
 
 import io.reactivex.Observable;
@@ -52,6 +53,13 @@ public interface ApiService {
 	 */
 	@GET("magazine/article/{articleId}")
 	Observable<BaseMgz<ArticleBean>> getArticle(@Path("articleId") int id);
+	/**
+	 *
+	 * @param id 文章id获取文章正文
+	 * @return
+	 */
+	@GET("magazine/talkdetial/{articleId}")
+	Observable<BaseMgz<ArticleBean>> getTalk(@Path("articleId") int id);
 
 
 	/**
@@ -109,16 +117,16 @@ public interface ApiService {
 	 * @param count
 	 * @return
 	 */
-	@GET("magazine/radio/{page}/{count}")
-	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getRadioLists(@Path("page") int page, @Path("count") int count);
+	@GET("magazine/everything/1/{page}/{count}")
+	Observable<BaseListTemplet<TalkContentsBean.ArticlesBean>> getRadioLists(@Path("page") int page, @Path("count") int count);
 	/**
 	 *	获取talk列表
 	 * @param page
 	 * @param count
 	 * @return
 	 */
-	@GET("magazine/everything/{page}/{count}")
-	Observable<BaseListTemplet<ContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
+	@GET("magazine/everything/2/{page}/{count}")
+	Observable<BaseListTemplet<TalkContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
 	/**
 	 *	获取评论列表
 	 * @param page

@@ -25,7 +25,7 @@ import com.jcs.magazine.adapter.TalkListAdapter;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.fragment.TalkFragment;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.Constant;
 import com.jcs.magazine.talk.MediaPlayerService;
 import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
@@ -247,7 +247,7 @@ public class ChildTalkFragment extends Fragment implements TabFragmentInterface,
 
 	private void initData(final AlertDialog loading) {
 
-		YzuClient.getInstance()
+		YzuClientDemo.getInstance()
 				.getTalkLists(1, 10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())

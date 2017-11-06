@@ -11,16 +11,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jcs.magazine.R;
-import com.jcs.magazine.bean.ContentsBean;
+import com.jcs.magazine.bean.TalkContentsBean;
 
 import java.util.List;
 
 public class RadioRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private OnArtItemClickListener onArtItemClickListener;
-	private List<ContentsBean.ArticlesBean> items;
+	private List<TalkContentsBean.ArticlesBean> items;
 	private Context context;
 
-	public RadioRvAdapter(Context context, List<ContentsBean.ArticlesBean> items) {
+	public RadioRvAdapter(Context context, List<TalkContentsBean.ArticlesBean> items) {
 		this.context = context;
 		this.items = items;
 	}

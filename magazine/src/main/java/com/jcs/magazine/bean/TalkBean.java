@@ -1,5 +1,7 @@
 package com.jcs.magazine.bean;
 
+import com.jcs.magazine.network.YzuClientDemo;
+
 import java.io.Serializable;
 
 /**
@@ -74,7 +76,7 @@ public class TalkBean  implements Serializable {
 	}
 
 	public String getUrl() {
-		return url;
+		return YzuClientDemo.RESOURCE_AUDIO_HOST+url;
 	}
 
 	public void setUrl(String url) {
@@ -82,7 +84,7 @@ public class TalkBean  implements Serializable {
 	}
 
 	public String getImage() {
-		return image;
+		return YzuClientDemo.RESOURCE_COVER_HOST+image;
 	}
 
 	public void setImage(String image) {

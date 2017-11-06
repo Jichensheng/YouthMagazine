@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
-import com.jcs.magazine.activity.ArticleDetialActivity;
+import com.jcs.magazine.activity.ArticleDetialActivityRe;
 import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
-import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.bean.TalkContentsBean;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.adapter.RadioRvAdapter;
 import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.util.DialogHelper;
@@ -42,7 +42,7 @@ public class ChildEverythingFragment extends Fragment implements TabFragmentInte
 	private String tabName;
 	private XRecyclerView recyclerView;
 	//某章的文章列表
-	private List<ContentsBean.ArticlesBean> list;
+	private List<TalkContentsBean.ArticlesBean> list;
 	private RadioRvAdapter artRvAdapter;
 
 	@Override
@@ -142,13 +142,13 @@ public class ChildEverythingFragment extends Fragment implements TabFragmentInte
 	}
 
 	private void intitData() {
-		YzuClient.getInstance()
+		YzuClientDemo.getInstance()
 				.getEverythingLists(1,10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Consumer<BaseListTemplet<ContentsBean.ArticlesBean>>() {
+				.subscribe(new Consumer<BaseListTemplet<TalkContentsBean.ArticlesBean>>() {
 					@Override
-					public void accept(BaseListTemplet<ContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
+					public void accept(BaseListTemplet<TalkContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
 						list.clear();
 						list.addAll(articlesBeanBaseListTemplet.getResults().getBody());
 						artRvAdapter.notifyDataSetChanged();
@@ -165,15 +165,15 @@ public class ChildEverythingFragment extends Fragment implements TabFragmentInte
 	public void onItemClick(View view, final int position) {
 		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
-		int articleID = list.get(position).getId();
-		YzuClient.getInstance().getArticle(5311)
+		int articleID = list.get(position).getArticleId();
+		YzuClientDemo.getInstance().getTalk(articleID)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
 						loading.dismiss();
-						Intent intent = new Intent(getContext(), ArticleDetialActivity.class);
+						Intent intent = new Intent(getContext(), ArticleDetialActivityRe.class);
 						intent.putExtra("content", articleBean.getResults().getContent());
 						intent.putExtra("title", list.get(position).getTitle());
 						intent.putExtra("author", list.get(position).getAuthor());

@@ -18,8 +18,8 @@ import com.jcs.magazine.activity.ArticleDetialActivityRe;
 import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
-import com.jcs.magazine.bean.ContentsBean;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.bean.TalkContentsBean;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.adapter.RadioRvAdapter;
 import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.util.DialogHelper;
@@ -42,7 +42,7 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	private String tabName;
 	private XRecyclerView recyclerView;
 	//某章的文章列表
-	private List<ContentsBean.ArticlesBean> list;
+	private List<TalkContentsBean.ArticlesBean> list;
 	private RadioRvAdapter artRvAdapter;
 
 	@Override
@@ -142,13 +142,13 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	}
 
 	private void intitData() {
-		YzuClient.getInstance()
+		YzuClientDemo.getInstance()
 				.getRadioLists(1,10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Consumer<BaseListTemplet<ContentsBean.ArticlesBean>>() {
+				.subscribe(new Consumer<BaseListTemplet<TalkContentsBean.ArticlesBean>>() {
 					@Override
-					public void accept(BaseListTemplet<ContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
+					public void accept(BaseListTemplet<TalkContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
 						list.clear();
 						list.addAll(articlesBeanBaseListTemplet.getResults().getBody());
 						artRvAdapter.notifyDataSetChanged();
@@ -165,8 +165,8 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	public void onItemClick(View view, final int position) {
 		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
 		//TODO 文章ID
-		int articleID = list.get(position).getId();
-		YzuClient.getInstance().getArticle(5311)
+		int articleID = list.get(position).getArticleId();
+		YzuClientDemo.getInstance().getTalk(articleID)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz<ArticleBean>>() {
