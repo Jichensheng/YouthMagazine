@@ -102,7 +102,7 @@ public class StartPage extends BaseActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 YzuClientDemo.getInstance()
-                        .getMagazineCover(1, 3)//第一页，每页3条
+                        .getMagazineCover(1, 10)//第一页，每页3条
                         .subscribeOn(Schedulers.newThread())//网络请求开新线程
                         .observeOn(AndroidSchedulers.mainThread())//网络响应在UI线程
                         .subscribe(new Consumer<BaseListTemplet<MgzCoverBean>>() {

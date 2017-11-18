@@ -63,7 +63,7 @@ public class BaseMgz<E> implements Serializable {
 				"succ=" + succ +
 				", statusCode=" + statusCode +
 				", msg='" + msg + '\'' +
-				", results=" + results.toString() +
+				", results=" + results!=null?results.toString():"null" +
 				", time=" + time +
 				'}';
 	}

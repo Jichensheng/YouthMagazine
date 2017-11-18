@@ -13,7 +13,7 @@ import com.jcs.magazine.util.LocalFileManager;
 import java.io.File;
 
 public class MgzGlideModule implements GlideModule {
-  private static final int MAX_CACHE=20*1024*1024;
+  private static final int MAX_CACHE=30*1024*1024;
 
 
   @Override

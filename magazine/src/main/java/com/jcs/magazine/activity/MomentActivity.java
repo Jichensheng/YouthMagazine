@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -29,16 +28,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcs.magazine.R;
 import com.jcs.magazine.adapter.MomentDetailAdapter;
 import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.CommentBean;
+import com.jcs.magazine.bean.CommentPostBean;
 import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.bean.UserBean;
+import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.RelativeDateFormat;
 import com.jcs.magazine.util.UiUtil;
@@ -61,7 +63,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MomentActivity extends BaseActivity implements TextView.OnEditorActionListener,
 		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener {
-	private RecyclerView recyclerView;
+	private XRecyclerView recyclerView;
 	private MomentBeanRefactor mb;
 	private Toolbar toolbar;
 	private MomentDetailAdapter adapter;
@@ -69,6 +71,8 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 	private EditText et_make_comment;
 	private String atNick = "";
 	private CommentBean atCommentBean = null;
+	private int index = 1;
+	private int total = 0;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		mb = (MomentBeanRefactor) getIntent().getSerializableExtra("mb");
 
-		recyclerView = (RecyclerView) findViewById(R.id.rv_moment_detial);
+		recyclerView = (XRecyclerView) findViewById(R.id.rv_moment_detial);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		adapter = new MomentDetailAdapter(this, commentList);
 		adapter.setOnLongPressItemListener(this);
@@ -94,6 +98,40 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		recyclerView.setAdapter(adapter);
 		initData();
 		recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this, DimentionUtils.dip2px(this, 1)));
+		recyclerView.setPullRefreshEnabled(false);
+		recyclerView.setLoadingMoreEnabled(true);
+		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+			@Override
+			public void onRefresh() {
+			}
+
+			@Override
+			public void onLoadMore() {
+				if (total <= index * 10) {
+					recyclerView.setNoMore(true);
+				} else {
+					recyclerView.setLoadingMoreEnabled(false);
+					YzuClientDemo.getInstance().getCommentLists(BuildConfig.COMMENT_TYPE_MOMENT, mb.getMid(), ++index, 10)
+							.subscribeOn(Schedulers.newThread())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
+								@Override
+								public void accept(BaseListTemplet<CommentBean> commentBeanBaseListTemplet) throws Exception {
+									commentList.addAll(commentBeanBaseListTemplet.getResults().getBody());
+									adapter.notifyDataSetChanged();
+									recyclerView.loadMoreComplete();
+									recyclerView.setLoadingMoreEnabled(true);
+								}
+							}, new Consumer<Throwable>() {
+								@Override
+								public void accept(Throwable throwable) throws Exception {
+									recyclerView.setLoadingMoreEnabled(true);
+								}
+							});
+
+				}
+			}
+		});
 		et_make_comment = (EditText) findViewById(R.id.et_make_comment);
 		et_make_comment.setOnEditorActionListener(this);
 		initDetail();
@@ -128,7 +166,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 				});
 		//用户已登录且是自己发的帖子
 		if (LoginUserHelper.getInstance().isLogined()
-				&& LoginUserHelper.getInstance().getUser().getUid().equals(mb.getPostman().getUid())) {
+				&& LoginUserHelper.getInstance().getUser().getUid()==mb.getPostman().getUid()) {
 			tv_btn.setText("删除");
 			// TODO: 2017/9/14 删除逻辑
 		} else {
@@ -182,12 +220,15 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 	}
 
 	private void initData() {
-		YzuClient.getInstance().getCommentLists(mb.getMid().trim(), 1, 10)
+		recyclerView.setNoMore(false);
+		YzuClientDemo.getInstance().getCommentLists(2,mb.getMid(), 1, 10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
 					@Override
 					public void accept(BaseListTemplet<CommentBean> commentBeanBaseListTemplet) throws Exception {
+						index = 1;
+						total = commentBeanBaseListTemplet.getResults().getTotal();
 						commentList.clear();
 						commentList.addAll(commentBeanBaseListTemplet.getResults().getBody());
 						adapter.notifyDataSetChanged();
@@ -221,19 +262,20 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 						imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
 								0);
 					}
+					//被at的那条评论
 					if (atCommentBean != null) {
-						if (("@" + atCommentBean.getNick() + " ").equals(atNick)) {
+						if (("@" + atCommentBean.getUser().getNick() + " ").equals(atNick)) {
 							if (comment.startsWith(atNick)) {
-								sendComment(comment.substring(atNick.length()), atCommentBean);
+								sendComment(comment.substring(atNick.length()), atCommentBean.getId());
 							} else if (comment.contains(atNick)) {
-								sendComment(comment.replaceAll(atNick, ""), atCommentBean);
+								sendComment(comment.replaceAll(atNick, ""), atCommentBean.getId());
 							} else {
 								atCommentBean = null;
-								sendComment(comment, null);
+								sendComment(comment, 0);
 							}
 						}
 					} else {
-						sendComment(comment, null);
+						sendComment(comment, 0);
 					}
 				}
 
@@ -244,42 +286,26 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 		return true;
 	}
 
-	private void sendComment(String comment, CommentBean quote) {
-		/**
-		 * 	//帖子id
-		 private String mid;
-		 //发帖人id
-		 private String uid;
-		 //评论文字
-		 private String excerpt;
-		 //评论时间
-		 private String date;
-		 //赞数
-		 private String praise;
-		 //评论人昵称
-		 private String nick;
-		 //评论人头像地址
-		 private String head;
-		 //引用评论
-		 private CommentBean quote;
-		 */
-		UserBean user = LoginUserHelper.getInstance().getUser();
-		CommentBean commentBean = new CommentBean();
-		commentBean.setMid(mb.getMid());
-		commentBean.setUid(user.getUid());
-		commentBean.setExcerpt(comment);
-		commentBean.setDate(String.valueOf(System.currentTimeMillis()));
-		commentBean.setNick(user.getNick());
-		commentBean.setHead(user.getHeadName());
-		commentBean.setQuote(quote);
+	private void sendComment(String comment,int quoteId) {
 
-		YzuClient.getInstance().sendComment(commentBean)
+		UserBean user = LoginUserHelper.getInstance().getUser();
+		CommentPostBean commentPostBean = new CommentPostBean();
+		commentPostBean.setTalkId(mb.getMid());
+		commentPostBean.setUid(user.getUid());
+		commentPostBean.setExcerpt(comment);
+		commentPostBean.setQuoteId(quoteId);
+		commentPostBean.setType("2");
+
+		YzuClientDemo.getInstance().sendComment(commentPostBean)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz>() {
 					@Override
 					public void accept(BaseMgz baseMgz) throws Exception {
 						// TODO: 2017/9/20 评论成功之后清除评论框并清除at的信息
+						et_make_comment.setText("");
+						atCommentBean = null;
+						initData();
 					}
 				}, new Consumer<Throwable>() {
 					@Override
@@ -309,14 +335,14 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 	 */
 	@Override
 	public void onLongPress(View itemView, final int itemPosition) {
-		UiUtil.toast(commentList.get(itemPosition).getCid());
+		UiUtil.toast(commentList.get(itemPosition).getId()+"");
 		final ListPopupWindow mListPop;
 		List<String> lists = new ArrayList<>();
 		lists.add("举报");
 		lists.add("回复");
 		lists.add("复制");
 		if (LoginUserHelper.getInstance().isLogined()) {
-			if (LoginUserHelper.getInstance().getUser().getUid().equals(commentList.get(itemPosition).getUid())) {
+			if (LoginUserHelper.getInstance().getUser().getUid()==commentList.get(itemPosition).getUser().getUid()) {
 				lists.add("删除");
 			}
 		}
@@ -333,7 +359,7 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 				switch (position) {
 					case 0://举报
 						UiUtil.toast(String.format("少侠，你举报了%s的评论，内容如下:\n%s",
-								commentList.get(itemPosition).getNick(), commentList.get(itemPosition).getExcerpt()));
+								commentList.get(itemPosition).getUser().getNick(), commentList.get(itemPosition).getExcerpt()));
 						break;
 					case 1://回复
 						UiUtil.toast("回复");
@@ -343,12 +369,13 @@ public class MomentActivity extends BaseActivity implements TextView.OnEditorAct
 							CommentBean commentBean = commentList.get(itemPosition);
 							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-							String user = "@" + commentBean.getNick() + " ";
+							String user = "@" + commentBean.getUser().getNick() + " ";
 							atNick = user;
 							atCommentBean = new CommentBean();
-							atCommentBean.setNick(commentBean.getNick());
-							atCommentBean.setExcerpt(commentBean.getExcerpt());
-							atCommentBean.setUid(commentBean.getUid());
+							UserBean quoteUser = new UserBean();
+							quoteUser.setNick(commentBean.getUser().getNick());
+							atCommentBean.setUser(quoteUser);//判断用户名是不是完整
+							atCommentBean.setId(commentBean.getId());
 
 							et_make_comment.setText(user);
 							et_make_comment.setSelection(user.length());

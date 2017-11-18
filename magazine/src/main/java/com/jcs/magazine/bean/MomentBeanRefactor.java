@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class MomentBeanRefactor implements Serializable {
 	//帖子id,用于查询此贴的评论列表
-	private String mid;
+	private int mid;
 	//发帖人id
 	private UserBean postman;
 	//最新的三个赞的用户id
@@ -26,11 +26,11 @@ public class MomentBeanRefactor implements Serializable {
 	//评论数
 	private int comment;
 
-	public String getMid() {
+	public int getMid() {
 		return mid;
 	}
 
-	public void setMid(String mid) {
+	public void setMid(int mid) {
 		this.mid = mid;
 	}
 

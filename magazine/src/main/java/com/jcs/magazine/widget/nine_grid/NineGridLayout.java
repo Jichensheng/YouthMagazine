@@ -125,7 +125,7 @@ public abstract class NineGridLayout extends ViewGroup {
         } else {
             setVisibility(GONE);
         }
-
+/*
         if (size == 1) {
             String url = YzuClientDemo.RESOURCE_MOMENT_HOST+mUrlList.get(0);
             RatioImageView imageView = createImageView(0, url);
@@ -143,9 +143,10 @@ public abstract class NineGridLayout extends ViewGroup {
                 addView(imageView);
             }
             return;
-        }
-
+        }*/
+        //确定行数
         generateChildrenLayout(size);
+        //确定行高
         layoutParams();
 
         for (int i = 0; i < size; i++) {

@@ -25,6 +25,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * 已发的帖
  * author：Jics
  * 2017/9/13 10:09
  */

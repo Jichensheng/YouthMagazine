@@ -30,11 +30,13 @@ import com.jcs.magazine.base.BaseActivity;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.CommentBean;
+import com.jcs.magazine.bean.CommentPostBean;
 import com.jcs.magazine.bean.UserBean;
 import com.jcs.magazine.global.LoginUserHelper;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DimentionUtils;
 import com.jcs.magazine.util.UiUtil;
+import com.jcs.magazine.widget.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +46,22 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * 带评论的文章详情页
  * author：Jics
  * 2017/9/25 14:59
  */
 public class ArticleDetialActivityRe extends BaseActivity implements TextView.OnEditorActionListener,
-		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener,ArticalDetialAdapter.OnWebViewLoadedListener {
+		View.OnClickListener, MomentDetailAdapter.OnLongPressItemListener, ArticalDetialAdapter.OnWebViewLoadedListener {
 	private ArticalDetialAdapter adapter;
 	private List<CommentBean> commentList;
-
+	private int type;
+	private int articleId;
+	private int index = 1;
+	private int total = 0;
 	private EditText et_make_comment;
 	private CommentBean atCommentBean = null;
 	private String atNick = "";
+	private XRecyclerView recyclerView;
 
 	@Override
 	protected void onCreate(@Nullable Bundle paramBundle) {
@@ -68,52 +75,44 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 		String content = getIntent().getStringExtra("content");
 		String title = getIntent().getStringExtra("title");
 		String autore = getIntent().getStringExtra("author");
+		type = getIntent().getIntExtra("type", 0);
+		articleId = getIntent().getIntExtra("articleId", 0);
 
-		final XRecyclerView recyclerView = (XRecyclerView) findViewById(R.id.xrv_artical);
+		recyclerView = (XRecyclerView) findViewById(R.id.xrv_artical);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this, DimentionUtils.dip2px(this, 1)));
+		recyclerView.setPullRefreshEnabled(false);
+		recyclerView.setLoadingMoreEnabled(true);
 		recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 			@Override
 			public void onRefresh() {
-				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);
-							 runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									recyclerView.refreshComplete();
-									recyclerView.setPullRefreshEnabled(true);
-								}
-							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}).start();
 			}
 
 			@Override
 			public void onLoadMore() {
-				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);
-							runOnUiThread(new Runnable() {
+				if (total <= index * 10) {
+					recyclerView.setNoMore(true);
+				} else {
+					recyclerView.setLoadingMoreEnabled(false);
+					YzuClientDemo.getInstance().getCommentLists(type, articleId, ++index, 10)
+							.subscribeOn(Schedulers.newThread())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
 								@Override
-								public void run() {
+								public void accept(BaseListTemplet<CommentBean> commentBeanBaseListTemplet) throws Exception {
+									commentList.addAll(commentBeanBaseListTemplet.getResults().getBody());
+									adapter.notifyDataSetChanged();
 									recyclerView.loadMoreComplete();
-									recyclerView.setPullRefreshEnabled(true);
+									recyclerView.setLoadingMoreEnabled(true);
+								}
+							}, new Consumer<Throwable>() {
+								@Override
+								public void accept(Throwable throwable) throws Exception {
+									recyclerView.setLoadingMoreEnabled(true);
 								}
 							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}).start();
+
+				}
 			}
 		});
 		adapter = new ArticalDetialAdapter(commentList, this, content, title, autore);
@@ -136,13 +135,15 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 	}
 
 	private void initData() {
-		// TODO: 2017/9/25 文章id
-		YzuClient.getInstance().getCommentLists("1".trim(), 1, 10)
+		recyclerView.setNoMore(false);
+		YzuClientDemo.getInstance().getCommentLists(type, articleId, 1, 10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseListTemplet<CommentBean>>() {
 					@Override
 					public void accept(BaseListTemplet<CommentBean> commentBeanBaseListTemplet) throws Exception {
+						index = 1;
+						total = commentBeanBaseListTemplet.getResults().getTotal();
 						commentList.clear();
 						commentList.addAll(commentBeanBaseListTemplet.getResults().getBody());
 						adapter.notifyDataSetChanged();
@@ -176,19 +177,20 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 						imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
 								0);
 					}
+					//被at的那条评论
 					if (atCommentBean != null) {
-						if (("@" + atCommentBean.getNick() + " ").equals(atNick)) {
+						if (("@" + atCommentBean.getUser().getNick() + " ").equals(atNick)) {
 							if (comment.startsWith(atNick)) {
-								sendComment(comment.substring(atNick.length()), atCommentBean);
+								sendComment(comment.substring(atNick.length()), atCommentBean.getId());
 							} else if (comment.contains(atNick)) {
-								sendComment(comment.replaceAll(atNick, ""), atCommentBean);
+								sendComment(comment.replaceAll(atNick, ""), atCommentBean.getId());
 							} else {
 								atCommentBean = null;
-								sendComment(comment, null);
+								sendComment(comment, 0);
 							}
 						}
 					} else {
-						sendComment(comment, null);
+						sendComment(comment, 0);
 					}
 				}
 
@@ -199,42 +201,25 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 		return true;
 	}
 
-	private void sendComment(String comment, CommentBean quote) {
-		/**
-		 * 	//帖子id
-		 private String mid;
-		 //发帖人id
-		 private String uid;
-		 //评论文字
-		 private String excerpt;
-		 //评论时间
-		 private String date;
-		 //赞数
-		 private String praise;
-		 //评论人昵称
-		 private String nick;
-		 //评论人头像地址
-		 private String head;
-		 //引用评论
-		 private CommentBean quote;
-		 */
-		UserBean user = LoginUserHelper.getInstance().getUser();
-		CommentBean commentBean = new CommentBean();
-		commentBean.setMid("1");
-		commentBean.setUid(user.getUid());
-		commentBean.setExcerpt(comment);
-		commentBean.setDate(String.valueOf(System.currentTimeMillis()));
-		commentBean.setNick(user.getNick());
-		commentBean.setHead(user.getHead());
-		commentBean.setQuote(quote);
+	private void sendComment(String comment, int quoteId) {
 
-		YzuClient.getInstance().sendComment(commentBean)
+		UserBean user = LoginUserHelper.getInstance().getUser();
+		CommentPostBean commentPostBean = new CommentPostBean();
+		commentPostBean.setTalkId(articleId);
+		commentPostBean.setUid(user.getUid());
+		commentPostBean.setExcerpt(comment);
+		commentPostBean.setQuoteId(quoteId);
+		commentPostBean.setType(type + "");
+
+		YzuClientDemo.getInstance().sendComment(commentPostBean)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseMgz>() {
 					@Override
 					public void accept(BaseMgz baseMgz) throws Exception {
-						// TODO: 2017/9/20 评论成功之后清除评论框并清除at的信息
+						et_make_comment.setText("");
+						atCommentBean = null;
+						initData();
 					}
 				}, new Consumer<Throwable>() {
 					@Override
@@ -264,14 +249,14 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 	 */
 	@Override
 	public void onLongPress(View itemView, final int itemPosition) {
-		UiUtil.toast(commentList.get(itemPosition).getCid());
+		UiUtil.toast(commentList.get(itemPosition).getId() + "");
 		final ListPopupWindow mListPop;
 		List<String> lists = new ArrayList<>();
 		lists.add("举报");
 		lists.add("回复");
 		lists.add("复制");
 		if (LoginUserHelper.getInstance().isLogined()) {
-			if (LoginUserHelper.getInstance().getUser().getUid().equals(commentList.get(itemPosition).getUid())) {
+			if (LoginUserHelper.getInstance().getUser().getUid() == commentList.get(itemPosition).getUser().getUid()) {
 				lists.add("删除");
 			}
 		}
@@ -288,7 +273,7 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 				switch (position) {
 					case 0://举报
 						UiUtil.toast(String.format("少侠，你举报了%s的评论，内容如下:\n%s",
-								commentList.get(itemPosition).getNick(), commentList.get(itemPosition).getExcerpt()));
+								commentList.get(itemPosition).getUser().getNick(), commentList.get(itemPosition).getExcerpt()));
 						break;
 					case 1://回复
 						UiUtil.toast("回复");
@@ -298,14 +283,16 @@ public class ArticleDetialActivityRe extends BaseActivity implements TextView.On
 							CommentBean commentBean = commentList.get(itemPosition);
 							getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-							String user = "@" + commentBean.getNick() + " ";
+							String user = "@" + commentBean.getUser().getNick() + " ";
 							atNick = user;
 							atCommentBean = new CommentBean();
-							atCommentBean.setNick(commentBean.getNick());
-							atCommentBean.setExcerpt(commentBean.getExcerpt());
-							atCommentBean.setUid(commentBean.getUid());
+							UserBean quoteUser = new UserBean();
+							quoteUser.setNick(commentBean.getUser().getNick());
+							atCommentBean.setUser(quoteUser);//判断用户名是不是完整
+							atCommentBean.setId(commentBean.getId());
 
 							et_make_comment.setText(user);
+							//游标位置
 							et_make_comment.setSelection(user.length());
 						} else {
 							Intent intent = new Intent(ArticleDetialActivityRe.this, LoginActicity.class);

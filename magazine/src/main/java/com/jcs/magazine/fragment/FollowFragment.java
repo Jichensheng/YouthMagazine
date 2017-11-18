@@ -41,7 +41,7 @@ public class FollowFragment extends Fragment implements FollowInterface, FollowL
 	private FollowListAdatper adatper;
 
 	private int followType;
-	private String uid;
+	private int uid;
 
 
 
@@ -165,12 +165,12 @@ public class FollowFragment extends Fragment implements FollowInterface, FollowL
 	}
 
 	@Override
-	public void setUid(String uid) {
+	public void setUid(int uid) {
 		this.uid=uid;
 	}
 
 	@Override
-	public String getUid() {
+	public int getUid() {
 		return uid;
 	}
 

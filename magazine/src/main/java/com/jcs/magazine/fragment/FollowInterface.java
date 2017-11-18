@@ -9,7 +9,7 @@ import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 public interface FollowInterface extends TabFragmentInterface {
 	void setFollowType(int type);
 	int getFollowType();
-	void setUid(String uid);
-	String getUid();
+	void setUid(int uid);
+	int getUid();
 	FollowFragment getFragment();
 }

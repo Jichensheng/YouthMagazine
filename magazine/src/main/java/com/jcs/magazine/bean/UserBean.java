@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 2017/8/25 14:29
  */
 public class UserBean implements Serializable {
-	private String uid;//用户ID
+	private int uid;//用户ID
 	private String name;//姓名
 	private String nick;//昵称
 	private String regDate;//注册时间
@@ -21,11 +21,11 @@ public class UserBean implements Serializable {
 	private String psw;
 	private String token;
 
-	public String getUid() {
+	public int getUid() {
 		return uid;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 

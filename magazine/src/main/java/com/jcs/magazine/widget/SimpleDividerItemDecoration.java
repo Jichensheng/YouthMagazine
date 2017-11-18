@@ -52,7 +52,7 @@ public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
 
-        int childCount = parent.getChildCount();
+        int childCount = parent.getChildCount()-1;//最后一个不加
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
 

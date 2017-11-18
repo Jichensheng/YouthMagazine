@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jcs.magazine.R;
-import com.jcs.magazine.activity.ArticleDetialActivity;
+import com.jcs.magazine.activity.ArticleDetialActivityRe;
 import com.jcs.magazine.adapter.ArtRvAdapter;
 import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.ContentsBean;
+import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.UiUtil;
@@ -135,10 +136,12 @@ public class ArticleFragment extends Fragment implements ArtRvAdapter.OnArtItemC
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
 						loading.dismiss();
-						Intent intent = new Intent(getContext(), ArticleDetialActivity.class);
+						Intent intent = new Intent(getContext(), ArticleDetialActivityRe.class);
 						intent.putExtra("content", articleBean.getResults().getContent());
 						intent.putExtra("title", list.get(position).getTitle());
 						intent.putExtra("author", list.get(position).getAuthor());
+						intent.putExtra("type", BuildConfig.COMMENT_TYPE_MAGAZINE);
+						intent.putExtra("articleId",list.get(position).getId());
 						startActivity(intent);
 					}
 				}, new Consumer<Throwable>() {

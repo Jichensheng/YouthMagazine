@@ -14,9 +14,9 @@ import java.util.List;
  * 2017/9/5 14:36
  */
 public class FollowTabAdapter extends FragmentPagerAdapter {
-	final String uid;
+	final int uid;
 	private List<FollowFragment> children;
-	public FollowTabAdapter(FragmentManager fm, List<FollowFragment> children,String uid) {
+	public FollowTabAdapter(FragmentManager fm, List<FollowFragment> children,int uid) {
 		super(fm);
 		this.children =children;
 		this.uid = uid;

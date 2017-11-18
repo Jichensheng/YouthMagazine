@@ -39,10 +39,10 @@ public class BaseApplication extends Application {
 
 	private void initBugly() {
 		Beta.smallIconId = R.drawable.download_small;
-		Beta.upgradeDialogLayoutId = R.layout.upgrade_layout;
+//		Beta.upgradeDialogLayoutId = R.layout.upgrade_layout;
 		Beta.storageDir = LocalFileManager.getInstance().getAppDownloadDir();
 		Beta.canShowUpgradeActs.add(MainActivity.class);
-		Beta.defaultBannerId=R.drawable.rocket_bg;
+//		Beta.defaultBannerId=R.drawable.rocket_bg;
 		Bugly.init(getApplicationContext(), "0557130f5a", false);
 		CrashReport.initCrashReport(getApplicationContext());
 	}

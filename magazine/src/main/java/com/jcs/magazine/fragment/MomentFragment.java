@@ -18,10 +18,16 @@ import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.global.PermissionHelper;
-import com.jcs.magazine.network.YzuClient;
 import com.jcs.magazine.network.YzuClientDemo;
+import com.jcs.magazine.util.DimentionUtils;
+import com.jcs.magazine.util.MessageEvent;
 import com.jcs.magazine.util.glide.ImageAutoLoadScrollListener;
+import com.jcs.magazine.widget.SimpleDividerItemDecoration;
 import com.melnykov.fab.FloatingActionButton;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,20 +44,23 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 	private MomentListAdapter adapter;
 	private List<MomentBeanRefactor> momentBeanList;
 	private List<BannerItem> bannerItemList;
-
+	private int index = 1;
+	private int total = 0;
 	private View rootView;
-
+	private XRecyclerView recyclerView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (rootView == null) {
+			EventBus.getDefault().register(this);
 			rootView = inflater.inflate(R.layout.main_fragment_moment_re, container, false);
-			momentBeanList=new ArrayList<>();
-			bannerItemList=new ArrayList<>();
-			final XRecyclerView recyclerView = (XRecyclerView) rootView.findViewById(R.id.rv_main_talk);
+			momentBeanList = new ArrayList<>();
+			bannerItemList = new ArrayList<>();
+			recyclerView = (XRecyclerView) rootView.findViewById(R.id.rv_main_talk);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+			recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext(), DimentionUtils.dip2px(getContext(), 1)));
 			getBannerData();
 			getListData();
-			adapter = new MomentListAdapter(getContext(),momentBeanList,bannerItemList);
+			adapter = new MomentListAdapter(getContext(), momentBeanList, bannerItemList);
 
 			recyclerView.setAdapter(adapter);
 
@@ -73,49 +82,67 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 				@Override
 				public void onRefresh() {
 					recyclerView.setPullRefreshEnabled(false);
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Thread.sleep(1000);
-								getActivity().runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										recyclerView.refreshComplete();
-										recyclerView.setPullRefreshEnabled(true);
+					YzuClientDemo.getInstance()
+							.getMomentLists(1, 10)
+							.subscribeOn(Schedulers.newThread())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(new Consumer<BaseListTemplet<MomentBeanRefactor>>() {
+								@Override
+								public void accept(BaseListTemplet<MomentBeanRefactor> momentBeanBaseListTemplet) throws Exception {
+									momentBeanList.clear();
+									index = 1;
+									total = momentBeanBaseListTemplet.getResults().getTotal();
+									for (MomentBeanRefactor momentBean : momentBeanBaseListTemplet.getResults().getBody()) {
+										momentBeanList.add(momentBean);
 									}
-								});
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}).start();
+									adapter.notifyDataSetChanged();
+									recyclerView.refreshComplete();
+									recyclerView.setPullRefreshEnabled(true);
+								}
+							}, new Consumer<Throwable>() {
+								@Override
+								public void accept(Throwable throwable) throws Exception {
+									recyclerView.setPullRefreshEnabled(true);
+								}
+							});
+
 				}
 
 				@Override
 				public void onLoadMore() {
-					recyclerView.setPullRefreshEnabled(false);
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Thread.sleep(1000);getActivity().runOnUiThread(new Runnable() {
+					if (total <= index * 10) {
+						recyclerView.setNoMore(true);
+					} else {
+						recyclerView.setPullRefreshEnabled(false);
+						YzuClientDemo.getInstance()
+								.getMomentLists(++index, 10)
+								.subscribeOn(Schedulers.newThread())
+								.observeOn(AndroidSchedulers.mainThread())
+								.subscribe(new Consumer<BaseListTemplet<MomentBeanRefactor>>() {
 									@Override
-									public void run() {
-										recyclerView.setPullRefreshEnabled(true);
+									public void accept(BaseListTemplet<MomentBeanRefactor> momentBeanBaseListTemplet) throws Exception {
+										for (MomentBeanRefactor momentBean : momentBeanBaseListTemplet.getResults().getBody()) {
+											momentBeanList.add(momentBean);
+										}
+										adapter.notifyDataSetChanged();
+
 										recyclerView.loadMoreComplete();
-										recyclerView.setNoMore(true);
+
+										recyclerView.setPullRefreshEnabled(true);
+									}
+								}, new Consumer<Throwable>() {
+									@Override
+									public void accept(Throwable throwable) throws Exception {
+
+										recyclerView.setPullRefreshEnabled(true);
 									}
 								});
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}).start();
+					}
+
 				}
 			});
-		}else{
-			ViewGroup group= (ViewGroup) rootView.getParent();
+		} else {
+			ViewGroup group = (ViewGroup) rootView.getParent();
 			if (group != null) {
 				group.removeView(rootView);
 			}
@@ -124,18 +151,21 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 		return rootView;
 	}
 
-	private void getListData(){
+	private void getListData() {
 		YzuClientDemo.getInstance()
-				.getMomentLists(1,10)
+				.getMomentLists(1, 10)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseListTemplet<MomentBeanRefactor>>() {
 					@Override
 					public void accept(BaseListTemplet<MomentBeanRefactor> momentBeanBaseListTemplet) throws Exception {
+						momentBeanList.clear();
+						index = 1;
+						total = momentBeanBaseListTemplet.getResults().getTotal();
 						for (MomentBeanRefactor momentBean : momentBeanBaseListTemplet.getResults().getBody()) {
 							momentBeanList.add(momentBean);
-							adapter.notifyDataSetChanged();
 						}
+						adapter.notifyDataSetChanged();
 
 					}
 				}, new Consumer<Throwable>() {
@@ -145,8 +175,9 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 					}
 				});
 	}
-	private void getBannerData(){
-		YzuClient.getInstance()
+
+	private void getBannerData() {
+		YzuClientDemo.getInstance()
 				.getMomentBannder()
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
@@ -169,11 +200,26 @@ public class MomentFragment extends BaseFragment implements View.OnClickListener
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()){
+		switch (v.getId()) {
 			case R.id.fab:
-				Intent intent=new Intent(getContext(), MakePostActivity.class);
+				Intent intent = new Intent(getContext(), MakePostActivity.class);
 				PermissionHelper.getHelper().startActivity(getContext(), intent);
 				break;
 		}
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void refreshWhenMsg(MessageEvent messageEvent) {
+		if (messageEvent.getMessage().equals("post_succ")) {
+			getListData();
+			recyclerView.setNoMore(false);
+		}
+
+	}
+
+	@Override
+	public void onDestroy() {
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
 	}
 }

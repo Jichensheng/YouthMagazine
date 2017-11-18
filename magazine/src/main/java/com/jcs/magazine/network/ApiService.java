@@ -5,6 +5,7 @@ import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.CommentBean;
+import com.jcs.magazine.bean.CommentPostBean;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
 import com.jcs.magazine.bean.MomentBean;
@@ -86,20 +87,20 @@ public interface ApiService {
 	 * @return
 	 */
 	@GET("magazine/user/{uid}/{page}/{count}")
-	Observable<BaseListTemplet<MomentBean>> getUserPostLists(@Path("uid") String uid,@Path("page") int page, @Path("count") int count);
+	Observable<BaseListTemplet<MomentBean>> getUserPostLists(@Path("uid") int uid,@Path("page") int page, @Path("count") int count);
 	/**
 	 *
 	 * 获取广场banner
 	 * @return
 	 */
-	@GET("magazine/moment/banner")
+	@GET("magazine/banner/1")
 	Observable<BaseListTemplet<BannerItem>> getMomentBannder();
 	/**
 	 *
 	 * 获取广场banner
 	 * @return
 	 */
-	@GET("magazine/love/banner")
+	@GET("magazine/banner/0")
 	Observable<BaseListTemplet<BannerItem>> getLoveBannder();
 
 	/**
@@ -112,7 +113,7 @@ public interface ApiService {
 	Observable<BaseListTemplet<TalkBean>> getTalkLists(@Path("page") int page, @Path("count") int count);
 
 	/**
-	 *	获取电台列表带歌曲的
+	 *	获取电台列表带歌曲的everything1电台
 	 * @param page
 	 * @param count
 	 * @return
@@ -120,21 +121,34 @@ public interface ApiService {
 	@GET("magazine/everything/1/{page}/{count}")
 	Observable<BaseListTemplet<TalkContentsBean.ArticlesBean>> getRadioLists(@Path("page") int page, @Path("count") int count);
 	/**
-	 *	获取talk列表
+	 *	获取talk列表everything2万象
 	 * @param page
 	 * @param count
 	 * @return
 	 */
 	@GET("magazine/everything/2/{page}/{count}")
 	Observable<BaseListTemplet<TalkContentsBean.ArticlesBean>> getEverythingLists(@Path("page") int page, @Path("count") int count);
+
 	/**
-	 *	获取评论列表
+	 * 获取评论列表
+	 * @param type 0：talk里边的三种 1:杂志文章 2：广场
+	 * @param mid
 	 * @param page
 	 * @param count
 	 * @return
 	 */
-	@GET("magazine/comment/{mid}/{page}/{count}")
-	Observable<BaseListTemplet<CommentBean>> getCommentLists(@Path("mid") String mid, @Path("page") int page, @Path("count") int count);
+	@GET("magazine/comment/{type}/{mid}/{page}/{count}")
+	Observable<BaseListTemplet<CommentBean>> getCommentLists(@Path("type") int type,@Path("mid") int mid, @Path("page") int page, @Path("count") int count);
+
+
+	/**
+	 * 发表评论
+	 * @param commentPostBean
+	 * @return
+	 */
+	@POST("magazine/comment/sendComment")
+	Observable<BaseMgz> sendComment(@Body CommentPostBean commentPostBean);
+
 	/**
 	 *	获取用户列表
 	 * @param page
@@ -142,7 +156,7 @@ public interface ApiService {
 	 * @return
 	 */
 	@GET("magazine/follow/{uid}/{type}/{page}/{count}")
-	Observable<BaseListTemplet<UserBean>> getFollowLists(@Path("uid") String uid,@Path("type") int type, @Path("page") int page, @Path("count") int count);
+	Observable<BaseListTemplet<UserBean>> getFollowLists(@Path("uid") int uid,@Path("type") int type, @Path("page") int page, @Path("count") int count);
 
 
 	/**
@@ -188,14 +202,6 @@ public interface ApiService {
 	 * @return
 	 */
 	@POST("magazine/moment/post")
-//	@POST("upload")
 	Observable<BaseMgz> makePost(@Body RequestBody Body);
 
-	/**
-	 * 发表评论
-	 * @param commentBean
-	 * @return
-	 */
-	@POST("magazine/comment/sendComment")
-	Observable<BaseMgz> sendComment(@Body CommentBean commentBean);
 }

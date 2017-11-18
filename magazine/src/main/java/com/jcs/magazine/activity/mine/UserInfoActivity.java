@@ -310,13 +310,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 	}
 
 	private void save() {
-		if (user.getUid() != null) {
+		if (user.getUid() != 0) {
 			//选中的头像
 			File file = headPath.length() != 0 ? new File(FileUtil.getProjectRootFile(), FileUtil.DEFAULT_PIC_HEAD_NAME) : null;
 
 			MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-			requestBodyBuilder.addFormDataPart("uid",user.getUid());
+			requestBodyBuilder.addFormDataPart("uid",user.getUid()+"");
 
 			if (!TextUtils.isEmpty(stv_nick.getRightString()))
 				requestBodyBuilder.addFormDataPart("nick", stv_nick.getRightString());

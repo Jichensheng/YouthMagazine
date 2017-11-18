@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.jcs.magazine.R;
@@ -103,6 +104,7 @@ public class NineGridTestLayout extends NineGridLayout {
     protected void displayImage(RatioImageView imageView, String url) {
 //        Picasso.with(mContext).load(url).placeholder(R.drawable.banner_default).into(imageView);
         Glide.with(mContext).load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.banner_default)
                 .error(R.drawable.banner_default)
                 .into(imageView);

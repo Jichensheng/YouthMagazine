@@ -24,6 +24,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.HtmlUtil;
+import com.jcs.magazine.util.RelativeDateFormat;
 import com.jcs.magazine.widget.CircleImageView;
 
 import java.util.List;
@@ -142,8 +143,8 @@ public class ArticalDetialAdapter extends RecyclerView.Adapter {
 	private void initCommentHolder(final CommentHolder holder, final int position) {
 		CommentBean commentBean = commentBeen.get(position - 1);
 
-		holder.tv_nickname.setText(commentBean.getNick());
-		Glide.with(context).load(commentBean.getHead())
+		holder.tv_nickname.setText(commentBean.getUser().getNick());
+		Glide.with(context).load(commentBean.getUser().getHead())
 //				.skipMemoryCache(true)
 //				.diskCacheStrategy(DiskCacheStrategy.NONE)
 				.error(R.drawable.default_avater)
@@ -154,13 +155,13 @@ public class ArticalDetialAdapter extends RecyclerView.Adapter {
 						holder.civ_head.setImageDrawable(resource);
 					}
 				});
-		holder.tv_public_time.setText(commentBean.getDate());
+		holder.tv_public_time.setText(RelativeDateFormat.formatString(commentBean.getCreateDate()));
 		holder.tv_comment.setText(commentBean.getExcerpt());
-		holder.tv_praise.setText(commentBean.getPraise());
+		holder.tv_praise.setText(commentBean.getPraise()+"");
 		CommentBean quote = commentBean.getQuote();
 		if (quote != null) {
 			holder.tv_quote.setVisibility(View.VISIBLE);
-			holder.tv_quote.setText(String.format("@%s %s", quote.getNick(), quote.getExcerpt()));
+			holder.tv_quote.setText(String.format("@%s %s", quote.getUser().getNick(), quote.getExcerpt()));
 			holder.tv_quote.setBackgroundColor(ContextCompat.getColor(context, R.color.light_gray_more));
 		} else {
 			holder.tv_quote.setVisibility(View.GONE);

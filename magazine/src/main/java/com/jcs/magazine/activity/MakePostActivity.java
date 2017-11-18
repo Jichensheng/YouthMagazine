@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -36,8 +36,10 @@ import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.network.upload.DefaultProgressListener;
 import com.jcs.magazine.network.upload.UploadFileRequestBody;
 import com.jcs.magazine.util.BitmapUtil;
+import com.jcs.magazine.util.DialogHelper;
 import com.jcs.magazine.util.FileUtil;
 import com.jcs.magazine.util.LocalFileManager;
+import com.jcs.magazine.util.MessageEvent;
 import com.jcs.magazine.util.UiUtil;
 import com.jcs.topsnackbar.Prompt;
 import com.jcs.topsnackbar.TSnackbar;
@@ -46,6 +48,8 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 
 /**
+ * 发帖
  * author：Jics
  * 2017/9/18 15:59
  */
@@ -184,13 +189,13 @@ public class MakePostActivity extends BaseActivity implements MakePostGridAdapte
 	 * 发说说的业务逻辑
 	 */
 	private void sendPost() {
-
+		final AlertDialog loading = new DialogHelper(this).show(R.layout.loading);
 		UserBean user = LoginUserHelper.getInstance().getUser();
 		if (user!=null&&!TextUtils.isEmpty(et_post.getText()) && !isUploading) {
 			isUploading = true;
 			MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 			requestBodyBuilder.addFormDataPart("excerpt", et_post.getText().toString());
-			requestBodyBuilder.addFormDataPart("uid", user.getUid());
+			requestBodyBuilder.addFormDataPart("uid", user.getUid()+"");
 			requestBodyBuilder.addFormDataPart("head", user.getHeadName());
 			requestBodyBuilder.addFormDataPart("nick", user.getNick());
 			for (int i = 0; i < uploadPic.size(); i++) {
@@ -205,9 +210,12 @@ public class MakePostActivity extends BaseActivity implements MakePostGridAdapte
 					.subscribe(new Consumer<BaseMgz>() {
 						@Override
 						public void accept(BaseMgz baseMgz) throws Exception {
-							Log.e(TAG, "accept: " + baseMgz.toString());
 							if (baseMgz.isSucc()) {
-								// TODO: 2017/9/19 上传成功收到服务器的回调时清除临时图片
+								loading.dismiss();
+								final File imageDir = FileUtil.getImageCacheFile();
+								LocalFileManager.getInstance().deleteAllFiles(imageDir);//清空上次缓存
+								uploadPic.clear();
+								EventBus.getDefault().post(new MessageEvent("post_succ"));
 								finish();
 							}
 							isUploading = false;
@@ -217,7 +225,8 @@ public class MakePostActivity extends BaseActivity implements MakePostGridAdapte
 						@Override
 						public void accept(Throwable throwable) throws Exception {
 							isUploading = false;
-							title.setText("编辑");
+							loading.dismiss();
+							title.setText("发送失败");
 						}
 					});
 		} else if (isUploading) {
@@ -302,14 +311,17 @@ public class MakePostActivity extends BaseActivity implements MakePostGridAdapte
 						.into(new SimpleTarget<Bitmap>(400, 300) {
 							@Override
 							public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-								new Thread(new Runnable() {
+								File file = new File(imageDir, System.currentTimeMillis() + ".jpg");
+								uploadPic.add(file);
+								BitmapUtil.saveBitmap(file, resource);
+								/*new Thread(new Runnable() {
 									@Override
 									public void run() {
 										File file = new File(imageDir, System.currentTimeMillis() + ".jpg");
 										uploadPic.add(file);
 										BitmapUtil.saveBitmap(file, resource);
 									}
-								}).start();
+								}).start();*/
 							}
 						});
 			}

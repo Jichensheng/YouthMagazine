@@ -28,14 +28,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  */
 public class YzuClientDemo {
-//	public static final String HOST="http://s1m7444195.iask.in/magazine/";
-//	public static final String HOST="http://192.168.0.108:3000/";
-//	public static final String HOST="http://192.168.191.1:3000/";
-	public static final String HOST="http://192.168.191.1:8090/";
-	public static final String RESOURCE_HEAD_HOST ="http://192.168.191.1:8090/upload/head/";
-	public static final String RESOURCE_COVER_HOST="http://192.168.191.1:8090/upload/cover/";
-	public static final String RESOURCE_AUDIO_HOST="http://192.168.191.1:8090/upload/audio/";
-	public static final String RESOURCE_MOMENT_HOST="http://192.168.191.1:8090/upload/moment/";
+//	public static final String HOST="http://192.168.191.1:8090/";
+	public static final String HOST="http://www.yangdaqingnian.top/";
+	public static final String RESOURCE_HEAD_HOST =HOST+"upload/head/";
+	public static final String RESOURCE_COVER_HOST=HOST+"upload/cover/";
+	public static final String RESOURCE_AUDIO_HOST=HOST+"upload/audio/";
+	public static final String RESOURCE_MOMENT_HOST=HOST+"upload/moment/";
 //	public static final String HOST="http://116.196.93.255:3000/";
 	private static ApiService yzuServer;
 	private static Retrofit retrofit;

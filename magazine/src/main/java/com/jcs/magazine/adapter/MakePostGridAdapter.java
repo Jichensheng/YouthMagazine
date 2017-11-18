@@ -14,6 +14,7 @@ import com.jcs.magazine.util.DimentionUtils;
 import java.util.List;
 
 /**
+ * 发表时的附加图片的预览图适配器
  * author：Jics
  * 2017/9/18 17:11
  */

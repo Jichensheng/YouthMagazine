@@ -13,7 +13,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.bean.BannerItem;
 import com.jcs.magazine.bean.BaseListTemplet;
-import com.jcs.magazine.network.YzuClient;
+import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.adapter.LoveAdapter;
 import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
 import com.jcs.magazine.widget.banner.BannerView;
@@ -86,7 +86,7 @@ public class LoveFragment extends BaseFragment {
 
 	private void initData() {
 		list=new ArrayList<>();
-		YzuClient.getInstance().getLoveBannder()
+		YzuClientDemo.getInstance().getLoveBannder()
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<BaseListTemplet<BannerItem>>() {

@@ -86,7 +86,12 @@ public class BuildConfig {
 	 */
 	public static final int CATCH_MAXAGE = 60 * 60; // 有网络时 设置缓存超时时间1个小时
 	public static final int CATCH_MAXSTALE = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
-	public static final int DEFAULT_TIMEOUT = 5 * 1000;
+
+	public static final int DEFAULT_TIMEOUT = 10 * 1000;
+	//0：talk里边的三种 1:杂志文章 2：广场
+	public static final int COMMENT_TYPE_TALK = 0;//Love专栏对应的评论
+	public static final int COMMENT_TYPE_MAGAZINE = 1;//文章对应的评论
+	public static final int COMMENT_TYPE_MOMENT = 2;//文章对应的评论
 
 
 	// 客户端变量

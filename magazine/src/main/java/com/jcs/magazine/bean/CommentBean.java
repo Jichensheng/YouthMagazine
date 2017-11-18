@@ -9,62 +9,51 @@ import java.io.Serializable;
  */
 public class CommentBean implements Serializable {
 	//评论id
-	private String cid;
+	private int id;
 	//帖子id
-	private String mid;
+	private int talkId;
 	//发帖人id
-	private String uid;
+	private UserBean user;
 	//评论文字
 	private String excerpt;
-	//评论时间
-	private String date;
 	//赞数
-	private String praise;
-	//评论人昵称
-	private String nick;
-	//评论人头像地址
-	private String head;
-	//引用评论
+	private int praise;
+	private String createDate;
+	//引用的评论对象
 	private CommentBean quote;
+	//评论类型 0：talk里边的三种 1:杂志文章 2：广场
+	private String type;
 
-	public String getCid() {
-		return cid;
+	public int getId() {
+		return id;
 	}
 
-	public void setCid(String cid) {
-		this.cid = cid;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getHead() {
-		return head;
+	public int getTalkId() {
+		return talkId;
 	}
 
-	public void setHead(String head) {
-		this.head = head;
+	public void setTalkId(int talkId) {
+		this.talkId = talkId;
 	}
 
-	public String getNick() {
-		return nick;
+	public UserBean getUser() {
+		return user;
 	}
 
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setUser(UserBean user) {
+		this.user = user;
 	}
 
-	public String getMid() {
-		return mid;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	public void setMid(String mid) {
-		this.mid = mid;
-	}
-
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getExcerpt() {
@@ -75,22 +64,14 @@ public class CommentBean implements Serializable {
 		this.excerpt = excerpt;
 	}
 
-	public String getDate() {
-		return date;
-	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getPraise() {
+	public int getPraise() {
 		return praise;
 	}
 
-	public void setPraise(String praise) {
+	public void setPraise(int praise) {
 		this.praise = praise;
 	}
-
 
 	public CommentBean getQuote() {
 		return quote;
@@ -100,17 +81,24 @@ public class CommentBean implements Serializable {
 		this.quote = quote;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "CommentBean{" +
-				"mid='" + mid + '\'' +
-				", uid='" + uid + '\'' +
+				"id=" + id +
+				", talkId=" + talkId +
+				", user=" + user +
 				", excerpt='" + excerpt + '\'' +
-				", date='" + date + '\'' +
 				", praise='" + praise + '\'' +
-				", nick='" + nick + '\'' +
-				", head='" + head + '\'' +
-				", quote=" + quote +
+				", quote=" + quote!=null?quote.toString():"null" +
+				", type='" + type + '\'' +
 				'}';
 	}
 }

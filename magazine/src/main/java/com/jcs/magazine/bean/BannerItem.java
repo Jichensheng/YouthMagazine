@@ -1,5 +1,7 @@
 package com.jcs.magazine.bean;
 
+import com.jcs.magazine.network.YzuClientDemo;
+
 /**
  * 轮播图
  */
@@ -9,7 +11,7 @@ public class BannerItem {
 	private String link;
 
 	public String getImage() {
-		return image;
+		return YzuClientDemo.RESOURCE_COVER_HOST+image;
 	}
 
 	public void setImage(String image) {

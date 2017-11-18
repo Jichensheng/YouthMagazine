@@ -19,6 +19,7 @@ import com.jcs.magazine.bean.ArticleBean;
 import com.jcs.magazine.bean.BaseListTemplet;
 import com.jcs.magazine.bean.BaseMgz;
 import com.jcs.magazine.bean.TalkContentsBean;
+import com.jcs.magazine.config.BuildConfig;
 import com.jcs.magazine.network.YzuClientDemo;
 import com.jcs.magazine.talk.adapter.RadioRvAdapter;
 import com.jcs.magazine.talk.interfaces.TabFragmentInterface;
@@ -45,6 +46,8 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	private List<TalkContentsBean.ArticlesBean> list;
 	private RadioRvAdapter artRvAdapter;
 
+	private int index = 1;
+	private int total = 0;
 	@Override
 	public void setTabName(String tabName) {
 		this.tabName=tabName;
@@ -79,9 +82,9 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	private void initView(View parent) {
 		list = new ArrayList<>();
 
+		recyclerView = (XRecyclerView) parent.findViewById(R.id.rv_content);
 		intitData();
 
-		recyclerView = (XRecyclerView) parent.findViewById(R.id.rv_content);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 		recyclerView.addOnScrollListener(new ImageAutoLoadScrollListener(getContext()));
@@ -97,44 +100,53 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 			@Override
 			public void onRefresh() {
 				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);
-							getActivity().runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									recyclerView.refreshComplete();
-									recyclerView.setPullRefreshEnabled(true);
-								}
-							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}).start();
+				YzuClientDemo.getInstance()
+						.getRadioLists(1,10)
+						.subscribeOn(Schedulers.newThread())
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe(new Consumer<BaseListTemplet<TalkContentsBean.ArticlesBean>>() {
+							@Override
+							public void accept(BaseListTemplet<TalkContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
+								list.clear();
+								list.addAll(articlesBeanBaseListTemplet.getResults().getBody());
+								artRvAdapter.notifyDataSetChanged();
+								recyclerView.refreshComplete();
+								recyclerView.setPullRefreshEnabled(true);
+							}
+						}, new Consumer<Throwable>() {
+							@Override
+							public void accept(Throwable throwable) throws Exception {
+								recyclerView.setPullRefreshEnabled(true);
+							}
+						});
 			}
 
 			@Override
 			public void onLoadMore() {
-				recyclerView.setPullRefreshEnabled(false);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(1000);getActivity().runOnUiThread(new Runnable() {
+				if (total <= index * 10) {
+					recyclerView.setNoMore(true);
+				} else {
+					recyclerView.setPullRefreshEnabled(false);
+					YzuClientDemo.getInstance()
+							.getRadioLists(++index, 10)
+							.subscribeOn(Schedulers.newThread())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(new Consumer<BaseListTemplet<TalkContentsBean.ArticlesBean>>() {
 								@Override
-								public void run() {
+								public void accept(BaseListTemplet<TalkContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
+									list.clear();
+									list.addAll(articlesBeanBaseListTemplet.getResults().getBody());
+									artRvAdapter.notifyDataSetChanged();
 									recyclerView.loadMoreComplete();
 									recyclerView.setPullRefreshEnabled(true);
 								}
+							}, new Consumer<Throwable>() {
+								@Override
+								public void accept(Throwable throwable) throws Exception {
+									recyclerView.setPullRefreshEnabled(true);
+								}
 							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}).start();
+				}
 			}
 		});
 
@@ -142,6 +154,7 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	}
 
 	private void intitData() {
+		recyclerView.setNoMore(false);
 		YzuClientDemo.getInstance()
 				.getRadioLists(1,10)
 				.subscribeOn(Schedulers.newThread())
@@ -149,6 +162,8 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 				.subscribe(new Consumer<BaseListTemplet<TalkContentsBean.ArticlesBean>>() {
 					@Override
 					public void accept(BaseListTemplet<TalkContentsBean.ArticlesBean> articlesBeanBaseListTemplet) throws Exception {
+						index = 1;
+						total = articlesBeanBaseListTemplet.getResults().getTotal();
 						list.clear();
 						list.addAll(articlesBeanBaseListTemplet.getResults().getBody());
 						artRvAdapter.notifyDataSetChanged();
@@ -164,7 +179,6 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 	@Override
 	public void onItemClick(View view, final int position) {
 		final AlertDialog loading = new DialogHelper(getContext()).show(R.layout.loading);
-		//TODO 文章ID
 		int articleID = list.get(position).getArticleId();
 		YzuClientDemo.getInstance().getTalk(articleID)
 				.subscribeOn(Schedulers.newThread())
@@ -173,11 +187,12 @@ public class ChildRadioFragment extends Fragment implements TabFragmentInterface
 					@Override
 					public void accept(BaseMgz<ArticleBean> articleBean) throws Exception {
 						loading.dismiss();
-//						Intent intent = new Intent(getContext(), ArticleDetialActivity.class);
 						Intent intent = new Intent(getContext(), ArticleDetialActivityRe.class);
 						intent.putExtra("content", articleBean.getResults().getContent());
 						intent.putExtra("title", list.get(position).getTitle());
 						intent.putExtra("author", list.get(position).getAuthor());
+						intent.putExtra("type", BuildConfig.COMMENT_TYPE_TALK);
+						intent.putExtra("articleId",list.get(position).getArticleId());
 						startActivity(intent);
 					}
 				}, new Consumer<Throwable>() {
