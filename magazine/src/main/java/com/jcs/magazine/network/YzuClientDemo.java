@@ -28,8 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  */
 public class YzuClientDemo {
-//	public static final String HOST="http://192.168.191.1:8090/";
-	public static final String HOST="http://www.yangdaqingnian.top/";
+	public static final String HOST="http://192.168.191.1:8090/";
+//	public static final String HOST="http://www.yangdaqingnian.top/";
 	public static final String RESOURCE_HEAD_HOST =HOST+"upload/head/";
 	public static final String RESOURCE_COVER_HOST=HOST+"upload/cover/";
 	public static final String RESOURCE_AUDIO_HOST=HOST+"upload/audio/";

@@ -21,8 +21,8 @@ import com.jcs.magazine.activity.LoginActicity;
 import com.jcs.magazine.activity.mine.CollectionActivity;
 import com.jcs.magazine.activity.mine.ContactUsActivity;
 import com.jcs.magazine.activity.mine.FollowActivity;
-import com.jcs.magazine.activity.mine.PostActivity;
 import com.jcs.magazine.activity.mine.UserInfoActivity;
+import com.jcs.magazine.adapter.ReMake.TPostActivity;
 import com.jcs.magazine.base.BaseFragment;
 import com.jcs.magazine.global.LoginUserHelper;
 import com.jcs.magazine.global.PermissionHelper;
@@ -165,7 +165,7 @@ public class MineFragement extends BaseFragment implements View.OnClickListener 
 				break;
 			//我的帖子
 			case R.id.iftv_post:
-				intent = new Intent(getContext(), PostActivity.class);
+				intent = new Intent(getContext(), TPostActivity.class);
 				PermissionHelper.getHelper().startActivity(getContext(), intent);
 				break;
 			//收藏夹

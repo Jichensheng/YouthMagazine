@@ -8,7 +8,6 @@ import com.jcs.magazine.bean.CommentBean;
 import com.jcs.magazine.bean.CommentPostBean;
 import com.jcs.magazine.bean.ContentsBean;
 import com.jcs.magazine.bean.MgzCoverBean;
-import com.jcs.magazine.bean.MomentBean;
 import com.jcs.magazine.bean.MomentBeanRefactor;
 import com.jcs.magazine.bean.TalkBean;
 import com.jcs.magazine.bean.TalkContentsBean;
@@ -81,13 +80,14 @@ public interface ApiService {
 	Observable<BaseListTemplet<MomentBeanRefactor>> getMomentLists(@Path("page") int page, @Path("count") int count);
 
 	/**
-	 *	获取某用户的发帖列表
+	 * 获取某用户的发帖列表或者收藏代码
+	 * @param uid
 	 * @param page
 	 * @param count
 	 * @return
 	 */
-	@GET("magazine/user/{uid}/{page}/{count}")
-	Observable<BaseListTemplet<MomentBean>> getUserPostLists(@Path("uid") int uid,@Path("page") int page, @Path("count") int count);
+	@GET("magazine/moment/re/user/{uid}/{page}/{count}")
+	Observable<BaseListTemplet<MomentBeanRefactor>> getUserPostLists(@Path("uid") int uid,@Path("page") int page, @Path("count") int count);
 	/**
 	 *
 	 * 获取广场banner

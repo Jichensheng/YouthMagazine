@@ -26,6 +26,7 @@ import static com.jcs.magazine.R.id.webView;
  * author：Jics
  * 2017/8/1 14:55
  */
+@Deprecated
 public class ArticleDetialActivity extends BaseActivity {
 	private int timeOut = 4 * 1000;
 	private TextView tv_title, tv_author;

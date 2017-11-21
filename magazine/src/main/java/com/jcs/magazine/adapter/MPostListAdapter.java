@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.jcs.magazine.R;
 import com.jcs.magazine.activity.MomentActivity;
-import com.jcs.magazine.bean.MomentBean;
+import com.jcs.magazine.bean.MomentBeanRefactor;
+import com.jcs.magazine.util.RelativeDateFormat;
 import com.jcs.magazine.widget.nine_grid.NineGridTestLayout;
 
 import java.util.List;
@@ -19,13 +20,13 @@ import java.util.List;
  * author：Jics
  * 17/4/12 10:54
  */
-
+@Deprecated
 public class MPostListAdapter extends RecyclerView.Adapter {
 	private boolean isMyself;
 	private Context context;
-	private List<MomentBean> momentBeanList;
+	private List<MomentBeanRefactor> momentBeanList;
 
-	public MPostListAdapter(Context context, List<MomentBean> momentBeanList,boolean isMyself) {
+	public MPostListAdapter(Context context, List<MomentBeanRefactor> momentBeanList,boolean isMyself) {
 		this.context = context;
 		this.momentBeanList = momentBeanList;
 		this.isMyself = isMyself;
@@ -45,11 +46,11 @@ public class MPostListAdapter extends RecyclerView.Adapter {
 			}else {
 				((MomentListHolder) holder).tv_btn_delet.setVisibility(View.GONE);
 			}
-			final MomentBean mb = momentBeanList.get(position );
+			final MomentBeanRefactor mb = momentBeanList.get(position );
 			final List<String> urls = mb.getImages();
 
 			((MomentListHolder) holder).nineGridTestLayout.setUrlList(urls);
-			((MomentListHolder) holder).tv_public_time.setText(mb.getDate());
+			((MomentListHolder) holder).tv_public_time.setText(RelativeDateFormat.formatString(mb.getDate()));
 			((MomentListHolder) holder).tv_content.setText(mb.getExcerpt());
 			((MomentListHolder) holder).tv_comment.setText("" + mb.getComment());
 			((MomentListHolder) holder).tv_praise.setText("" + mb.getPraise());

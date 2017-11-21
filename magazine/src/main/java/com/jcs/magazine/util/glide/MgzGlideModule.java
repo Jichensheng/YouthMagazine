@@ -6,7 +6,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper;
-import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.module.GlideModule;
 import com.jcs.magazine.util.LocalFileManager;
 
@@ -18,7 +17,9 @@ public class MgzGlideModule implements GlideModule {
 
   @Override
   public void applyOptions(Context context, GlideBuilder builder) {
-    builder.setDiskCache(new InternalCacheDiskCacheFactory(context,MAX_CACHE ));
+//    builder.setDiskCache(new InternalCacheDiskCacheFactory(context,MAX_CACHE ));
+
+
     builder .setDiskCache(new DiskCache.Factory() {
       @Override
       public DiskCache build() {

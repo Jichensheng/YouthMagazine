@@ -74,6 +74,10 @@
             android:name=".activity.ArticleDetialActivityRe"
             android:screenOrientation="portrait"
         />
+        <activity
+            android:name=".adapter.ReMake.TPostActivity"
+            android:screenOrientation="portrait"
+        />
 
 
         <!--umeng share-->

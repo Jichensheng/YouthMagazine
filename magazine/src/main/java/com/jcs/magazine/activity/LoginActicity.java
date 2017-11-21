@@ -232,24 +232,28 @@ public class LoginActicity extends BaseActivity implements View.OnClickListener,
 				.subscribe(new Consumer<BaseMgz<UserBean>>() {
 					@Override
 					public void accept(BaseMgz<UserBean> userBeanBaseMgz) throws Exception {
+						if (userBeanBaseMgz.isSucc()) {
+							UserBean userBean = userBeanBaseMgz.getResults();
+							LoginUserHelper.getInstance().setLoginUser(userBean);
+							/**
+							 * 注册成功更新本地数据
+							 */
+							SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+							SharedPreferences.Editor editor = sp.edit();
+							editor.putBoolean("user_info_isloged", true);
+							editor.putString("user_info_nicname", userBean.getNick());
+							editor.putString("user_info_psw", userBean.getPsw());
+							editor.putLong("user_info_time", System.currentTimeMillis());
+							editor.putString("user_info_token", userBean.getToken());
+							editor.apply();
 
-						UserBean userBean = userBeanBaseMgz.getResults();
-						LoginUserHelper.getInstance().setLoginUser(userBean);
-						/**
-						 * 注册成功更新本地数据
-						 */
-						SharedPreferences sp = getSharedPreferences("user_info", Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor = sp.edit();
-						editor.putBoolean("user_info_isloged", true);
-						editor.putString("user_info_nicname", userBean.getNick());
-						editor.putString("user_info_psw", userBean.getPsw());
-						editor.putLong("user_info_time", System.currentTimeMillis());
-						editor.putString("user_info_token", userBean.getToken());
-						editor.apply();
+							EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
+							startActivity(new Intent(LoginActicity.this, UserInfoActivity.class));
+							finish();
+						}else {
+							UiUtil.toast("含有敏感信息");
+						}
 
-						EventBus.getDefault().post(new MessageEvent("refresh_login_state"));
-						startActivity(new Intent(LoginActicity.this, UserInfoActivity.class));
-						finish();
 					}
 				}, new Consumer<Throwable>() {
 					@Override

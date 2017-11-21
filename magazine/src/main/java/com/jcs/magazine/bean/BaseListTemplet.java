@@ -37,7 +37,7 @@ public class BaseListTemplet<T> extends BaseMgz<BaseListTemplet<T>> {
 	public String toString() {
 		return "BaseListTemplet{" +
 				"total=" + total +
-				", body=" + body.toString() +
+				", body=" + body==null?"null":body.toString() +
 				'}';
 	}
 }

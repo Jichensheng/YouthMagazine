@@ -11,6 +11,7 @@ import com.jcs.magazine.activity.mine.CollectionActivity;
 import com.jcs.magazine.activity.mine.FollowActivity;
 import com.jcs.magazine.activity.mine.PostActivity;
 import com.jcs.magazine.activity.mine.UserInfoActivity;
+import com.jcs.magazine.adapter.ReMake.TPostActivity;
 
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ public class PermissionHelper {
 		PERMISSIONMAP.put(CollectionActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(FollowActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(PostActivity.class.getName(), LOGINUSER);
+		PERMISSIONMAP.put(TPostActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(UserInfoActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put(MakePostActivity.class.getName(), LOGINUSER);
 		PERMISSIONMAP.put("XXActivity.class.getName()", VISITOR);

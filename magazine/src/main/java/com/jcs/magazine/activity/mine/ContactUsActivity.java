@@ -7,6 +7,7 @@ import com.jcs.magazine.R;
 import com.jcs.magazine.base.BaseActivity;
 
 /**
+ * 联系我们页
  * author：Jics
  * 2017/9/13 10:08
  */
